@@ -1,33 +1,77 @@
-import {SubstrateExtrinsic,SubstrateEvent,SubstrateBlock} from "@subql/types";
+// Copyright 2020-2022 OnFinality Limited authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 import {StarterEntity} from "../types";
-import {Balance} from "@polkadot/types/interfaces";
+import {Extrinsic, EventRecord, SignedBlock} from '@polkadot/types/interfaces';
 
+export interface Entity {
+  id: string;
+}
 
-export async function handleBlock(block: SubstrateBlock): Promise<void> {
-    //Create a new starterEntity with ID using block hash
-    let record = new StarterEntity(block.block.header.hash.toString());
-    //Record block number
-    record.field1 = block.block.header.number.toNumber();
+export type FunctionPropertyNames<T> = {
+  [K in keyof T]: T[K] extends Function ? K : never;
+}[keyof T];
+
+export interface Store {
+  get(entity: string, id: string): Promise<Entity | null>;
+  getByField(entity: string, field: string, value): Promise<Entity[]>;
+  getOneByField(entity: string, field: string, value): Promise<Entity | null>;
+  set(entity: string, id: string, data: Entity): Promise<void>;
+  bulkCreate(entity: string, data: Entity[]): Promise<void>;
+  remove(entity: string, id: string): Promise<void>;
+}
+
+export interface SubstrateBlock extends SignedBlock {
+  // parent block's spec version, can be used to decide the correct metadata that should be used for this block.
+  specVersion: number;
+  timestamp: Date;
+  events: EventRecord[];
+}
+
+export interface SubstrateExtrinsic {
+  // index in the block
+  idx: number;
+  extrinsic: Extrinsic;
+  block: SubstrateBlock;
+  events: EventRecord[];
+  success: boolean;
+}
+
+export interface SubstrateEvent extends EventRecord {
+  // index in the block
+  idx: number;
+  extrinsic?: SubstrateExtrinsic;
+  block: SubstrateBlock;
+}
+
+export type AlgorandBlock = Record<string, any>;
+
+export type AvalancheBlock = Record<string, any>;
+
+export type AvalancheTransaction = Record<string, any>;
+
+export interface BlockWrapper {
+  getBlock: () => SubstrateBlock | AlgorandBlock | AvalancheBlock;
+  getBlockHeight: () => number;
+  getHash: () => string;
+  getCalls?: (filters?: any) => SubstrateExtrinsic[] | AvalancheTransaction[];
+}
+
+export type DynamicDatasourceCreator = (name: string, args: Record<string, unknown>) => Promise<void>;
+
+export async function handleBlock(block: BlockWrapper): Promise<void> {
+    const record = new StarterEntity(block.getHash());
+    record.height = block.getBlockHeight();
     await record.save();
 }
 
-export async function handleEvent(event: SubstrateEvent): Promise<void> {
-    const {event: {data: [account, balance]}} = event;
-    //Retrieve the record by its ID
-    const record = await StarterEntity.get(event.block.block.header.hash.toString());
-    record.field2 = account.toString();
-    //Big integer type Balance of a transfer event
-    record.field3 = (balance as Balance).toBigInt();
+export async function handleCall(transaction: AvalancheTransaction): Promise<void> {
+    const record = await StarterEntity.get(transaction.blockHash);
+    if (record.transactions) {
+      const transactions = JSON.parse(record.transactions);
+      transactions.push(transaction)
+      record.transactions = JSON.stringify(transactions)
+    } else {
+      record.transactions = JSON.stringify([transaction]);
+    }
     await record.save();
 }
-
-export async function handleCall(extrinsic: SubstrateExtrinsic): Promise<void> {
-    const record = await StarterEntity.get(extrinsic.block.block.header.hash.toString());
-    //Date type timestamp
-    record.field4 = extrinsic.block.timestamp;
-    //Boolean tyep
-    record.field5 = true;
-    await record.save();
-}
-
-

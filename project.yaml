@@ -9,8 +9,12 @@ schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: 'wss://polkadot.api.onfinality.io/public-ws'
-  genesisHash: '0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3' # Polkadot
+  endpoint: "avax.dc.thechainhub.com"
+  port: 9650
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDc2NTM2MzksImp0aSI6IlYwREc3Mmd0WTJjamtjVjFpcEVTWnB4Q1Jpbz0iLCJlbmRwb2ludHMiOlsiL2V4dC9pbmRleC9DL2Jsb2NrIiwiL2V4dC9iYy9YIiwiL2V4dC9pbmZvIiwiL2V4dC9iYy9DIiwiL2V4dC9pbmRleC9YL3Z0eCIsIi9leHQvYmMvQy9hdmF4IiwiL2V4dC9iYy9DL3JwYyJdfQ.I3opZCuB0P081epoZ8EZG9Mr0jqG6s8r1f5Pzz2auXU'
+  genesisHash: '0x31ced5b9beb7f8782b014660da0cb18cc409f121f408186886e1ca3e8eeca96b'
+  chainName: 'C'
+  type: 'avalanche'
 
 dataSources:
   - kind: substrate/Runtime
@@ -19,12 +23,8 @@ dataSources:
       file: "./dist/index.js"
       handlers:
         - handler: handleBlock
-          kind: substrate/BlockHandler
-        - handler: handleEvent
-          kind: substrate/EventHandler
-          filter: #Filter is optional
-            module: balances
-            method: Deposit
+          kind: BlockHandler
         - handler: handleCall
-          kind: substrate/CallHandler
-
+          kind: CallHandler
+          filter:
+            to: '0xa8cbe88567d83b8a4fae2dfe1996edce8e4a8c25dd438ef71a26f05e8dbaedf20fdc9714'
