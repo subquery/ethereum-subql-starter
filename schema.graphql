@@ -1,17 +1,54 @@
-type StarterEntity @entity {
+ type AvalancheBlockEntity @entity {
+  id: ID!
+  difficulty: String
+  extraData: String
+  gasLimit: String
+  gasUsed: String
+  hash: String! @index(unique:true)
+  logsBloom: String
+  miner: String
+  mixHash: String
+  nonce: String
+  number: String! @index(unique:true)
+  parentHash: String
+  receiptsRoot: String
+  sha3Uncles: String
+  size: String
+  stateRoot: String
+  timestamp: String
+  totalDifficulty: String
+  transactionsRoot: String
+  uncles: [String]
+}
 
-  id: ID! #id is a required field
+type AvalancheTransactionEntity @entity {
+  id: ID!
+  block: AvalancheBlockEntity!
+  blockHash: String!
+  blockNumber: String! 
+  from: String
+  gas: String
+  gasPrice: String
+  hash: String
+  input: String
+  nonce: String
+  to: String
+  transactionIndex: String!
+  value: String
+  v: String
+  r: String
+  s: String
+}
 
-  height: Int!
-
-  transactions: String #filed2 is an optional field
-
-  field3: BigInt
-
-  field4: Date
-
-  field5: Boolean
-
-
-
+type AvalancheEventEntity @entity {
+  id: ID!
+  block: AvalancheBlockEntity!
+  logIndex: String!
+  blockNumber: String! 
+  blockHash: String! 
+  transactionHash: String
+  transactionIndex: String
+  address: String
+  data: String
+  topics: [String]
 }

@@ -1,77 +1,122 @@
 // Copyright 2020-2022 OnFinality Limited authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-import {StarterEntity} from "../types";
-import {Extrinsic, EventRecord, SignedBlock} from '@polkadot/types/interfaces';
+import { AvalancheBlockEntity, AvalancheTransactionEntity } from "../types";
 
-export interface Entity {
-  id: string;
-}
+// TODO: those 3 types are duplicate from subql/types
+// We have to find a way to import them from our version of the package
+export type AvalancheBlock = {
+  difficulty: string;
+  extraData: string;
+  gasLimit: string;
+  gasUsed: string;
+  hash: string;
+  logsBloom: string;
+  miner: string;
+  mixHash: string;
+  nonce: string;
+  number: string;
+  parentHash: string;
+  receiptsRoot: string;
+  sha3Uncles: string;
+  size: string;
+  stateRoot: string;
+  timestamp: string;
+  totalDifficulty: string;
+  transactions: AvalancheTransaction[];
+  transactionsRoot: string;
+  uncles: string[];
+};
 
-export type FunctionPropertyNames<T> = {
-  [K in keyof T]: T[K] extends Function ? K : never;
-}[keyof T];
+export type AvalancheTransaction = {
+  blockHash: string;
+  blockNumber: string;
+  from: string;
+  gas: string;
+  gasPrice: string;
+  hash: string;
+  input: string;
+  nonce: string;
+  to: string;
+  transactionIndex: string;
+  value: string;
+  v: string;
+  r: string;
+  s: string;
+};
 
-export interface Store {
-  get(entity: string, id: string): Promise<Entity | null>;
-  getByField(entity: string, field: string, value): Promise<Entity[]>;
-  getOneByField(entity: string, field: string, value): Promise<Entity | null>;
-  set(entity: string, id: string, data: Entity): Promise<void>;
-  bulkCreate(entity: string, data: Entity[]): Promise<void>;
-  remove(entity: string, id: string): Promise<void>;
-}
+export type AvalancheEvent = {
+  logIndex: string;
+  blockNumber: string;
+  blockHash: string;
+  transactionHash: string;
+  transactionIndex: string;
+  address: string;
+  data: string;
+  topics: string[];
+};
 
-export interface SubstrateBlock extends SignedBlock {
-  // parent block's spec version, can be used to decide the correct metadata that should be used for this block.
-  specVersion: number;
-  timestamp: Date;
-  events: EventRecord[];
-}
-
-export interface SubstrateExtrinsic {
-  // index in the block
-  idx: number;
-  extrinsic: Extrinsic;
-  block: SubstrateBlock;
-  events: EventRecord[];
-  success: boolean;
-}
-
-export interface SubstrateEvent extends EventRecord {
-  // index in the block
-  idx: number;
-  extrinsic?: SubstrateExtrinsic;
-  block: SubstrateBlock;
-}
-
-export type AlgorandBlock = Record<string, any>;
-
-export type AvalancheBlock = Record<string, any>;
-
-export type AvalancheTransaction = Record<string, any>;
-
+// TODO: same for this interface
 export interface BlockWrapper {
-  getBlock: () => SubstrateBlock | AlgorandBlock | AvalancheBlock;
+  getBlock: () => AvalancheBlock;
   getBlockHeight: () => number;
   getHash: () => string;
-  getCalls?: (filters?: any) => SubstrateExtrinsic[] | AvalancheTransaction[];
+  getCalls?: (filters?: any) => | AvalancheTransaction[];
+  getEvents: () => AvalancheEvent[];
+  getVersion: () => number;
 }
 
 export type DynamicDatasourceCreator = (name: string, args: Record<string, unknown>) => Promise<void>;
 
 export async function handleBlock(block: BlockWrapper): Promise<void> {
-    const record = new StarterEntity(block.getHash());
-    record.height = block.getBlockHeight();
-    await record.save();
+  let avalancheBlock: AvalancheBlock = block.getBlock();
+  const blockRecord = new AvalancheBlockEntity(avalancheBlock.hash);
+
+  blockRecord.difficulty = avalancheBlock.difficulty;
+  blockRecord.extraData = avalancheBlock.extraData;
+  blockRecord.gasLimit = avalancheBlock.gasLimit;
+  blockRecord.gasUsed = avalancheBlock.gasUsed;
+  blockRecord.hash = avalancheBlock.hash;
+  blockRecord.logsBloom = avalancheBlock.logsBloom;
+  blockRecord.miner = avalancheBlock.miner;
+  blockRecord.mixHash = avalancheBlock.mixHash;
+  blockRecord.nonce = avalancheBlock.nonce;
+  blockRecord.number = avalancheBlock.number;
+  blockRecord.parentHash = avalancheBlock.parentHash;
+  blockRecord.receiptsRoot = avalancheBlock.receiptsRoot;
+  blockRecord.sha3Uncles = avalancheBlock.sha3Uncles;
+  blockRecord.size = avalancheBlock.size;
+  blockRecord.stateRoot = avalancheBlock.stateRoot;
+  blockRecord.timestamp = avalancheBlock.timestamp;
+  blockRecord.totalDifficulty = avalancheBlock.totalDifficulty;
+  blockRecord.transactionsRoot = avalancheBlock.transactionsRoot;
+  blockRecord.uncles = avalancheBlock.uncles;
+
+  await blockRecord.save();
 }
 
 export async function handleCall(transaction: AvalancheTransaction): Promise<void> {
-    const record = await StarterEntity.get(transaction.blockHash);
-    if (record.transactions) {
-      const transactions = JSON.parse(record.transactions);
-      transactions.push(transaction)
-      record.transactions = JSON.stringify(transactions)
-    } else {
-      record.transactions = JSON.stringify([transaction]);
-    }
-    await record.save();
+  const blockRecord = await AvalancheBlockEntity.get(transaction.blockHash);
+  const transactionRecord = new AvalancheTransactionEntity(`${transaction.blockHash}-${transaction.hash}`)
+
+  transactionRecord.blockId = transaction.blockHash
+  transactionRecord.blockHash = transaction.blockHash;
+  transactionRecord.blockNumber = transaction.blockNumber;
+  transactionRecord.from = transaction.from;
+  transactionRecord.gas = transaction.gas;
+  transactionRecord.gasPrice = transaction.gasPrice;
+  transactionRecord.hash = transaction.hash;
+  transactionRecord.input = transaction.input;
+  transactionRecord.nonce = transaction.nonce;
+  transactionRecord.r = transaction.r;
+  transactionRecord.s = transaction.s;
+  transactionRecord.to = transaction.to;
+  transactionRecord.transactionIndex = transaction.transactionIndex;
+  transactionRecord.v = transaction.v;
+  transactionRecord.value = transaction.value;
+
+  await transactionRecord.save();
 }
+
+// export async function handleEvent(event: AvalancheEvent): Promise<void> {
+//   const record = await StarterEntity.get(event.blockHash);
+// }

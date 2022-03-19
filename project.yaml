@@ -1,4 +1,4 @@
-specVersion: "0.2.0"
+specVersion: "0.3.0"
 
 name: "Subql-Starter"
 version: "0.0.0"
@@ -11,13 +11,15 @@ schema:
 network:
   endpoint: "avax.dc.thechainhub.com"
   port: 9650
-  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDc2NTM2MzksImp0aSI6IlYwREc3Mmd0WTJjamtjVjFpcEVTWnB4Q1Jpbz0iLCJlbmRwb2ludHMiOlsiL2V4dC9pbmRleC9DL2Jsb2NrIiwiL2V4dC9iYy9YIiwiL2V4dC9pbmZvIiwiL2V4dC9iYy9DIiwiL2V4dC9pbmRleC9YL3Z0eCIsIi9leHQvYmMvQy9hdmF4IiwiL2V4dC9iYy9DL3JwYyJdfQ.I3opZCuB0P081epoZ8EZG9Mr0jqG6s8r1f5Pzz2auXU'
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDc3NDQ3MDQsImp0aSI6Ik80VklfSHhuZVcwaktpZHlxQlRXT1YzRmdsRT0iLCJlbmRwb2ludHMiOlsiL2V4dC9pbmRleC9DL2Jsb2NrIiwiL2V4dC9iYy9YIiwiL2V4dC9pbmZvIiwiL2V4dC9iYy9DIiwiL2V4dC9pbmRleC9YL3Z0eCIsIi9leHQvaW5kZXgveC90eCIsIi9leHQvYmMvQy9ycGMiXX0.HAZo9vcKRbFLHyL2WxeJ8EgYKYpeypuhUdZ2BX1j4UA'
   genesisHash: '0x31ced5b9beb7f8782b014660da0cb18cc409f121f408186886e1ca3e8eeca96b'
   chainName: 'C'
   type: 'avalanche'
+  chainId: 'mainnet'
 
 dataSources:
   - kind: substrate/Runtime
+    processor: {}
     startBlock: 1
     mapping:
       file: "./dist/index.js"
@@ -27,4 +29,4 @@ dataSources:
         - handler: handleCall
           kind: CallHandler
           filter:
-            to: '0xa8cbe88567d83b8a4fae2dfe1996edce8e4a8c25dd438ef71a26f05e8dbaedf20fdc9714'
+            to: '0x95042281af6566fc6748f28263ceeecaefb4d2b4'
