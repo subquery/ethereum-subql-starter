@@ -1,6 +1,6 @@
 // Copyright 2020-2022 OnFinality Limited authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-import { AvalancheBlockEntity, AvalancheTransactionEntity } from "../types";
+import { AvalancheBlockEntity, AvalancheEventEntity, AvalancheTransactionEntity } from "../types";
 
 // TODO: those 3 types are duplicate from subql/types
 // We have to find a way to import them from our version of the package
@@ -65,8 +65,6 @@ export interface BlockWrapper {
   getVersion: () => number;
 }
 
-export type DynamicDatasourceCreator = (name: string, args: Record<string, unknown>) => Promise<void>;
-
 export async function handleBlock(block: BlockWrapper): Promise<void> {
   let avalancheBlock: AvalancheBlock = block.getBlock();
   const blockRecord = new AvalancheBlockEntity(avalancheBlock.hash);
@@ -95,7 +93,6 @@ export async function handleBlock(block: BlockWrapper): Promise<void> {
 }
 
 export async function handleCall(transaction: AvalancheTransaction): Promise<void> {
-  const blockRecord = await AvalancheBlockEntity.get(transaction.blockHash);
   const transactionRecord = new AvalancheTransactionEntity(`${transaction.blockHash}-${transaction.hash}`)
 
   transactionRecord.blockId = transaction.blockHash
@@ -117,6 +114,18 @@ export async function handleCall(transaction: AvalancheTransaction): Promise<voi
   await transactionRecord.save();
 }
 
-// export async function handleEvent(event: AvalancheEvent): Promise<void> {
-//   const record = await StarterEntity.get(event.blockHash);
-// }
+export async function handleEvent(event: AvalancheEvent): Promise<void> {
+  const eventRecord = new AvalancheEventEntity(`${event.blockHash}-${event.logIndex}`);
+
+  eventRecord.address = event.address
+  eventRecord.blockHash = event.blockHash
+  eventRecord.blockId = event.blockHash
+  eventRecord.blockNumber = event.blockNumber
+  eventRecord.data = event.data
+  eventRecord.logIndex = event.logIndex
+  eventRecord.topics = event.topics
+  eventRecord.transactionHash = event.transactionHash
+  eventRecord.transactionIndex = event.transactionIndex
+
+  await eventRecord.save()
+}

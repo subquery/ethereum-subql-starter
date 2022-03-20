@@ -11,7 +11,7 @@ schema:
 network:
   endpoint: "avax.dc.thechainhub.com"
   port: 9650
-  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDc3NDQ3MDQsImp0aSI6Ik80VklfSHhuZVcwaktpZHlxQlRXT1YzRmdsRT0iLCJlbmRwb2ludHMiOlsiL2V4dC9pbmRleC9DL2Jsb2NrIiwiL2V4dC9iYy9YIiwiL2V4dC9pbmZvIiwiL2V4dC9iYy9DIiwiL2V4dC9pbmRleC9YL3Z0eCIsIi9leHQvaW5kZXgveC90eCIsIi9leHQvYmMvQy9ycGMiXX0.HAZo9vcKRbFLHyL2WxeJ8EgYKYpeypuhUdZ2BX1j4UA'
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDc4MTYwOTMsImp0aSI6IjJHaWlkTGhEWVp5MUlMSVlIS1gzVExfWmltZz0iLCJlbmRwb2ludHMiOlsiL2V4dC9pbmRleC9DL2Jsb2NrIiwiL2V4dC9iYy9YIiwiL2V4dC9pbmZvIiwiL2V4dC9iYy9DIiwiL2V4dC9pbmRleC9YL3Z0eCIsIi9leHQvaW5kZXgveC90eCIsIi9leHQvYmMvQy9ycGMiXX0.N0xLRiEqFRuOyPw5zdudZ85y4pC8BluI0LSOw0Cd6Bo'
   genesisHash: '0x31ced5b9beb7f8782b014660da0cb18cc409f121f408186886e1ca3e8eeca96b'
   chainName: 'C'
   type: 'avalanche'
@@ -28,5 +28,5 @@ dataSources:
           kind: BlockHandler
         - handler: handleCall
           kind: CallHandler
-          filter:
-            to: '0x95042281af6566fc6748f28263ceeecaefb4d2b4'
+        - handler: handleEvent
+          kind: EventHandler
