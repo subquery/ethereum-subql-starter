@@ -1,7 +1,7 @@
 {
-  "name": "subquery-starter",
-  "version": "0.0.4",
-  "description": "This project can be use as a starting point for developing your SubQuery project",
+  "name": "avax-evm-starter",
+  "version": "0.0.1",
+  "description": "an evm starter project index pangolin transfer",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -b",
@@ -18,8 +18,12 @@
   ],
   "author": "Ian He & Jay Ji",
   "license": "MIT",
+  "dependencies": {
+    "@pangolindex/exchange-contracts": "^1.0.2"
+  },
   "devDependencies": {
     "@polkadot/api": "7.7.1",
+    "@terra-money/terra.js": "^3.0.8",
     "@subql/cli": "latest",
     "@subql/types": "latest",
     "typescript": "4.5.5"

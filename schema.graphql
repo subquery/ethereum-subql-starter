@@ -25,7 +25,7 @@ type AvalancheTransactionEntity @entity {
   id: ID!
   block: AvalancheBlockEntity!
   blockHash: String!
-  blockNumber: String! 
+  blockNumber: String!
   from: String
   gas: String
   gasPrice: String
@@ -44,11 +44,39 @@ type AvalancheEventEntity @entity {
   id: ID!
   block: AvalancheBlockEntity!
   logIndex: String!
-  blockNumber: String! 
-  blockHash: String! 
+  blockNumber: String!
+  blockHash: String!
   transactionHash: String
   transactionIndex: String
   address: String
   data: String
   topics: [String]
 }
+
+
+ type Transaction @entity {
+
+   id: ID! # Transaction hash
+
+   value: BigInt!
+
+   to: String!
+
+   from: String!
+
+   contractAddress: String!
+ }
+
+
+ type Harvest @entity {
+   id: ID! # Transaction hash 0x6b0a0cceae3634fed45e84ac92285b258bb3b7ce8a911773376d8c8a01a92d3f
+
+   value: BigInt!
+
+   from: String!
+
+   pid: String!
+
+   contractAddress: String! #0x1f806f7c8ded893fd3cae279191ad7aa3798e928
+ }
+

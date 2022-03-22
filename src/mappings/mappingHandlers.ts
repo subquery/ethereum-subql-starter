@@ -1,6 +1,7 @@
 // Copyright 2020-2022 OnFinality Limited authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-import { AvalancheBlockEntity, AvalancheEventEntity, AvalancheTransactionEntity } from "../types";
+import {AvalancheBlockEntity, AvalancheEventEntity, AvalancheTransactionEntity, Harvest, Transaction} from "../types";
+import { BigNumber } from "ethers";
 
 // TODO: those 3 types are duplicate from subql/types
 // We have to find a way to import them from our version of the package
@@ -128,4 +129,30 @@ export async function handleEvent(event: AvalancheEvent): Promise<void> {
   eventRecord.transactionIndex = event.transactionIndex
 
   await eventRecord.save()
+}
+
+
+type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; value: BigNumber; };
+type ApproveCallArgs = [string, BigNumber] & { _spender: string; _value: BigNumber; }
+
+export async function handleEvmEventTransfer(event: AvalancheEvent): Promise<void> {
+  const transaction = new Transaction(event.transactionHash);
+  // transaction.value = event.args.value.toBigInt();
+  // transaction.from = event.args.from;
+  // transaction.to = event.args.to;
+  // transaction.contractAddress = event.address;
+  await transaction.save();
+}
+
+
+export async function handleEvmCallHarvest(transaction: AvalancheTransaction): Promise<void> {
+  const approval = new Harvest(transaction.hash);
+
+  approval.from = transaction.from;
+  approval.contractAddress = transaction.to;
+
+  // approval.value = transaction.args._value.toBigInt();
+  // approval.pid = transaction.args.pid;
+
+  await approval.save();
 }

@@ -1,9 +1,9 @@
 specVersion: "0.3.0"
 
-name: "Subql-Starter"
+name: "avax-evm-Starter"
 version: "0.0.0"
 description: ""
-repository: "https://github.com/subquery/subql-starter"
+repository: ""
 
 schema:
   file: "./schema.graphql"
@@ -18,15 +18,29 @@ network:
   chainId: 'mainnet'
 
 dataSources:
-  - kind: substrate/Runtime
-    processor: {}
-    startBlock: 1
-    mapping:
-      file: "./dist/index.js"
-      handlers:
-        - handler: handleBlock
-          kind: BlockHandler
-        - handler: handleCall
-          kind: CallHandler
-        - handler: handleEvent
-          kind: EventHandler
+  - kind: avalanche/Evm #TODO, any better name?
+    startBlock: 11021983
+    processor:
+      file: './node_modules/@subql/contract-processors/dist/avalancheEvm.js' #TODO
+      options:
+        # Must be a key of assets
+        abi: erc20
+        ## Pangolin token
+        address: '0x60781C2586D68229fde47564546784ab3fACA982'
+    assets:
+      erc20:
+        file: './node_modules/@pangolindex/exchange-contracts/artifacts/contracts/pangolin-core/interfaces/PangolinERC20.sol/PangolinERC20.json'
+      mapping:
+        file: './dist/index.js'
+        handlers:
+          - handler: handleEvmEventTransfer
+            kind: avalanche/EvmEvent
+            filter:
+              topics:
+                - Transfer(address indexed from, address indexed to, uint256 amount)
+          - handler: handleEvmCallHarvest
+            kind: avalanche/EvmCall
+            filter:
+              function: harvest(address[] liquidityPairs, bool claimMiniChef)
+
+
