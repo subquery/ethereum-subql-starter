@@ -1,21 +1,20 @@
 specVersion: "0.3.0"
 
-name: "avax-evm-Starter"
-version: "0.0.0"
-description: ""
-repository: ""
+name: "Avalanche-subql-starter"
+version: "0.0.1"
+description: "This project can be use as a starting point for developing your new Avalanche SubQuery project"
+repository: "https://github.com/subquery/avalanche-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: "avax.dc.thechainhub.com"
+  endpoint: "avalanche.api.onfinality.io"
   port: 9650
-  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDc4MTYwOTMsImp0aSI6IjJHaWlkTGhEWVp5MUlMSVlIS1gzVExfWmltZz0iLCJlbmRwb2ludHMiOlsiL2V4dC9pbmRleC9DL2Jsb2NrIiwiL2V4dC9iYy9YIiwiL2V4dC9pbmZvIiwiL2V4dC9iYy9DIiwiL2V4dC9pbmRleC9YL3Z0eCIsIi9leHQvaW5kZXgveC90eCIsIi9leHQvYmMvQy9ycGMiXX0.N0xLRiEqFRuOyPw5zdudZ85y4pC8BluI0LSOw0Cd6Bo'
-  genesisHash: '0x31ced5b9beb7f8782b014660da0cb18cc409f121f408186886e1ca3e8eeca96b'
-  chainName: 'C'
-  type: 'avalanche'
-  chainId: 'mainnet'
+  genesisHash: "0x31ced5b9beb7f8782b014660da0cb18cc409f121f408186886e1ca3e8eeca96b"
+  type: "avalanche"
+  chainId: "mainnet"
+  chainName: "C"
 
 dataSources:
   - kind: avalanche/Runtime
@@ -24,12 +23,12 @@ dataSources:
       # Must be a key of assets
       abi: erc20
       ## Pangolin token https://snowtrace.io/token/0x60781c2586d68229fde47564546784ab3faca982
-      address: '0x60781C2586D68229fde47564546784ab3fACA982'
+      address: "0x60781C2586D68229fde47564546784ab3fACA982"
     assets:
       erc20:
-        file: './node_modules/@pangolindex/exchange-contracts/artifacts/contracts/pangolin-core/interfaces/IPangolinERC20.sol/IPangolinERC20.json'
+        file: "./node_modules/@pangolindex/exchange-contracts/artifacts/contracts/pangolin-core/interfaces/IPangolinERC20.sol/IPangolinERC20.json"
     mapping:
-      file: './dist/index.js'
+      file: "./dist/index.js"
       handlers:
         - handler: handleEvmEventTransfer
           kind: EventHandler
@@ -40,5 +39,3 @@ dataSources:
           kind: CallHandler
           filter:
             function: approve(address spender, uint256 rawAmount)
-
-

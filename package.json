@@ -1,7 +1,7 @@
 {
-  "name": "avax-evm-starter",
+  "name": "avalanche-subql-starter",
   "version": "0.0.1",
-  "description": "an evm starter project index pangolin transfer",
+  "description": "This project can be use as a starting point for developing your new Avalanche SubQuery project",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -b",
@@ -9,14 +9,14 @@
     "test": "jest",
     "codegen": "./node_modules/.bin/subql codegen"
   },
-  "homepage": "https://github.com/subquery/subql-starter",
-  "repository": "github:subquery/subql-starter",
+  "homepage": "https://github.com/subquery/avalanche-subql-starter",
+  "repository": "github:subquery/avalanche-subql-starter",
   "files": [
     "dist",
     "schema.graphql",
     "project.yaml"
   ],
-  "author": "Ian He & Jay Ji",
+  "author": "SubQuery Team",
   "license": "MIT",
   "dependencies": {
     "@pangolindex/exchange-contracts": "^1.0.2",
