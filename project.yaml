@@ -18,8 +18,8 @@ network:
   chainId: 'mainnet'
 
 dataSources:
-  - kind: substrate/Runtime #avalanche/Evm #TODO, any better name?
-    startBlock: 11021983
+  - kind: substrate/Runtime
+    startBlock: 12454857
     options:
       # Must be a key of assets
       abi: erc20
@@ -36,9 +36,9 @@ dataSources:
           filter:
             topics:
               - Transfer(address indexed from, address indexed to, uint256 amount)
-        - handler: handleEvmCallHarvest
+        - handler: handleEvmCallApprove
           kind: CallHandler
           filter:
-            function: harvest(address[] liquidityPairs, bool claimMiniChef)
+            function: approve(address spender, uint256 rawAmount)
 
 

@@ -68,15 +68,15 @@ type AvalancheEventEntity @entity {
  }
 
 
- type Harvest @entity {
-   id: ID! # Transaction hash 0x6b0a0cceae3634fed45e84ac92285b258bb3b7ce8a911773376d8c8a01a92d3f
+ type Approve @entity {
+   id: ID!
 
    value: BigInt!
 
    from: String!
 
-   pid: String!
+   spender: String!
 
-   contractAddress: String! #0x1f806f7c8ded893fd3cae279191ad7aa3798e928
+   contractAddress: String!
  }
 

@@ -1,6 +1,6 @@
 // Copyright 2020-2022 OnFinality Limited authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-import {AvalancheBlockEntity, AvalancheEventEntity, AvalancheTransactionEntity, Harvest, Transaction} from "../types";
+import {AvalancheBlockEntity, AvalancheEventEntity, AvalancheTransactionEntity, Approve, Transaction} from "../types";
 import { BigNumber } from "ethers";
 import assert from "assert";
 
@@ -156,17 +156,16 @@ export async function handleEvmEventTransfer(event: AvalancheEvent<TransferEvent
 }
 
 
-export async function handleEvmCallHarvest(transaction: AvalancheTransaction<ApproveCallArgs>): Promise<void> {
+export async function handleEvmCallApprove(transaction: AvalancheTransaction): Promise<void> {
 
-  assert(transaction.args, 'Call Args not parsed');
-
-  const approval = new Harvest(transaction.hash);
-
-  approval.from = transaction.from;
-  approval.contractAddress = transaction.to;
-
-  approval.value = transaction.args._value.toBigInt();
-  // approval.pid = transaction.args.pid;
-
-  await approval.save();
+  logger.info('********* handleEvmCallApprove')
+  // assert(transaction.args, 'Call Args not parsed');
+  //
+  // const approve = new Approve(transaction.hash);
+  // approve.from = transaction.from;
+  // approve.spender = transaction.args._spender
+  // approve.value = transaction.args._value.toBigInt();
+  // approve.contractAddress = transaction.to;
+  //
+  // await approve.save();
 }
