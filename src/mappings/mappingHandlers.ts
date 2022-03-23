@@ -2,9 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 import {AvalancheBlockEntity, AvalancheEventEntity, AvalancheTransactionEntity, Harvest, Transaction} from "../types";
 import { BigNumber } from "ethers";
+import assert from "assert";
 
 // TODO: those 3 types are duplicate from subql/types
 // We have to find a way to import them from our version of the package
+export interface AvalancheResult extends ReadonlyArray<any> {
+    readonly [key: string]: any;
+}
+
 export type AvalancheBlock = {
   difficulty: string;
   extraData: string;
@@ -28,7 +33,7 @@ export type AvalancheBlock = {
   uncles: string[];
 };
 
-export type AvalancheTransaction = {
+export type AvalancheTransaction<T extends AvalancheResult = AvalancheResult> = {
   blockHash: string;
   blockNumber: string;
   from: string;
@@ -43,9 +48,10 @@ export type AvalancheTransaction = {
   v: string;
   r: string;
   s: string;
+  args?: T;
 };
 
-export type AvalancheEvent = {
+export type AvalancheEvent<T extends AvalancheResult = AvalancheResult> = {
   logIndex: string;
   blockNumber: string;
   blockHash: string;
@@ -54,6 +60,7 @@ export type AvalancheEvent = {
   address: string;
   data: string;
   topics: string[];
+  args?: T;
 };
 
 // TODO: same for this interface
@@ -94,6 +101,9 @@ export async function handleBlock(block: BlockWrapper): Promise<void> {
 }
 
 export async function handleCall(transaction: AvalancheTransaction): Promise<void> {
+
+
+
   const transactionRecord = new AvalancheTransactionEntity(`${transaction.blockHash}-${transaction.hash}`)
 
   transactionRecord.blockId = transaction.blockHash
@@ -135,23 +145,27 @@ export async function handleEvent(event: AvalancheEvent): Promise<void> {
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; value: BigNumber; };
 type ApproveCallArgs = [string, BigNumber] & { _spender: string; _value: BigNumber; }
 
-export async function handleEvmEventTransfer(event: AvalancheEvent): Promise<void> {
+export async function handleEvmEventTransfer(event: AvalancheEvent<TransferEventArgs>): Promise<void> {
+  assert(event.args, 'Event Args not parsed');
   const transaction = new Transaction(event.transactionHash);
-  // transaction.value = event.args.value.toBigInt();
-  // transaction.from = event.args.from;
-  // transaction.to = event.args.to;
-  // transaction.contractAddress = event.address;
+  transaction.value = event.args.value.toBigInt();
+  transaction.from = event.args.from;
+  transaction.to = event.args.to;
+  transaction.contractAddress = event.address;
   await transaction.save();
 }
 
 
-export async function handleEvmCallHarvest(transaction: AvalancheTransaction): Promise<void> {
+export async function handleEvmCallHarvest(transaction: AvalancheTransaction<ApproveCallArgs>): Promise<void> {
+
+  assert(transaction.args, 'Call Args not parsed');
+
   const approval = new Harvest(transaction.hash);
 
   approval.from = transaction.from;
   approval.contractAddress = transaction.to;
 
-  // approval.value = transaction.args._value.toBigInt();
+  approval.value = transaction.args._value.toBigInt();
   // approval.pid = transaction.args.pid;
 
   await approval.save();

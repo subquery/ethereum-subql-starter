@@ -18,28 +18,26 @@ network:
   chainId: 'mainnet'
 
 dataSources:
-  - kind: avalanche/Evm #TODO, any better name?
+  - kind: substrate/Runtime #avalanche/Evm #TODO, any better name?
     startBlock: 11021983
-    processor:
-      file: './node_modules/@subql/contract-processors/dist/avalancheEvm.js' #TODO
-      options:
-        # Must be a key of assets
-        abi: erc20
-        ## Pangolin token https://snowtrace.io/token/0x60781c2586d68229fde47564546784ab3faca982
-        address: '0x60781C2586D68229fde47564546784ab3fACA982'
+    options:
+      # Must be a key of assets
+      abi: erc20
+      ## Pangolin token https://snowtrace.io/token/0x60781c2586d68229fde47564546784ab3faca982
+      address: '0x60781C2586D68229fde47564546784ab3fACA982'
     assets:
       erc20:
-        file: './node_modules/@pangolindex/exchange-contracts/artifacts/contracts/pangolin-core/interfaces/PangolinERC20.sol/PangolinERC20.json'
+        file: './node_modules/@pangolindex/exchange-contracts/artifacts/contracts/pangolin-core/interfaces/IPangolinERC20.sol/IPangolinERC20.json'
     mapping:
       file: './dist/index.js'
       handlers:
         - handler: handleEvmEventTransfer
-          kind: avalanche/EvmEvent
+          kind: EventHandler
           filter:
             topics:
               - Transfer(address indexed from, address indexed to, uint256 amount)
         - handler: handleEvmCallHarvest
-          kind: avalanche/EvmCall
+          kind: CallHandler
           filter:
             function: harvest(address[] liquidityPairs, bool claimMiniChef)
 
