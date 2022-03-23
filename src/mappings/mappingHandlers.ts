@@ -143,7 +143,7 @@ export async function handleEvent(event: AvalancheEvent): Promise<void> {
 
 
 type TransferEventArgs = [string, string, BigNumber] & { from: string; to: string; value: BigNumber; };
-type ApproveCallArgs = [string, BigNumber] & { _spender: string; _value: BigNumber; }
+type ApproveCallArgs = [string, BigNumber] & { spender: string; value: BigNumber; }
 
 export async function handleEvmEventTransfer(event: AvalancheEvent<TransferEventArgs>): Promise<void> {
   assert(event.args, 'Event Args not parsed');
@@ -156,16 +156,13 @@ export async function handleEvmEventTransfer(event: AvalancheEvent<TransferEvent
 }
 
 
-export async function handleEvmCallApprove(transaction: AvalancheTransaction): Promise<void> {
+export async function handleEvmCallApprove(transaction: AvalancheTransaction<ApproveCallArgs>): Promise<void> {
 
-  logger.info('********* handleEvmCallApprove')
-  // assert(transaction.args, 'Call Args not parsed');
-  //
-  // const approve = new Approve(transaction.hash);
-  // approve.from = transaction.from;
-  // approve.spender = transaction.args._spender
-  // approve.value = transaction.args._value.toBigInt();
-  // approve.contractAddress = transaction.to;
-  //
-  // await approve.save();
+  assert(transaction.args, 'Call Args not parsed');
+  const approve = new Approve(transaction.hash);
+  approve.from = transaction.from;
+  approve.spender = transaction.args.spender
+  approve.value = transaction.args.value.toBigInt();
+  approve.contractAddress = transaction.to;
+  await approve.save();
 }

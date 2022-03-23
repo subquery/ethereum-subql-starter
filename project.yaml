@@ -18,7 +18,7 @@ network:
   chainId: 'mainnet'
 
 dataSources:
-  - kind: substrate/Runtime
+  - kind: avalanche/Runtime
     startBlock: 12454857
     options:
       # Must be a key of assets

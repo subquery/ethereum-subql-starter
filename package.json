@@ -20,21 +20,15 @@
   "license": "MIT",
   "dependencies": {
     "@pangolindex/exchange-contracts": "^1.0.2",
-    "@subql/common": "file:.yalc/@subql/common",
-    "@subql/validator": "file:.yalc/@subql/validator",
+    "@subql/common": "latest",
+    "@subql/validator": "latest",
     "assert": "^2.0.0"
   },
   "devDependencies": {
     "@polkadot/api": "7.7.1",
-    "@subql/cli": "file:.yalc/@subql/cli",
-    "@subql/types": "file:.yalc/@subql/types",
+    "@subql/cli": "latest",
+    "@subql/types": "latest",
     "@terra-money/terra.js": "^3.0.8",
     "typescript": "4.5.5"
-  },
-  "resolutions": {
-    "@subql/cli": "file:.yalc/@subql/cli",
-    "@subql/types": "file:.yalc/@subql/types",
-    "@subql/common": "file:.yalc/@subql/common",
-    "@subql/validator": "file:.yalc/@subql/validator"
   }
 }
