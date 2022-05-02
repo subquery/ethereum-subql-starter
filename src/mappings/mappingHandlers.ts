@@ -1,14 +1,31 @@
 // Copyright 2020-2022 OnFinality Limited authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 import {
+  Approve,
+  Transaction,
   AvalancheBlockEntity,
   AvalancheEventEntity,
   AvalancheTransactionEntity,
-  Approve,
-  Transaction,
 } from "../types";
 import { BigNumber } from "ethers";
 import assert from "assert";
+
+export interface Entity {
+  id: string;
+}
+
+export type FunctionPropertyNames<T> = {
+  [K in keyof T]: T[K] extends Function ? K : never;
+}[keyof T];
+
+export interface Store {
+  get(entity: string, id: string): Promise<Entity | null>;
+  getByField(entity: string, field: string, value): Promise<Entity[]>;
+  getOneByField(entity: string, field: string, value): Promise<Entity | null>;
+  set(entity: string, id: string, data: Entity): Promise<void>;
+  bulkCreate(entity: string, data: Entity[]): Promise<void>;
+  remove(entity: string, id: string): Promise<void>;
+}
 
 // TODO: those 3 types are duplicate from subql/types
 // We have to find a way to import them from our version of the package
@@ -80,6 +97,41 @@ export interface BlockWrapper {
   getVersion: () => number;
 }
 
+type TransferEventArgs = [string, string, BigNumber] & {
+  from: string;
+  to: string;
+  value: BigNumber;
+};
+type ApproveCallArgs = [string, BigNumber] & {
+  spender: string;
+  value: BigNumber;
+};
+
+export async function handleEvmEventTransfer(
+  event: AvalancheEvent<TransferEventArgs>
+): Promise<void> {
+  assert(event.args, "Event Args not parsed");
+  const transaction = new Transaction(event.transactionHash);
+  transaction.value = event.args.value.toBigInt();
+  transaction.from = event.args.from;
+  transaction.to = event.args.to;
+  transaction.contractAddress = event.address;
+  logger.info("Saved Transaction: " + event.transactionHash.toString());
+  await transaction.save();
+}
+
+export async function handleEvmCallApprove(
+  transaction: AvalancheTransaction<ApproveCallArgs>
+): Promise<void> {
+  assert(transaction.args, "Call Args not parsed");
+  const approve = new Approve(transaction.hash);
+  approve.from = transaction.from;
+  approve.spender = transaction.args.spender;
+  approve.value = transaction.args.value.toBigInt();
+  approve.contractAddress = transaction.to;
+  await approve.save();
+}
+
 export async function handleBlock(block: BlockWrapper): Promise<void> {
   let avalancheBlock: AvalancheBlock = block.getBlock();
   const blockRecord = new AvalancheBlockEntity(avalancheBlock.hash);
@@ -149,39 +201,4 @@ export async function handleEvent(event: AvalancheEvent): Promise<void> {
   eventRecord.transactionIndex = event.transactionIndex;
 
   await eventRecord.save();
-}
-
-type TransferEventArgs = [string, string, BigNumber] & {
-  from: string;
-  to: string;
-  value: BigNumber;
-};
-type ApproveCallArgs = [string, BigNumber] & {
-  spender: string;
-  value: BigNumber;
-};
-
-export async function handleEvmEventTransfer(
-  event: AvalancheEvent<TransferEventArgs>
-): Promise<void> {
-  assert(event.args, "Event Args not parsed");
-  const transaction = new Transaction(event.transactionHash);
-  transaction.value = event.args.value.toBigInt();
-  transaction.from = event.args.from;
-  transaction.to = event.args.to;
-  transaction.contractAddress = event.address;
-  logger.info("Saved Transaction: " + event.transactionHash.toString());
-  await transaction.save();
-}
-
-export async function handleEvmCallApprove(
-  transaction: AvalancheTransaction<ApproveCallArgs>
-): Promise<void> {
-  assert(transaction.args, "Call Args not parsed");
-  const approve = new Approve(transaction.hash);
-  approve.from = transaction.from;
-  approve.spender = transaction.args.spender;
-  approve.value = transaction.args.value.toBigInt();
-  approve.contractAddress = transaction.to;
-  await approve.save();
 }
