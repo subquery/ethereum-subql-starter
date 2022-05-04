@@ -16,13 +16,14 @@ schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: 'https://avalanche.api.onfinality.io/'
+  endpoint: "avax.dc.thechainhub.com"
+  port: 9650
   chainId: 'mainnet'
   type: "avalanche"
   chainName: "C"
 
 dataSources:
-  - kind: substrate/Runtime
+  - kind: avalanche/Runtime
     processor: {}
     startBlock: 12454857
     options:
@@ -37,13 +38,13 @@ dataSources:
       file: "./dist/index.js"
       handlers:
         - handler: handleEvmEventTransfer
-          kind: substrate/EventHandler
+          kind: avalanche/EventHandler
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
               - Transfer(address indexed from, address indexed to, uint256 amount)
         - handler: handleEvmCallApprove
-          kind: substrate/CallHandler
+          kind: avalanche/TransactionHandler
           filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
