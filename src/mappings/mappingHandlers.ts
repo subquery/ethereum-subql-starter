@@ -87,16 +87,6 @@ export type AvalancheEvent<T extends AvalancheResult = AvalancheResult> = {
   args?: T;
 };
 
-// TODO: same for this interface
-export interface BlockWrapper {
-  getBlock: () => AvalancheBlock;
-  getBlockHeight: () => number;
-  getHash: () => string;
-  getCalls?: (filters?: any) => AvalancheTransaction[];
-  getEvents: () => AvalancheEvent[];
-  getVersion: () => number;
-}
-
 type TransferEventArgs = [string, string, BigNumber] & {
   from: string;
   to: string;
@@ -132,29 +122,28 @@ export async function handleEvmCallApprove(
   await approve.save();
 }
 
-export async function handleBlock(block: BlockWrapper): Promise<void> {
-  let avalancheBlock: AvalancheBlock = block.getBlock();
-  const blockRecord = new AvalancheBlockEntity(avalancheBlock.hash);
+export async function handleBlock(block: AvalancheBlock): Promise<void> {
+  const blockRecord = new AvalancheBlockEntity(block.hash);
 
-  blockRecord.difficulty = avalancheBlock.difficulty;
-  blockRecord.extraData = avalancheBlock.extraData;
-  blockRecord.gasLimit = avalancheBlock.gasLimit;
-  blockRecord.gasUsed = avalancheBlock.gasUsed;
-  blockRecord.hash = avalancheBlock.hash;
-  blockRecord.logsBloom = avalancheBlock.logsBloom;
-  blockRecord.miner = avalancheBlock.miner;
-  blockRecord.mixHash = avalancheBlock.mixHash;
-  blockRecord.nonce = avalancheBlock.nonce;
-  blockRecord.number = avalancheBlock.number;
-  blockRecord.parentHash = avalancheBlock.parentHash;
-  blockRecord.receiptsRoot = avalancheBlock.receiptsRoot;
-  blockRecord.sha3Uncles = avalancheBlock.sha3Uncles;
-  blockRecord.size = avalancheBlock.size;
-  blockRecord.stateRoot = avalancheBlock.stateRoot;
-  blockRecord.timestamp = avalancheBlock.timestamp;
-  blockRecord.totalDifficulty = avalancheBlock.totalDifficulty;
-  blockRecord.transactionsRoot = avalancheBlock.transactionsRoot;
-  blockRecord.uncles = avalancheBlock.uncles;
+  blockRecord.difficulty = block.difficulty;
+  blockRecord.extraData = block.extraData;
+  blockRecord.gasLimit = block.gasLimit;
+  blockRecord.gasUsed = block.gasUsed;
+  blockRecord.hash = block.hash;
+  blockRecord.logsBloom = block.logsBloom;
+  blockRecord.miner = block.miner;
+  blockRecord.mixHash = block.mixHash;
+  blockRecord.nonce = block.nonce;
+  blockRecord.number = block.number;
+  blockRecord.parentHash = block.parentHash;
+  blockRecord.receiptsRoot = block.receiptsRoot;
+  blockRecord.sha3Uncles = block.sha3Uncles;
+  blockRecord.size = block.size;
+  blockRecord.stateRoot = block.stateRoot;
+  blockRecord.timestamp = block.timestamp;
+  blockRecord.totalDifficulty = block.totalDifficulty;
+  blockRecord.transactionsRoot = block.transactionsRoot;
+  blockRecord.uncles = block.uncles;
 
   await blockRecord.save();
 }
