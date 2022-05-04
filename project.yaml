@@ -1,7 +1,14 @@
-specVersion: "0.2.0"
+specVersion: "1.0.0"
 
 name: "avalanche-subql-starter"
 version: "0.0.1"
+runner:
+  node:
+    name: '@subql/node-avalanche'
+    version: '*'
+  query:
+    name: '@subql/query'
+    version: '*'
 description: "This project can be use as a starting point for developing your new Avalanche SubQuery project"
 repository: "https://github.com/subquery/avalanche-subql-starter"
 
@@ -11,7 +18,7 @@ schema:
 network:
   endpoint: "avax.dc.thechainhub.com"
   port: 9650
-  genesisHash: "0x31ced5b9beb7f8782b014660da0cb18cc409f121f408186886e1ca3e8eeca96b"
+  chainId: 'mainnet'
   type: "avalanche"
   chainName: "C"
 
