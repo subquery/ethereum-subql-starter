@@ -16,8 +16,7 @@ schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: "avax.dc.thechainhub.com"
-  port: 9650
+  endpoint: 'https://avalanche.api.onfinality.io/'
   chainId: 'mainnet'
   type: "avalanche"
   chainName: "C"
