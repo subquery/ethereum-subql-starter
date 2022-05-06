@@ -7,85 +7,9 @@ import {
   AvalancheEventEntity,
   AvalancheTransactionEntity,
 } from "../types";
+import { AvalancheBlock, AvalancheEvent, AvalancheTransaction } from '@subql/types-avalanche'
 import { BigNumber } from "ethers";
 import assert from "assert";
-
-export interface Entity {
-  id: string;
-}
-
-export type FunctionPropertyNames<T> = {
-  [K in keyof T]: T[K] extends Function ? K : never;
-}[keyof T];
-
-export interface Store {
-  get(entity: string, id: string): Promise<Entity | null>;
-  getByField(entity: string, field: string, value): Promise<Entity[]>;
-  getOneByField(entity: string, field: string, value): Promise<Entity | null>;
-  set(entity: string, id: string, data: Entity): Promise<void>;
-  bulkCreate(entity: string, data: Entity[]): Promise<void>;
-  remove(entity: string, id: string): Promise<void>;
-}
-
-// TODO: those 3 types are duplicate from subql/types
-// We have to find a way to import them from our version of the package
-export interface AvalancheResult extends ReadonlyArray<any> {
-  readonly [key: string]: any;
-}
-
-export type AvalancheBlock = {
-  difficulty: string;
-  extraData: string;
-  gasLimit: string;
-  gasUsed: string;
-  hash: string;
-  logsBloom: string;
-  miner: string;
-  mixHash: string;
-  nonce: string;
-  number: string;
-  parentHash: string;
-  receiptsRoot: string;
-  sha3Uncles: string;
-  size: string;
-  stateRoot: string;
-  timestamp: string;
-  totalDifficulty: string;
-  transactions: AvalancheTransaction[];
-  transactionsRoot: string;
-  uncles: string[];
-};
-
-export type AvalancheTransaction<T extends AvalancheResult = AvalancheResult> =
-  {
-    blockHash: string;
-    blockNumber: string;
-    from: string;
-    gas: string;
-    gasPrice: string;
-    hash: string;
-    input: string;
-    nonce: string;
-    to: string;
-    transactionIndex: string;
-    value: string;
-    v: string;
-    r: string;
-    s: string;
-    args?: T;
-  };
-
-export type AvalancheEvent<T extends AvalancheResult = AvalancheResult> = {
-  logIndex: string;
-  blockNumber: string;
-  blockHash: string;
-  transactionHash: string;
-  transactionIndex: string;
-  address: string;
-  data: string;
-  topics: string[];
-  args?: T;
-};
 
 type TransferEventArgs = [string, string, BigNumber] & {
   from: string;
