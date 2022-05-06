@@ -5,7 +5,7 @@ version: "0.0.1"
 runner:
   node:
     name: '@subql/node-avalanche'
-    version: '*'
+    version: '0.0.5-1'
   query:
     name: '@subql/query'
     version: '*'
