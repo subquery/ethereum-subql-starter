@@ -37,7 +37,7 @@ export async function handleBlock(block: AvalancheBlock): Promise<void> {
   await blockRecord.save();
 }
 
-export async function handleCall(
+export async function handleTransaction(
   transaction: AvalancheTransaction
 ): Promise<void> {
   const transactionRecord = new AvalancheTransactionEntity(

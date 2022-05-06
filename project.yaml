@@ -37,14 +37,16 @@ dataSources:
     mapping:
       file: "./dist/index.js"
       handlers:
-        - handler: handleEvmEventTransfer
+        - handler: handleBlock
+          kind: avalanche/BlockHandler
+        - handler: handleEvent
           kind: avalanche/EventHandler
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
               - Transfer(address indexed from, address indexed to, uint256 amount)
           # address: "0x60781C2586D68229fde47564546784ab3fACA982"
-        - handler: handleEvmCallApprove
+        - handler: handleTransaction
           kind: avalanche/TransactionHandler
           filter:
             ## The function can either be the function fragment or signature
