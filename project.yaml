@@ -43,6 +43,7 @@ dataSources:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
               - Transfer(address indexed from, address indexed to, uint256 amount)
+          # address: "0x60781C2586D68229fde47564546784ab3fACA982"
         - handler: handleEvmCallApprove
           kind: avalanche/TransactionHandler
           filter:
@@ -50,4 +51,5 @@ dataSources:
             # function: '0x095ea7b3'
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
             function: approve(address spender, uint256 rawAmount)
-            ## from: "0x60781C2586D68229fde47564546784ab3fACA982"
+            # from: "0x60781C2586D68229fde47564546784ab3fACA982"
+            # to: "0x60781C2586D68229fde47564546784ab3fACA982"

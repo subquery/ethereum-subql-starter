@@ -1,27 +1,4 @@
-type Transaction @entity {
-  id: ID! # Transaction hash
-  value: BigInt!
-
-  to: String!
-
-  from: String!
-
-  contractAddress: String!
-}
-
-type Approve @entity {
-  id: ID!
-
-  value: BigInt!
-
-  from: String!
-
-  spender: String!
-
-  contractAddress: String!
-}
-
- type AvalancheBlockEntity @entity {
+type AvalancheBlockEntity @entity {
   id: ID!
   difficulty: String
   extraData: String

@@ -1,50 +1,15 @@
 // Copyright 2020-2022 OnFinality Limited authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 import {
-  Approve,
-  Transaction,
   AvalancheBlockEntity,
   AvalancheEventEntity,
   AvalancheTransactionEntity,
 } from "../types";
-import { AvalancheBlock, AvalancheEvent, AvalancheTransaction } from '@subql/types-avalanche'
-import { BigNumber } from "ethers";
-import assert from "assert";
-
-type TransferEventArgs = [string, string, BigNumber] & {
-  from: string;
-  to: string;
-  value: BigNumber;
-};
-type ApproveCallArgs = [string, BigNumber] & {
-  spender: string;
-  value: BigNumber;
-};
-
-export async function handleEvmEventTransfer(
-  event: AvalancheEvent<TransferEventArgs>
-): Promise<void> {
-  assert(event.args, "Event Args not parsed");
-  const transaction = new Transaction(event.transactionHash);
-  transaction.value = event.args.value.toBigInt();
-  transaction.from = event.args.from;
-  transaction.to = event.args.to;
-  transaction.contractAddress = event.address;
-  logger.info("Saved Transaction: " + event.transactionHash.toString());
-  await transaction.save();
-}
-
-export async function handleEvmCallApprove(
-  transaction: AvalancheTransaction<ApproveCallArgs>
-): Promise<void> {
-  assert(transaction.args, "Call Args not parsed");
-  const approve = new Approve(transaction.hash);
-  approve.from = transaction.from;
-  approve.spender = transaction.args.spender;
-  approve.value = transaction.args.value.toBigInt();
-  approve.contractAddress = transaction.to;
-  await approve.save();
-}
+import {
+  AvalancheBlock,
+  AvalancheEvent,
+  AvalancheTransaction,
+} from "@subql/types-avalanche";
 
 export async function handleBlock(block: AvalancheBlock): Promise<void> {
   const blockRecord = new AvalancheBlockEntity(block.hash);
