@@ -5,10 +5,10 @@ version: "0.0.1"
 runner:
   node:
     name: '@subql/node-avalanche'
-    version: '0.0.5-1'
+    version: latest
   query:
     name: '@subql/query'
-    version: '*'
+    version: latest
 description: "This project can be use as a starting point for developing your new Avalanche SubQuery project"
 repository: "https://github.com/subquery/avalanche-subql-starter"
 
@@ -24,7 +24,6 @@ network:
 
 dataSources:
   - kind: avalanche/Runtime
-    processor: {}
     startBlock: 12454857
     options:
       # Must be a key of assets
