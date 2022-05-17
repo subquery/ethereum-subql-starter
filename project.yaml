@@ -24,7 +24,7 @@ network:
 
 dataSources:
   - kind: avalanche/Runtime
-    startBlock: 12454857
+    startBlock: 1
     options:
       # Must be a key of assets
       abi: erc20
