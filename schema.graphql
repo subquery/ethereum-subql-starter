@@ -1,22 +1,22 @@
 type AvalancheBlockEntity @entity {
   id: ID!
-  difficulty: String
+  difficulty: BigInt
   extraData: String
-  gasLimit: String
-  gasUsed: String
+  gasLimit: BigInt
+  gasUsed: BigInt
   hash: String! @index(unique:true)
   logsBloom: String
   miner: String
   mixHash: String
   nonce: String
-  number: String! @index(unique:true)
+  number: Int! @index(unique:true)
   parentHash: String
   receiptsRoot: String
   sha3Uncles: String
-  size: String
+  size: BigInt
   stateRoot: String
-  timestamp: String
-  totalDifficulty: String
+  timestamp: BigInt
+  totalDifficulty: BigInt
   transactionsRoot: String
   uncles: [String]
 }

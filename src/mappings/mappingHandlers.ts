@@ -6,12 +6,12 @@ import {
   AvalancheTransactionEntity,
 } from "../types";
 import {
-  AvalancheBlock,
-  AvalancheEvent,
+  AvalancheBlockWrapper,
+  AvalancheLog,
   AvalancheTransaction,
 } from "@subql/types-avalanche";
 
-export async function handleBlock(block: AvalancheBlock): Promise<void> {
+export async function handleBlock({block}: AvalancheBlockWrapper): Promise<void> {
   const blockRecord = new AvalancheBlockEntity(block.hash);
 
   blockRecord.difficulty = block.difficulty;
@@ -63,7 +63,7 @@ export async function handleTransaction(
   await transactionRecord.save();
 }
 
-export async function handleEvent(event: AvalancheEvent): Promise<void> {
+export async function handleLog(event: AvalancheLog): Promise<void> {
   const eventRecord = new AvalancheEventEntity(
     `${event.blockHash}-${event.logIndex}`
   );

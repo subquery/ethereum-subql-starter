@@ -5,7 +5,7 @@ version: "0.0.1"
 runner:
   node:
     name: '@subql/node-avalanche'
-    version: '0.0.5-3'
+    version: '*'
   query:
     name: '@subql/query'
     version: '*'
@@ -38,8 +38,8 @@ dataSources:
       handlers:
         - handler: handleBlock
           kind: avalanche/BlockHandler
-        - handler: handleEvent
-          kind: avalanche/EventHandler
+        - handler: handleLog
+          kind: avalanche/LogHandler
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
