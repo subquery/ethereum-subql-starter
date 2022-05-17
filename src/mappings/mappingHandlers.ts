@@ -7,9 +7,21 @@ import {
 } from "../types";
 import {
   AvalancheBlockWrapper,
-  AvalancheLog,
+  AvalancheResult,
   AvalancheTransaction,
 } from "@subql/types-avalanche";
+
+export type AvalancheLog<T extends AvalancheResult = AvalancheResult> = {
+  logIndex: string;
+  blockNumber: string;
+  blockHash: string;
+  transactionHash: string;
+  transactionIndex: string;
+  address: string;
+  data: string;
+  topics: string[];
+  args?: T;
+};
 
 export async function handleBlock({block}: AvalancheBlockWrapper): Promise<void> {
   const blockRecord = new AvalancheBlockEntity(block.hash);
