@@ -1,7 +1,11 @@
 type AvalancheBlockEntity @entity {
   id: ID!
+  baseFeePerGas: BigInt
+  blockExtraData: String
+  blockGasCost: BigInt
   difficulty: BigInt
-  extraData: String
+  extDataGasUsed: String
+  extDataHash: String
   gasLimit: BigInt
   gasUsed: BigInt
   hash: String! @index(unique:true)
@@ -25,30 +29,54 @@ type AvalancheTransactionEntity @entity {
   id: ID!
   block: AvalancheBlockEntity!
   blockHash: String!
-  blockNumber: String! 
+  blockNumber: Int! 
   from: String
-  gas: String
-  gasPrice: String
+  gas: BigInt
+  gasPrice: BigInt
   hash: String
   input: String
-  nonce: String
+  nonce: BigInt
   to: String
-  transactionIndex: String!
-  value: String
-  v: String
+  transactionIndex: BigInt!
+  value: BigInt
+  type: String
+  v: BigInt
   r: String
   s: String
+  accessList: [String]
+  chainId: String
+  maxFeePerGas: BigInt
+  maxPriorityFeePerGas: BigInt
 }
 
-type AvalancheEventEntity @entity {
+type AvalancheLogEntity @entity {
   id: ID!
   block: AvalancheBlockEntity!
-  logIndex: String!
-  blockNumber: String! 
-  blockHash: String! 
-  transactionHash: String
-  transactionIndex: String
   address: String
-  data: String
   topics: [String]
+  data: String
+  blockNumber: Int!
+  transactionHash: String
+  transactionIndex: Int
+  blockHash: String! 
+  logIndex: Int!
+  removed: Boolean
+}
+
+type AvalancheReceiptEntity @entity {
+  id: ID!
+  block: AvalancheBlockEntity!
+  blockHash: String!
+  blockNumber: Int!
+  contractAddress: String
+  cumulativeGasUsed: BigInt
+  effectiveGasPrice: BigInt
+  from: String
+  gasUsed: BigInt
+  logsBloom: String
+  status: Boolean
+  to: String
+  transactionHash: String
+  transactionIndex: Int!
+  type: String
 }
