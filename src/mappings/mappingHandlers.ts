@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import {
   AvalancheBlockEntity,
-  AvalancheEventEntity,
   AvalancheTransactionEntity,
+  AvalancheLogEntity
 } from "../types";
 import {
   AvalancheBlockWrapper,
@@ -64,7 +64,7 @@ export async function handleTransaction(
 }
 
 export async function handleLog(event: AvalancheLog): Promise<void> {
-  const eventRecord = new AvalancheEventEntity(
+  const eventRecord = new AvalancheLogEntity(
     `${event.blockHash}-${event.logIndex}`
   );
 

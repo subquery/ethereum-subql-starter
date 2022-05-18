@@ -4,11 +4,11 @@ name: "avalanche-subql-starter"
 version: "0.0.1"
 runner:
   node:
-    name: '@subql/node-avalanche'
-    version: '*'
+    name: "@subql/node-avalanche"
+    version: "*"
   query:
-    name: '@subql/query'
-    version: '*'
+    name: "@subql/query"
+    version: "*"
 description: "This project can be use as a starting point for developing your new Avalanche SubQuery project"
 repository: "https://github.com/subquery/avalanche-subql-starter"
 
@@ -18,7 +18,7 @@ schema:
 network:
   endpoint: "avalanche.api.onfinality.io"
   port: 9650
-  chainId: 'mainnet'
+  chainId: "mainnet"
   type: "avalanche"
   chainName: "C"
 
@@ -38,13 +38,6 @@ dataSources:
       handlers:
         - handler: handleBlock
           kind: avalanche/BlockHandler
-        - handler: handleLog
-          kind: avalanche/LogHandler
-          filter:
-            topics:
-              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
-              - Transfer(address indexed from, address indexed to, uint256 amount)
-          # address: "0x60781C2586D68229fde47564546784ab3fACA982"
         - handler: handleTransaction
           kind: avalanche/TransactionHandler
           filter:
@@ -54,3 +47,10 @@ dataSources:
             function: approve(address spender, uint256 rawAmount)
             # from: "0x60781C2586D68229fde47564546784ab3fACA982"
             # to: "0x60781C2586D68229fde47564546784ab3fACA982"
+        - handler: handleLog
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - Transfer(address indexed from, address indexed to, uint256 amount)
+          # address: "0x60781C2586D68229fde47564546784ab3fACA982"

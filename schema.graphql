@@ -40,7 +40,7 @@ type AvalancheTransactionEntity @entity {
   s: String
 }
 
-type AvalancheEventEntity @entity {
+type AvalancheLogEntity @entity {
   id: ID!
   block: AvalancheBlockEntity!
   logIndex: String!
