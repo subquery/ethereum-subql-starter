@@ -13,15 +13,14 @@ import {
 } from "@subql/types-avalanche";
 
 export type AvalancheBlock = {
-  baseFeePerGas: bigint;
   blockExtraData: string;
-  blockGasCost: bigint;
   difficulty: bigint;
   extDataGasUsed: string;
   extDataHash: string;
   gasLimit: bigint;
   gasUsed: bigint;
   hash: string;
+  logs: AvalancheLog[];
   logsBloom: string;
   miner: string;
   mixHash: string;
@@ -37,6 +36,8 @@ export type AvalancheBlock = {
   transactions: AvalancheTransaction[];
   transactionsRoot: string;
   uncles: string[];
+  baseFeePerGas?: bigint;
+  blockGasCost?: bigint;
 };
 
 export type AvalancheLog<T extends AvalancheResult = AvalancheResult> = {
