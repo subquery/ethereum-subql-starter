@@ -26,6 +26,7 @@
     "assert": "^2.0.0"
   },
   "devDependencies": {
+    "@polkadot/api": "7.7.1",
     "@subql/cli": "latest",
     "@subql/types": "latest",
     "@subql/types-avalanche": "dev",
