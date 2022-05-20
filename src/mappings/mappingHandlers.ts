@@ -2,20 +2,25 @@
 // SPDX-License-Identifier: Apache-2.0
 import {
   AvalancheBlockEntity,
+
+  AvalancheLogEntity,
   AvalancheTransactionEntity,
-  AvalancheLogEntity
+  AvalancheReceiptEntity,
 } from "../types";
 import {
-  AvalancheBlockWrapper,
-  AvalancheLog,
+  AvalancheBlock,
   AvalancheTransaction,
+  AvalancheLog,
 } from "@subql/types-avalanche";
 
-export async function handleBlock({block}: AvalancheBlockWrapper): Promise<void> {
+export async function handleBlock(block: AvalancheBlock): Promise<void> {
   const blockRecord = new AvalancheBlockEntity(block.hash);
-
+  blockRecord.baseFeePerGas = block.baseFeePerGas;
+  blockRecord.blockExtraData = block.blockExtraData;
+  blockRecord.blockGasCost = block.blockGasCost;
   blockRecord.difficulty = block.difficulty;
-  blockRecord.extraData = block.extraData;
+  blockRecord.extDataGasUsed = block.extDataGasUsed;
+  blockRecord.extDataHash = block.extDataHash;
   blockRecord.gasLimit = block.gasLimit;
   blockRecord.gasUsed = block.gasUsed;
   blockRecord.hash = block.hash;
@@ -43,7 +48,6 @@ export async function handleTransaction(
   const transactionRecord = new AvalancheTransactionEntity(
     `${transaction.blockHash}-${transaction.hash}`
   );
-
   transactionRecord.blockId = transaction.blockHash;
   transactionRecord.blockHash = transaction.blockHash;
   transactionRecord.blockNumber = transaction.blockNumber;
@@ -53,30 +57,53 @@ export async function handleTransaction(
   transactionRecord.hash = transaction.hash;
   transactionRecord.input = transaction.input;
   transactionRecord.nonce = transaction.nonce;
-  transactionRecord.r = transaction.r;
-  transactionRecord.s = transaction.s;
   transactionRecord.to = transaction.to;
   transactionRecord.transactionIndex = transaction.transactionIndex;
-  transactionRecord.v = transaction.v;
   transactionRecord.value = transaction.value;
-
+  transactionRecord.type = transaction.type;
+  transactionRecord.v = transaction.v;
+  transactionRecord.r = transaction.r;
+  transactionRecord.s = transaction.s;
+  transactionRecord.accessList = transaction.accessList;
+  transactionRecord.chainId = transaction.chainId;
+  transactionRecord.maxFeePerGas = transaction.maxFeePerGas;
+  transactionRecord.maxPriorityFeePerGas = transaction.maxPriorityFeePerGas;
   await transactionRecord.save();
 }
 
-export async function handleLog(event: AvalancheLog): Promise<void> {
-  const eventRecord = new AvalancheLogEntity(
-    `${event.blockHash}-${event.logIndex}`
+export async function handleLog(log: AvalancheLog): Promise<void> {
+  const logRecord = new AvalancheLogEntity(
+    `${log.blockHash}-${log.logIndex}`
   );
+  logRecord.blockId = log.blockHash;
+  logRecord.address = log.address;
+  logRecord.blockHash = log.blockHash;
+  logRecord.blockNumber = log.blockNumber;
+  logRecord.data = log.data;
+  logRecord.logIndex = log.logIndex;
+  logRecord.removed = log.removed;
+  logRecord.topics = log.topics;
+  logRecord.transactionHash = log.transactionHash;
+  logRecord.transactionIndex = log.transactionIndex;
+  await logRecord.save();
+}
 
-  eventRecord.address = event.address;
-  eventRecord.blockHash = event.blockHash;
-  eventRecord.blockId = event.blockHash;
-  eventRecord.blockNumber = event.blockNumber;
-  eventRecord.data = event.data;
-  eventRecord.logIndex = event.logIndex;
-  eventRecord.topics = event.topics;
-  eventRecord.transactionHash = event.transactionHash;
-  eventRecord.transactionIndex = event.transactionIndex;
-
-  await eventRecord.save();
+export async function handleReceipt(transaction: AvalancheTransaction): Promise<void> {
+  const receipt = transaction.receipt;
+  const receiptRecord = new AvalancheReceiptEntity(`${receipt.blockHash}-${receipt.transactionHash}`);
+  receiptRecord.blockId = receipt.blockHash;
+  receiptRecord.blockHash = receipt.blockHash;
+  receiptRecord.blockNumber = receipt.blockNumber;
+  receiptRecord.contractAddress = receipt.contractAddress;
+  receiptRecord.cumulativeGasUsed = receipt.cumulativeGasUsed;
+  receiptRecord.effectiveGasPrice = receipt.effectiveGasPrice;
+  receiptRecord.from = receipt.from;
+  receiptRecord.gasUsed = receipt.gasUsed;
+  receiptRecord.logsBloom = receipt.logsBloom;
+  receiptRecord.status = receipt.status;
+  receiptRecord.to = receipt.to;
+  receiptRecord.transactionHash = receipt.transactionHash;
+  receiptRecord.transactionIndex = receipt.transactionIndex;
+  receiptRecord.type = receipt.type;
+  await receiptRecord.save();
 }
