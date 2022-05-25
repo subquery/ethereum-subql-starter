@@ -21,6 +21,7 @@ network:
   chainId: "mainnet"
   type: "avalanche"
   chainName: "C"
+  dictionary: https://api.subquery.network/sq/subquery/avalanche-dictionary
 
 dataSources:
   - kind: avalanche/Runtime
