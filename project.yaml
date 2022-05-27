@@ -16,11 +16,11 @@ schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: "avalanche.api.onfinality.io"
-  port: 9650
+  endpoint: "http://avalanche.api.onfinality.io:9650"
+  # endpoint: "https://avalanche.api.onfinality.io"
+  # endpoint:  https://api.avax-test.network
   chainId: "mainnet"
-  type: "avalanche"
-  chainName: "C"
+  subnet: "C"
   dictionary: https://api.subquery.network/sq/subquery/avalanche-dictionary
 
 dataSources:
@@ -37,8 +37,8 @@ dataSources:
     mapping:
       file: "./dist/index.js"
       handlers:
-        - handler: handleBlock
-          kind: avalanche/BlockHandler
+        # - handler: handleBlock
+        #   kind: avalanche/BlockHandler
         - handler: handleTransaction
           kind: avalanche/TransactionHandler
           filter:
@@ -48,8 +48,8 @@ dataSources:
             function: approve(address spender, uint256 rawAmount)
             # from: "0x60781C2586D68229fde47564546784ab3fACA982"
             # to: "0x60781C2586D68229fde47564546784ab3fACA982"
-        - handler: handleReceipt
-          kind: avalanche/TransactionHandler
+        # - handler: handleReceipt
+        #   kind: avalanche/TransactionHandler
         - handler: handleLog
           kind: avalanche/LogHandler
           filter:
