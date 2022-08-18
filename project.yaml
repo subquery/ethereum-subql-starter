@@ -16,8 +16,7 @@ schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: "http://avalanche.api.onfinality.io:9650"
-  # endpoint: "https://avalanche.api.onfinality.io"
+  endpoint: "https://avalanche.api.onfinality.io/public"
   # endpoint:  https://api.avax-test.network
   chainId: "mainnet"
   subnet: "C"
