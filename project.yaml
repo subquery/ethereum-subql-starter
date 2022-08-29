@@ -16,15 +16,16 @@ schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: "https://avalanche.api.onfinality.io/public"
-  # endpoint:  https://api.avax-test.network
-  chainId: "mainnet"
-  subnet: "C"
-  dictionary: https://api.subquery.network/sq/subquery/avalanche-dictionary
+  # endpoint: "http://avalanche.api.onfinality.io:9650"
+  # endpoint: "https://avalanche.api.onfinality.io"
+  endpoint:  wss://rinkeby.infura.io/ws/v3/777041f69d9143b5b9813bceb58986fd
+  chainId: "4"
+  subnet: "mainnet"
+  # dictionary: https://api.subquery.network/sq/subquery/avalanche-dictionary
 
 dataSources:
   - kind: avalanche/Runtime
-    startBlock: 1
+    startBlock: 1000000
     options:
       # Must be a key of assets
       abi: erc20
@@ -36,23 +37,25 @@ dataSources:
     mapping:
       file: "./dist/index.js"
       handlers:
-        # - handler: handleBlock
-        #   kind: avalanche/BlockHandler
+        - handler: handleBlock
+          kind: avalanche/BlockHandler
+          filter:
+            modulo: 10
         - handler: handleTransaction
           kind: avalanche/TransactionHandler
-          filter:
+          #filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
-            function: approve(address spender, uint256 rawAmount)
+            # function: approve(address spender, uint256 rawAmount)
             # from: "0x60781C2586D68229fde47564546784ab3fACA982"
             # to: "0x60781C2586D68229fde47564546784ab3fACA982"
         # - handler: handleReceipt
         #   kind: avalanche/TransactionHandler
         - handler: handleLog
           kind: avalanche/LogHandler
-          filter:
-            topics:
+          #filter:
+            #topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
-              - Transfer(address indexed from, address indexed to, uint256 amount)
+              #- Transfer(address indexed from, address indexed to, uint256 amount)
               # address: "0x60781C2586D68229fde47564546784ab3fACA982"

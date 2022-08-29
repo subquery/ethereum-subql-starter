@@ -8,42 +8,43 @@ import {
   AvalancheReceiptEntity,
 } from "../types";
 import {
-  AvalancheBlock,
-  AvalancheTransaction,
-  AvalancheLog,
+  EthereumTransaction,
+  EthereumLog,
 } from "@subql/types-avalanche";
+import { ethers } from "ethers";
 
-export async function handleBlock(block: AvalancheBlock): Promise<void> {
+export async function handleBlock(block: ethers.providers.Block): Promise<void> {
+  logger.info(`Handling block ${block.number}`);
   const blockRecord = new AvalancheBlockEntity(block.hash);
-  blockRecord.baseFeePerGas = block.baseFeePerGas;
-  blockRecord.blockExtraData = block.blockExtraData;
-  blockRecord.blockGasCost = block.blockGasCost;
-  blockRecord.difficulty = block.difficulty;
-  blockRecord.extDataGasUsed = block.extDataGasUsed;
-  blockRecord.extDataHash = block.extDataHash;
-  blockRecord.gasLimit = block.gasLimit;
-  blockRecord.gasUsed = block.gasUsed;
+  //blockRecord.baseFeePerGas = block.baseFeePerGas.toBigInt();
+  //blockRecord.blockExtraData = block.blockExtraData;
+  //blockRecord.blockGasCost = block.blockGasCost;
+  blockRecord.difficulty = BigInt(block.difficulty);
+  //blockRecord.extDataGasUsed = block.extDataGasUsed;
+  //lockRecord.extDataHash = block.extDataHash;
+  blockRecord.gasLimit = block.gasLimit.toBigInt();
+  blockRecord.gasUsed = block.gasUsed.toBigInt();
   blockRecord.hash = block.hash;
-  blockRecord.logsBloom = block.logsBloom;
+  //blockRecord.logsBloom = block.logsBloom;
   blockRecord.miner = block.miner;
-  blockRecord.mixHash = block.mixHash;
+  //blockRecord.mixHash = block.mixHash;
   blockRecord.nonce = block.nonce;
   blockRecord.number = block.number;
   blockRecord.parentHash = block.parentHash;
-  blockRecord.receiptsRoot = block.receiptsRoot;
-  blockRecord.sha3Uncles = block.sha3Uncles;
-  blockRecord.size = block.size;
-  blockRecord.stateRoot = block.stateRoot;
-  blockRecord.timestamp = block.timestamp;
-  blockRecord.totalDifficulty = block.totalDifficulty;
-  blockRecord.transactionsRoot = block.transactionsRoot;
-  blockRecord.uncles = block.uncles;
+  //blockRecord.receiptsRoot = block.receiptsRoot;
+  //blockRecord.sha3Uncles = block.sha3Uncles;
+  //blockRecord.size = block.size;
+  //blockRecord.stateRoot = block.stateRoot;
+  blockRecord.timestamp = BigInt(block.timestamp);
+  //blockRecord.totalDifficulty = block.totalDifficulty;
+  //blockRecord.transactionsRoot = block.transactionsRoot;
+  //blockRecord.uncles = block.uncles;
 
   await blockRecord.save();
 }
 
 export async function handleTransaction(
-  transaction: AvalancheTransaction
+  transaction: EthereumTransaction
 ): Promise<void> {
   const transactionRecord = new AvalancheTransactionEntity(
     `${transaction.blockHash}-${transaction.hash}`
@@ -52,26 +53,26 @@ export async function handleTransaction(
   transactionRecord.blockHash = transaction.blockHash;
   transactionRecord.blockNumber = transaction.blockNumber;
   transactionRecord.from = transaction.from;
-  transactionRecord.gas = transaction.gas;
-  transactionRecord.gasPrice = transaction.gasPrice;
+  transactionRecord.gas = transaction.receipt.gasUsed.toBigInt();
+  transactionRecord.gasPrice = transaction.gasPrice.toBigInt();
   transactionRecord.hash = transaction.hash;
-  transactionRecord.input = transaction.input;
-  transactionRecord.nonce = transaction.nonce;
+  transactionRecord.input = transaction.data;
+  transactionRecord.nonce = BigInt(transaction.nonce);
   transactionRecord.to = transaction.to;
-  transactionRecord.transactionIndex = transaction.transactionIndex;
-  transactionRecord.value = transaction.value;
-  transactionRecord.type = transaction.type;
-  transactionRecord.v = transaction.v;
+  transactionRecord.transactionIndex = BigInt(transaction.receipt.transactionIndex);
+  transactionRecord.value = transaction.value.toBigInt();
+  transactionRecord.type = transaction.type.toString();
+  transactionRecord.v = BigInt(transaction.v);
   transactionRecord.r = transaction.r;
   transactionRecord.s = transaction.s;
-  transactionRecord.accessList = transaction.accessList;
-  transactionRecord.chainId = transaction.chainId;
-  transactionRecord.maxFeePerGas = transaction.maxFeePerGas;
-  transactionRecord.maxPriorityFeePerGas = transaction.maxPriorityFeePerGas;
+  //transactionRecord.accessList = transaction.accessList;
+  transactionRecord.chainId = transaction.chainId.toString();
+  transactionRecord.maxFeePerGas = transaction.maxFeePerGas.toBigInt();
+  transactionRecord.maxPriorityFeePerGas = transaction.maxPriorityFeePerGas.toBigInt();
   await transactionRecord.save();
 }
 
-export async function handleLog(log: AvalancheLog): Promise<void> {
+export async function handleLog(log: EthereumLog): Promise<void> {
   const logRecord = new AvalancheLogEntity(
     `${log.blockHash}-${log.logIndex}`
   );
@@ -88,22 +89,22 @@ export async function handleLog(log: AvalancheLog): Promise<void> {
   await logRecord.save();
 }
 
-export async function handleReceipt(transaction: AvalancheTransaction): Promise<void> {
+export async function handleReceipt(transaction: EthereumTransaction): Promise<void> {
   const receipt = transaction.receipt;
   const receiptRecord = new AvalancheReceiptEntity(`${receipt.blockHash}-${receipt.transactionHash}`);
   receiptRecord.blockId = receipt.blockHash;
   receiptRecord.blockHash = receipt.blockHash;
   receiptRecord.blockNumber = receipt.blockNumber;
   receiptRecord.contractAddress = receipt.contractAddress;
-  receiptRecord.cumulativeGasUsed = receipt.cumulativeGasUsed;
-  receiptRecord.effectiveGasPrice = receipt.effectiveGasPrice;
+  receiptRecord.cumulativeGasUsed = receipt.cumulativeGasUsed.toBigInt();
+  receiptRecord.effectiveGasPrice = receipt.effectiveGasPrice.toBigInt();
   receiptRecord.from = receipt.from;
-  receiptRecord.gasUsed = receipt.gasUsed;
+  receiptRecord.gasUsed = receipt.gasUsed.toBigInt();
   receiptRecord.logsBloom = receipt.logsBloom;
-  receiptRecord.status = receipt.status;
+  receiptRecord.status = receipt.status !== 0;
   receiptRecord.to = receipt.to;
   receiptRecord.transactionHash = receipt.transactionHash;
   receiptRecord.transactionIndex = receipt.transactionIndex;
-  receiptRecord.type = receipt.type;
+  receiptRecord.type = receipt.type.toString();
   await receiptRecord.save();
 }
