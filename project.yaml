@@ -4,7 +4,7 @@ name: "avalanche-subql-starter"
 version: "0.0.1"
 runner:
   node:
-    name: "@subql/node-avalanche"
+    name: "@subql/node-ethereum"
     version: "*"
   query:
     name: "@subql/query"
@@ -24,7 +24,7 @@ network:
   # dictionary: https://api.subquery.network/sq/subquery/avalanche-dictionary
 
 dataSources:
-  - kind: avalanche/Runtime
+  - kind: ethereum/Runtime
     startBlock: 1000000
     options:
       # Must be a key of assets
@@ -38,11 +38,11 @@ dataSources:
       file: "./dist/index.js"
       handlers:
         - handler: handleBlock
-          kind: avalanche/BlockHandler
+          kind: ethereum/BlockHandler
           filter:
             modulo: 10
         - handler: handleTransaction
-          kind: avalanche/TransactionHandler
+          kind: ethereum/TransactionHandler
           #filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
@@ -53,7 +53,7 @@ dataSources:
         # - handler: handleReceipt
         #   kind: avalanche/TransactionHandler
         - handler: handleLog
-          kind: avalanche/LogHandler
+          kind: ethereum/LogHandler
           #filter:
             #topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/

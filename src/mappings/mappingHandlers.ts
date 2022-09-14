@@ -10,10 +10,11 @@ import {
 import {
   EthereumTransaction,
   EthereumLog,
+  EthereumBlock,
 } from "@subql/types-avalanche";
 import { ethers } from "ethers";
 
-export async function handleBlock(block: ethers.providers.Block): Promise<void> {
+export async function handleBlock(block: EthereumBlock): Promise<void> {
   logger.info(`Handling block ${block.number}`);
   const blockRecord = new AvalancheBlockEntity(block.hash);
   //blockRecord.baseFeePerGas = block.baseFeePerGas.toBigInt();
