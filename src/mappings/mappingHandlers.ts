@@ -11,7 +11,7 @@ import {
   EthereumTransaction,
   EthereumLog,
   EthereumBlock,
-} from "@subql/types-avalanche";
+} from "@subql/types-ethereum";
 import { ethers } from "ethers";
 
 export async function handleBlock(block: EthereumBlock): Promise<void> {
@@ -23,8 +23,8 @@ export async function handleBlock(block: EthereumBlock): Promise<void> {
   blockRecord.difficulty = BigInt(block.difficulty);
   //blockRecord.extDataGasUsed = block.extDataGasUsed;
   //lockRecord.extDataHash = block.extDataHash;
-  blockRecord.gasLimit = block.gasLimit.toBigInt();
-  blockRecord.gasUsed = block.gasUsed.toBigInt();
+  blockRecord.gasLimit = block.gasLimit;
+  blockRecord.gasUsed = block.gasUsed;
   blockRecord.hash = block.hash;
   //blockRecord.logsBloom = block.logsBloom;
   blockRecord.miner = block.miner;
@@ -54,22 +54,22 @@ export async function handleTransaction(
   transactionRecord.blockHash = transaction.blockHash;
   transactionRecord.blockNumber = transaction.blockNumber;
   transactionRecord.from = transaction.from;
-  transactionRecord.gas = transaction.receipt.gasUsed.toBigInt();
-  transactionRecord.gasPrice = transaction.gasPrice.toBigInt();
+  transactionRecord.gas = transaction.receipt.gasUsed;
+  transactionRecord.gasPrice = transaction.gasPrice;
   transactionRecord.hash = transaction.hash;
-  transactionRecord.input = transaction.data;
+  transactionRecord.input = transaction.input;
   transactionRecord.nonce = BigInt(transaction.nonce);
   transactionRecord.to = transaction.to;
   transactionRecord.transactionIndex = BigInt(transaction.receipt.transactionIndex);
-  transactionRecord.value = transaction.value.toBigInt();
+  transactionRecord.value = transaction.value;
   transactionRecord.type = transaction.type.toString();
   transactionRecord.v = BigInt(transaction.v);
   transactionRecord.r = transaction.r;
   transactionRecord.s = transaction.s;
   //transactionRecord.accessList = transaction.accessList;
   transactionRecord.chainId = transaction.chainId.toString();
-  transactionRecord.maxFeePerGas = transaction.maxFeePerGas.toBigInt();
-  transactionRecord.maxPriorityFeePerGas = transaction.maxPriorityFeePerGas.toBigInt();
+  transactionRecord.maxFeePerGas = transaction.maxFeePerGas;
+  transactionRecord.maxPriorityFeePerGas = transaction.maxPriorityFeePerGas;
   await transactionRecord.save();
 }
 
@@ -97,12 +97,12 @@ export async function handleReceipt(transaction: EthereumTransaction): Promise<v
   receiptRecord.blockHash = receipt.blockHash;
   receiptRecord.blockNumber = receipt.blockNumber;
   receiptRecord.contractAddress = receipt.contractAddress;
-  receiptRecord.cumulativeGasUsed = receipt.cumulativeGasUsed.toBigInt();
-  receiptRecord.effectiveGasPrice = receipt.effectiveGasPrice.toBigInt();
+  receiptRecord.cumulativeGasUsed = receipt.cumulativeGasUsed;
+  receiptRecord.effectiveGasPrice = receipt.effectiveGasPrice;
   receiptRecord.from = receipt.from;
-  receiptRecord.gasUsed = receipt.gasUsed.toBigInt();
+  receiptRecord.gasUsed = receipt.gasUsed;
   receiptRecord.logsBloom = receipt.logsBloom;
-  receiptRecord.status = receipt.status !== 0;
+  receiptRecord.status = receipt.status;
   receiptRecord.to = receipt.to;
   receiptRecord.transactionHash = receipt.transactionHash;
   receiptRecord.transactionIndex = receipt.transactionIndex;

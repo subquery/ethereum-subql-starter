@@ -18,9 +18,8 @@ schema:
 network:
   # endpoint: "http://avalanche.api.onfinality.io:9650"
   # endpoint: "https://avalanche.api.onfinality.io"
-  endpoint:  wss://rinkeby.infura.io/ws/v3/777041f69d9143b5b9813bceb58986fd
-  chainId: "4"
-  subnet: "mainnet"
+  endpoint:  https://mainnet.infura.io/v3/c3772903689441d290c68698bb022ba6
+  chainId: "1"
   # dictionary: https://api.subquery.network/sq/subquery/avalanche-dictionary
 
 dataSources:
