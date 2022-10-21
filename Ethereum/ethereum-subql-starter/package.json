@@ -1,7 +1,7 @@
 {
-  "name": "avalanche-subql-starter",
+  "name": "ethereum-subql-starter",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Avalanche SubQuery project",
+  "description": "This project can be use as a starting point for developing your new Ethereum SubQuery project",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
@@ -10,8 +10,8 @@
     "codegen": "./node_modules/.bin/subql codegen",
     "start:docker": "docker-compose pull && docker-compose up --remove-orphans"
   },
-  "homepage": "https://github.com/subquery/avalanche-subql-starter",
-  "repository": "github:subquery/avalanche-subql-starter",
+  "homepage": "https://github.com/subquery/ethereum-subql-starter",
+  "repository": "github:subquery/ethereum-subql-starter",
   "files": [
     "dist",
     "schema.graphql",
@@ -20,9 +20,9 @@
   "author": "SubQuery Team",
   "license": "MIT",
   "dependencies": {
-    "@pangolindex/exchange-contracts": "^1.0.2",
     "@polkadot/api": "^9",
     "@subql/common": "latest",
+    "@subql/types-ethereum": "latest",
     "@subql/validator": "latest",
     "assert": "^2.0.0"
   },
