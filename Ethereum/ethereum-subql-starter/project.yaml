@@ -21,12 +21,11 @@ network:
 
 dataSources:
   - kind: ethereum/Runtime
-    startBlock: 1000000
+    startBlock: 15695385
     options:
       # Must be a key of assets
       abi: erc20
-      ## Pangolin token https://snowtrace.io/token/0x60781c2586d68229fde47564546784ab3faca982
-      address: "0x60781C2586D68229fde47564546784ab3fACA982"
+      address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
     assets:
       erc20:
         file: "erc20.abi.json"
