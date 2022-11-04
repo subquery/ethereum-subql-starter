@@ -1,12 +1,9 @@
 // Copyright 2020-2022 OnFinality Limited authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-import {
-  EthereumTransaction,
-  EthereumLog,
-} from "@subql/types-ethereum";
-import { BigNumber } from '@ethersproject/bignumber';
+import { EthereumTransaction, EthereumLog } from "@subql/types-ethereum";
+import { BigNumber } from "@ethersproject/bignumber";
 
-import { Approval, Transaction } from '../types';
+import { Approval, Transaction } from "../types";
 
 // Setup types from ABI
 type TransferEventArgs = [string, string, BigNumber] & {

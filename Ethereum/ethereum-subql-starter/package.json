@@ -20,7 +20,6 @@
   "author": "SubQuery Team",
   "license": "MIT",
   "dependencies": {
-    "@polkadot/api": "^9",
     "@subql/common": "latest",
     "@subql/types-ethereum": "latest",
     "@subql/validator": "latest",

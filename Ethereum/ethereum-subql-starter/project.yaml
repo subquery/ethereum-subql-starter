@@ -16,7 +16,7 @@ schema:
   file: "./schema.graphql"
 
 network:
-  endpoint:  https://mainnet.infura.io/v3/c3772903689441d290c68698bb022ba6
+  endpoint: https://mainnet.infura.io/v3/c3772903689441d290c68698bb022ba6
   chainId: "1"
 
 dataSources:

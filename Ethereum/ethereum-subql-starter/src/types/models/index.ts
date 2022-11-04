@@ -2,7 +2,6 @@
 
 // Auto-generated , DO NOT EDIT
 
-export {Transaction} from "./Transaction"
+export { Transaction } from "./Transaction";
 
-export {Approval} from "./Approval"
-
+export { Approval } from "./Approval";
