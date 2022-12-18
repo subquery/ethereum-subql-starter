@@ -1,6 +1,6 @@
 specVersion: "1.0.0"
 
-name: "ethereum-subql-starter"
+name: "uniswap-v3"
 version: "0.0.1"
 runner:
   node:
@@ -18,9 +18,11 @@ schema:
 network:
   endpoint: https://mainnet.infura.io/v3/c3772903689441d290c68698bb022ba6
   chainId: "1"
+  dictionary: "https://eth-dict.api.onfinality.io/"
 
 dataSources:
   - kind: ethereum/Runtime
+    # Should start from the first instance of uniswap
     startBlock: 15695385
     options:
       # Must be a key of assets
