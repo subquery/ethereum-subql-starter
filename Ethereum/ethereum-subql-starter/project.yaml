@@ -21,30 +21,110 @@ network:
   dictionary: "https://eth-dict.api.onfinality.io/"
 
 dataSources:
+  # ethereum/events
   - kind: ethereum/Runtime
     # Should start from the first instance of uniswap
-    startBlock: 15695385
+    startBlock: 12369621
+    # What is the difference between options and assets
     options:
       # Must be a key of assets
-      abi: erc20
-      address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      # TODO: what is Factory abi ?
+      abi: Factory
+      address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
     assets:
-      erc20:
-        file: "erc20.abi.json"
+      # TODO: Multiple abis
+      Factory:
+        file: "./abis/Factory.json"
+      ERC20:
+        file: "./abis/ERC20.json"
+      ERC20SymbolBytes:
+        file: "./abis/ERC20SymbolBytes.json"
+      ERC20NameBytes:
+        file: "./abis/ERC20NameBytes.json"
+      Pool:
+        file: "./abis/pool.json"
     mapping:
       file: "./dist/index.js"
       handlers:
-        - handler: handleTransaction
+        - handler: handlePoolCreated
+          # TODO: Find out eth types
           kind: ethereum/TransactionHandler
           filter:
-            ## The function can either be the function fragment or signature
-            # function: '0x095ea7b3'
-            # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
-            function: approve(address spender, uint256 rawAmount)
-        - handler: handleLog
-          kind: ethereum/LogHandler
+            function: PoolCreated(indexed address,indexed address,indexed uint24,int24,address)
+    # ethereum/contract
+  - kind: ethereum/Runtime
+    startBlock: 12369651
+    options:
+      abi: NonfungiblePositionManager
+      address: '0xC36442b4a4522E871399CD717aBDD847Ab11FE88'
+    assets:
+      NonfungiblePositionManager:
+        file: ./abis/NonfungiblePositionManager.json
+      Pool:
+        file: ./abis/pool.json
+      Factory:
+        file: ./abis/factory.json
+      ERC20:
+        file: ./abis/ERC20.json
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleIncreaseLiquidity
+          # TODO: Find out eth types
+#          kind: ethereum/TransactionHandler
           filter:
-            topics:
-              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
-              - Transfer(address indexed from, address indexed to, uint256 amount)
-              # address: "0x60781C2586D68229fde47564546784ab3fACA982"
+            function: IncreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+        - handler: handleDecreaseLiquidity
+          # TODO: Find out eth types
+#          kind: ethereum/TransactionHandler
+          filter:
+            function: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+        - handler: handleCollect
+          # TODO: Find out eth types
+#          kind: ethereum/TransactionHandler
+          filter:
+            function: Collect(indexed uint256,address,uint256,uint256)
+        - handler: handleTransfer
+          # TODO: Find out eth types
+#          kind: ethereum/TransactionHandler
+          filter:
+            function: Transfer(indexed address,indexed address,indexed uint256)
+templates:
+  - name: Pool
+    # TODO: Find out how to fill this in
+    kind: ethereum/Runtime
+    assets:
+      Pool:
+        file: ./abis/pool.json
+      Factory:
+        file: ./abis/factory.json
+      ERC20:
+        file: ./abis/ERC20.json
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleInitialize
+          kind: ethereum/Runtime
+          filter:
+            function: Initialize(uint160,int24)
+        - handler: handleSwap
+          kind: ethereum/Runtime
+          filter:
+            function: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+        - handler: handleMint
+          kind: ethereum/Runtime
+          filter:
+            function: Mint(address,indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
+        - handler: handleBurn
+          kind: ethereum/Runtime
+          filter:
+            function: Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
+        - handler: handleFlash
+          kind: ethereum/Runtime
+          filter:
+            function: Flash(indexed address,indexed address,uint256,uint256,uint256,uint256)
+
+
+
+
+
