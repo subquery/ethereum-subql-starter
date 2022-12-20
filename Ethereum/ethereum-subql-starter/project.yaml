@@ -16,7 +16,12 @@ schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: https://mainnet.infura.io/v3/c3772903689441d290c68698bb022ba6
+  # This endpoint must be a public non-pruned archive node
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  # You can get them from OnFinality for free https://app.onfinality.io
+  # https://documentation.onfinality.io/support/the-enhanced-api-service
+  endpoint: https://eth.api.onfinality.io/public
   chainId: "1"
 
 dataSources:
