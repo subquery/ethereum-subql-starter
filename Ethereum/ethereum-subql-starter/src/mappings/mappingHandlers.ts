@@ -17,28 +17,28 @@ type ApproveCallArgs = [string, BigNumber] & {
 };
 
 export async function handleLog(
-  event: EthereumLog<TransferEventArgs>
+  log: EthereumLog<TransferEventArgs>
 ): Promise<void> {
   const transaction = Transaction.create({
-    id: event.transactionHash,
-    value: event.args.value.toBigInt(),
-    from: event.args.from,
-    to: event.args.to,
-    contractAddress: event.address,
+    id: log.transactionHash,
+    value: log.args.value.toBigInt(),
+    from: log.args.from,
+    to: log.args.to,
+    contractAddress: log.address,
   });
 
   await transaction.save();
 }
 
 export async function handleTransaction(
-  event: EthereumTransaction<ApproveCallArgs>
+  tx: EthereumTransaction<ApproveCallArgs>
 ): Promise<void> {
   const approval = Approval.create({
-    id: event.hash,
-    owner: event.from,
-    value: event.args._value.toBigInt(),
-    spender: event.args._spender,
-    contractAddress: event.to,
+    id: tx.hash,
+    owner: tx.from,
+    value: tx.args._value.toBigInt(),
+    spender: tx.args._spender,
+    contractAddress: tx.to,
   });
 
   await approval.save();
