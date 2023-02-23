@@ -16,13 +16,17 @@ schema:
   file: "./schema.graphql"
 
 network:
+  # chainId is the EVM Chain ID, for Ethereum this is 1
+  # https://chainlist.org/chain/1
+  chainId: "1"
   # This endpoint must be a public non-pruned archive node
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
   # You can get them from OnFinality for free https://app.onfinality.io
   # https://documentation.onfinality.io/support/the-enhanced-api-service
-  endpoint: https://eth.api.onfinality.io/public
-  chainId: "1"
+  endpoint: "https://eth.api.onfinality.io/public"
+  # Optionally provide the HTTP endpoint of a full chain dictionary to speed up processing
+  # dictionary: "https://api.subquery.network/sq/subquery/ethereum-dictionary"
 
 dataSources:
   - kind: ethereum/Runtime
