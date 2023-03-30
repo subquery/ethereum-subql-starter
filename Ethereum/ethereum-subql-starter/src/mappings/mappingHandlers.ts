@@ -1,24 +1,13 @@
 // Copyright 2020-2022 OnFinality Limited authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-import { EthereumTransaction, EthereumLog } from "@subql/types-ethereum";
-import { BigNumber } from "@ethersproject/bignumber";
-
 import { Approval, Transaction } from "../types";
+import {
+  ApproveTransaction,
+  TransferLog,
+} from "../types/abi-interfaces/Erc20Abi";
 
-// Setup types from ABI
-type TransferEventArgs = [string, string, BigNumber] & {
-  from: string;
-  to: string;
-  value: BigNumber;
-};
-type ApproveCallArgs = [string, BigNumber] & {
-  _spender: string;
-  _value: BigNumber;
-};
-
-export async function handleLog(
-  log: EthereumLog<TransferEventArgs>
-): Promise<void> {
+export async function handleLog(log: TransferLog): Promise<void> {
+  logger.info(`New transfer transaction log at block ${log.blockNumber}`);
   const transaction = Transaction.create({
     id: log.transactionHash,
     value: log.args.value.toBigInt(),
@@ -30,14 +19,13 @@ export async function handleLog(
   await transaction.save();
 }
 
-export async function handleTransaction(
-  tx: EthereumTransaction<ApproveCallArgs>
-): Promise<void> {
+export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
+  logger.info(`New Approval transaction at block ${tx.blockNumber}`);
   const approval = Approval.create({
     id: tx.hash,
     owner: tx.from,
-    value: tx.args._value.toBigInt(),
-    spender: tx.args._spender,
+    spender: await tx.args[0],
+    value: BigInt(await tx.args[1].toString()),
     contractAddress: tx.to,
   });
 

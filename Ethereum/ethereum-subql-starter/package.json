@@ -29,6 +29,7 @@
   "devDependencies": {
     "@subql/cli": "latest",
     "@subql/types": "latest",
-    "typescript": "4.5.5"
+    "typescript": "4.5.5",
+    "ethers": "^5.7.2"
   }
 }

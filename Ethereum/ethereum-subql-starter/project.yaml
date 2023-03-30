@@ -25,8 +25,8 @@ network:
   # You can get them from OnFinality for free https://app.onfinality.io
   # https://documentation.onfinality.io/support/the-enhanced-api-service
   endpoint: "https://eth.api.onfinality.io/public"
-  # Optionally provide the HTTP endpoint of a full chain dictionary to speed up processing
-  # dictionary: "https://api.subquery.network/sq/subquery/ethereum-dictionary"
+  # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
+  dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary"
 
 dataSources:
   - kind: ethereum/Runtime
