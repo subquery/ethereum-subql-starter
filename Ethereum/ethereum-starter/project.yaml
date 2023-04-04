@@ -30,7 +30,7 @@ network:
 
 dataSources:
   - kind: ethereum/Runtime
-    startBlock: 1
+    startBlock: 4719568
     options:
       # Must be a key of assets
       abi: erc20

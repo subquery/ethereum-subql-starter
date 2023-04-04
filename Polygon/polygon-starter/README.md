@@ -91,9 +91,9 @@ For the `subql-starter` project, you can try to query with the following code to
 ```graphql
 {
   query {
-      transactions{
+    	transactions{
         totalCount
-          nodes{
+        	nodes{
             id
             value
             to
