@@ -1,0 +1,59 @@
+specVersion: "1.0.0"
+
+name: "avalanche-starter"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "This project can be use as a starting point for developing your
+  new Ethereum SubQuery project"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  # chainId is the EVM Chain ID, for Avalanche this is 43114
+  # https://chainlist.org/chain/43114
+  chainId: "43114"
+  # This endpoint must be a public non-pruned archive node
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  # You can get them from OnFinality for free https://app.onfinality.io
+  # https://documentation.onfinality.io/support/the-enhanced-api-service
+  endpoint: "https://avalanche.api.onfinality.io/public/ext/bc/C/rpc"
+  # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
+  dictionary: "https://api.subquery.network/sq/subquery/avalanche-dictionary"
+
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 30100
+    options:
+      # Must be a key of assets
+      abi: erc20
+      address: "0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15" # this is the contract address for wrapped ether https://snowtrace.io/token/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15
+    assets:
+      erc20:
+        file: "erc20.abi.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleTransaction
+          kind: ethereum/TransactionHandler
+          filter:
+            ## The function can either be the function fragment or signature
+            # function: '0x095ea7b3'
+            # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
+            function: approve(address spender, uint256 rawAmount)
+        - handler: handleLog
+          kind: ethereum/LogHandler
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - Transfer(address indexed from, address indexed to, uint256
+                amount)
+              # address: "0x60781C2586D68229fde47564546784ab3fACA982"
