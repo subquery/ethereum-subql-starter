@@ -29,7 +29,7 @@ network:
   dictionary: "https://gx.api.subquery.network/sq/subquery/polygon-dictionary"
 
 dataSources:
-  - kind: ethereum/Runtime
+  - kind: ethereum/Runtime # We use ethereum runtime since Polygon is a layer-2 that is compatible
     startBlock: 3678215 # This is the block that the contract was deployed on
     options:
       # Must be a key of assets
@@ -42,14 +42,14 @@ dataSources:
       file: "./dist/index.js"
       handlers:
         - handler: handleTransaction
-          kind: ethereum/TransactionHandler
+          kind: ethereum/TransactionHandler # We use ethereum handlers since Polygon is a layer-2 that is compatible
           filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
             function: approve(address spender, uint256 rawAmount)
         - handler: handleLog
-          kind: ethereum/LogHandler
+          kind: ethereum/LogHandler # We use ethereum handlers since Polygon is a layer-2 that is compatible
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
