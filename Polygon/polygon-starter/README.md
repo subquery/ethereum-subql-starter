@@ -91,16 +91,16 @@ For the `subql-starter` project, you can try to query with the following code to
 ```graphql
 {
   query {
-    	transactions{
-        totalCount
-        	nodes{
-            id
-            value
-            to
-            from
-            contractAddress
-          }
+    transactions{
+      totalCount
+        nodes{
+          id
+          value
+          to
+          from
+          contractAddress
         }
+      }
   }
 }
 ```
