@@ -1,6 +1,6 @@
 specVersion: "1.0.0"
 
-name: "ethereum-subql-starter"
+name: "bsc-subql-starter"
 version: "0.0.1"
 runner:
   node:
@@ -9,32 +9,32 @@ runner:
   query:
     name: "@subql/query"
     version: "*"
-description: "This project can be use as a starting point for developing your new Ethereum SubQuery project"
+description: "This project can be use as a starting point for developing your new BSC SubQuery project"
 repository: "https://github.com/subquery/ethereum-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  # chainId is the EVM Chain ID, for Ethereum this is 1
-  # https://chainlist.org/chain/1
-  chainId: "1"
+  # chainId is the EVM Chain ID, for BSC this is 56
+  # https://chainlist.org/chain/56
+  chainId: "56"
   # This endpoint must be a public non-pruned archive node
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
   # You can get them from OnFinality for free https://app.onfinality.io
   # https://documentation.onfinality.io/support/the-enhanced-api-service
-  endpoint: "https://eth.api.onfinality.io/public"
+  endpoint: "https://bsc-dataseed1.binance.org"
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary"
+  dictionary: "https://gx.api.subquery.network/sq/subquery/bsc-dictionary"
 
 dataSources:
   - kind: ethereum/Runtime
-    startBlock: 4719568
+    startBlock: 326031
     options:
       # Must be a key of assets
       abi: erc20
-      address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" # this is the contract address for wrapped ether https://etherscan.io/address/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+      address: "0x2170Ed0880ac9A755fd29B2688956BD959F933F8" # this is the contract address for Binance-Peg Ethereum Token https://bscscan.com/address/0x2170ed0880ac9a755fd29b2688956bd959f933f8
     assets:
       erc20:
         file: "erc20.abi.json"
