@@ -8,9 +8,10 @@ export async function handleLog(log: TransferLog): Promise<void> {
   logger.info(`New transfer transaction log at block ${log.blockNumber}`);
   const transfer = Transfer.create({
     id: log.transactionHash,
-    value: log.args.value.toBigInt(),
+    blockHeight: log.blockNumber.toString(),
     from: log.args.from,
     to: log.args.to,
+    value: log.args.value.toBigInt(),
     contractAddress: log.address,
   });
 
@@ -21,6 +22,7 @@ export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
   logger.info(`New Approval transaction at block ${tx.blockNumber}`);
   const approval = Approval.create({
     id: tx.hash,
+    blockHeight: tx.blockNumber.toString(),
     owner: tx.from,
     spender: await tx.args[0],
     value: BigInt(await tx.args[1].toString()),

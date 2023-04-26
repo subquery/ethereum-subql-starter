@@ -90,12 +90,13 @@ For the `subql-starter` project, you can try to query with the following code to
 
 ```graphql
 query {
-  transfers(first: 5, orderBy: VALUE_DESC) {
+  transfers(first: 5, orderBy: BLOCK_HEIGHT_ASC) {
     nodes {
       id
-      value
-      to
+      blockHeight
       from
+      to
+      value
       contractAddress
     }
   }

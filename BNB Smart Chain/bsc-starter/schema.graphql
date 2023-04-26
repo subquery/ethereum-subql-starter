@@ -4,16 +4,18 @@
 
 type Transfer @entity {
   id: ID! # Transaction hash
-  value: BigInt!
+  blockHeight: String
   to: String!
   from: String!
+  value: BigInt!
   contractAddress: String!
 }
 
 type Approval @entity {
   id: ID! # Transaction hash
-  value: BigInt!
+  blockHeight: String
   owner: String!
   spender: String!
+  value: BigInt!
   contractAddress: String!
 }
