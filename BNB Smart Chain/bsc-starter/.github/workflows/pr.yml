@@ -18,7 +18,7 @@ jobs:
         run: yarn codegen
       - name: Build
         run: yarn build
-      - name: Install subql-node
-        run: yarn global add @subql/node
+      - name: Install subql-node-ethereum
+        run: yarn global add @subql/node-ethereum
       - name: Run tests with Subquery Node
-        run: subql-node test -f ${{ github.workspace }}
+        run: subql-node-ethereum test -f ${{ github.workspace }}
