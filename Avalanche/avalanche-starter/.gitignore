@@ -54,3 +54,6 @@ Thumbs.db
 *.wmv
 
 .data
+.yarn
+
+.DS_Store

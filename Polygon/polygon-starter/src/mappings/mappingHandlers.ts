@@ -1,6 +1,4 @@
-// Copyright 2020-2022 OnFinality Limited authors & contributors
-// SPDX-License-Identifier: Apache-2.0
-import { Approval, Transaction } from "../types";
+import { Approval, Transfer } from "../types";
 import {
   ApproveTransaction,
   TransferLog,
@@ -8,26 +6,28 @@ import {
 
 export async function handleLog(log: TransferLog): Promise<void> {
   logger.info(`New transfer transaction log at block ${log.blockNumber}`);
-  const transaction = Transaction.create({
+  const transferRecord = Transfer.create({
     id: log.transactionHash,
+    blockHeight: log.blockNumber.toString(),
     value: log.args.value.toBigInt(),
     from: log.args.from,
     to: log.args.to,
     contractAddress: log.address,
   });
 
-  await transaction.save();
+  await transferRecord.save();
 }
 
 export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
   logger.info(`New Approval transaction at block ${tx.blockNumber}`);
-  const approval = Approval.create({
+  const approvalRecord = Approval.create({
     id: tx.hash,
+    blockHeight: tx.blockNumber.toString(),
     owner: tx.from,
     spender: await tx.args[0],
     value: BigInt(await tx.args[1].toString()),
     contractAddress: tx.to,
   });
 
-  await approval.save();
+  await approvalRecord.save();
 }

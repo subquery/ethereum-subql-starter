@@ -3,7 +3,7 @@
 The Starter Package is an example that you can use as a starting point for developing your SubQuery project.
 A SubQuery package defines which data The SubQuery will index from the blockchain, and how it will store it.
 
-This SubQuery Ethereum starter project indexes transfers and approvals for the Ethereum Wrapped Ether smart contract. 
+This SubQuery Avalanche starter project indexes transfers and deposits for the Pangolin smart contract.
 
 Note: If the starter project shows a "failed to fetch blocks", it is highly likely that the endpoint has an issue, often with rate limiting. Please visit https://onfinality.io/ and sign up for a free API key.
 
@@ -95,17 +95,17 @@ For the `subql-starter` project, you can try to query with the following code to
 ```graphql
 {
   query {
-    transactions(first:2 orderBy:BLOCK_HEIGHT_ASC){
+    transactions(first: 2, orderBy: BLOCK_HEIGHT_ASC) {
       totalCount
-        nodes{
-          id
-          txHash
-          blockHeight
-          to
-          from
-          value
-          contractAddress
-        }
+      nodes {
+        id
+        txHash
+        blockHeight
+        to
+        from
+        value
+        contractAddress
+      }
     }
   }
 }

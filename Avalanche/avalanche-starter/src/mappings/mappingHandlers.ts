@@ -1,10 +1,8 @@
-// Copyright 2020-2022 OnFinality Limited authors & contributors
-// SPDX-License-Identifier: Apache-2.0
 import { Approval, Transaction } from "../types";
 import {
   ApproveTransaction,
   TransferLog,
-} from "../types/abi-interfaces/Erc20Abi";
+} from "../types/abi-interfaces/PangolinERC20";
 
 export async function handleLog(log: TransferLog): Promise<void> {
   logger.info(`New transfer transaction log at block ${log.blockNumber}`);
@@ -14,7 +12,7 @@ export async function handleLog(log: TransferLog): Promise<void> {
     blockHeight: BigInt(log.blockNumber),
     to: log.args.to,
     from: log.args.from,
-    value: log.args.value.toBigInt(),
+    value: log.args[2].toBigInt(),
     contractAddress: log.address,
   });
 

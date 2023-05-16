@@ -1,5 +1,3 @@
-// Copyright 2020-2022 OnFinality Limited authors & contributors
-// SPDX-License-Identifier: Apache-2.0
 import { Approval, Transaction } from "../types";
 import {
   ApproveTransaction,
@@ -10,9 +8,11 @@ export async function handleLog(log: TransferLog): Promise<void> {
   logger.info(`New transfer transaction log at block ${log.blockNumber}`);
   const transaction = Transaction.create({
     id: log.transactionHash,
-    value: log.args.value.toBigInt(),
-    from: log.args.from,
+    txHash: log.transactionHash,
+    blockHeight: BigInt(log.blockNumber),
     to: log.args.to,
+    from: log.args.from,
+    value: log.args.value.toBigInt(),
     contractAddress: log.address,
   });
 

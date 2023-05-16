@@ -2,24 +2,20 @@
 # Add the `@index` or `@index(unique: true)` annotation after any non-key field
 # https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
 
-type Transaction @entity {
+type Transfer @entity {
   id: ID! # Transaction hash
-  value: BigInt!
-
+  blockHeight: String
   to: String!
-
   from: String!
-
+  value: BigInt!
   contractAddress: String!
 }
 
 type Approval @entity {
   id: ID! # Transaction hash
-  value: BigInt!
-
+  blockHeight: String
   owner: String!
-
   spender: String!
-
+  value: BigInt!
   contractAddress: String!
 }

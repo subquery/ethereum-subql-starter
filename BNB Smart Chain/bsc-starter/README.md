@@ -89,18 +89,16 @@ Finally, you should see a GraphQL playground is showing in the explorer and the 
 For the `subql-starter` project, you can try to query with the following code to get a taste of how it works.
 
 ```graphql
-{
-  query {
-      transactions{
-        totalCount
-          nodes{
-            id
-            value
-            to
-            from
-            contractAddress
-          }
-        }
+query {
+  transfers(first: 5, orderBy: BLOCK_HEIGHT_ASC) {
+    nodes {
+      id
+      blockHeight
+      from
+      to
+      value
+      contractAddress
+    }
   }
 }
 ```

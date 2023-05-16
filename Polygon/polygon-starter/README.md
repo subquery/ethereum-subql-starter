@@ -3,6 +3,8 @@
 The Starter Package is an example that you can use as a starting point for developing your SubQuery project.
 A SubQuery package defines which data The SubQuery will index from the blockchain, and how it will store it.
 
+This SubQuery Polygon starter project indexes all Polygon EVM transfers event for the wrapped ether contract 0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619. 
+
 ## Preparation
 
 #### Environment
@@ -89,18 +91,16 @@ Finally, you should see a GraphQL playground is showing in the explorer and the 
 For the `subql-starter` project, you can try to query with the following code to get a taste of how it works.
 
 ```graphql
-{
-  query {
-    	transactions{
-        totalCount
-        	nodes{
-            id
-            value
-            to
-            from
-            contractAddress
-          }
-        }
+query {
+  transfers(first: 2, orderBy: BLOCK_HEIGHT_ASC) {
+    nodes {
+      id
+      blockHeight
+      contractAddress
+      to
+      from
+      value
+    }
   }
 }
 ```
