@@ -38,7 +38,7 @@ dataSources:
       address: "0x2170Ed0880ac9A755fd29B2688956BD959F933F8" # this is the contract address for Binance-Peg Ethereum Token https://bscscan.com/address/0x2170ed0880ac9a755fd29b2688956bd959f933f8
     assets:
       erc20:
-        file: "erc20.abi.json"
+        file: "./abis/erc20.abi.json"
     mapping:
       file: "./dist/index.js"
       handlers:
