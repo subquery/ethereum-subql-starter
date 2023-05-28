@@ -1,6 +1,6 @@
 specVersion: "1.0.0"
 
-name: "ethereum-subql-starter"
+name: "arbitrum-subql-starter"
 version: "0.0.1"
 runner:
   node:
@@ -9,33 +9,33 @@ runner:
   query:
     name: "@subql/query"
     version: "*"
-description: "This project can be use as a starting point for developing your new Ethereum SubQuery project"
+description: "This project can be use as a starting point for developing your new Arbitrum SubQuery project"
 repository: "https://github.com/subquery/ethereum-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  # chainId is the EVM Chain ID, for Ethereum this is 1
-  # https://chainlist.org/chain/1
-  chainId: "1"
+  # chainId is the EVM Chain ID, for Arbitrum this is 42161
+  # https://chainlist.org/chain/42161
+  chainId: "42161"
   # This endpoint must be a public non-pruned archive node
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
   # You can get them from OnFinality for free https://app.onfinality.io
   # https://documentation.onfinality.io/support/the-enhanced-api-service
-  endpoint: ["https://eth.api.onfinality.io/public"]
+  endpoint: ["https://arbitrum.api.onfinality.io/public"]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary"
+  dictionary: "https://gx.api.subquery.network/sq/subquery/arbitrum-dictionary-eth"
 
 dataSources:
-  - kind: ethereum/Runtime
-    startBlock: 4719568
+  - kind: ethereum/Runtime # We use ethereum runtime since Arbitrum is a layer-2 that is compatible
+    startBlock: 2591 # This is the block that the contract was deployed on https://arbiscan.io/tx/0x8ebe1945f039f865af8b3079df3819534340ee41a5e6b8bfefb9c36a857778c9
     options:
       # Must be a key of assets
       abi: erc20
-      address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" # this is the contract address for wrapped ether https://etherscan.io/address/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+      address: "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f" # This is the contract address for wrapped BTC https://arbiscan.io/token/0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f
     assets:
       erc20:
         file: "./abis/erc20.abi.json"
@@ -43,14 +43,14 @@ dataSources:
       file: "./dist/index.js"
       handlers:
         - handler: handleTransaction
-          kind: ethereum/TransactionHandler
+          kind: ethereum/TransactionHandler # We use ethereum handlers since Arbitrum is a layer-2 that is compatible
           filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
-            function: approve(address spender, uint256 rawAmount)
+            function: approve(address spender, uint256 amount)
         - handler: handleLog
-          kind: ethereum/LogHandler
+          kind: ethereum/LogHandler # We use ethereum handlers since Arbitrum is a layer-2 that is compatible
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
