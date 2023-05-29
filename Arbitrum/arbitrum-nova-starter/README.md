@@ -3,7 +3,7 @@
 The Starter Package is an example that you can use as a starting point for developing your SubQuery project.
 A SubQuery package defines which data The SubQuery will index from the blockchain, and how it will store it.
 
-This SubQuery Arbitrum starter project indexes all Arbitrum EVM transfers event for the wrapped ether contract 0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619.
+This SubQuery Arbitrum Nova starter project indexes all Arbitrum EVM transfers event for the wrapped ether contract 0x765277EebeCA2e31912C9946eAe1021199B39C61.
 
 ## Preparation
 
