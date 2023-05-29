@@ -1,7 +1,7 @@
 {
-  "name": "arbitrum-subql-starter",
+  "name": "arbitrum-one-subql-starter",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Arbitrum SubQuery project",
+  "description": "This project can be use as a starting point for developing your new Arbitrum One SubQuery project",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",

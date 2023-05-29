@@ -1,6 +1,6 @@
 specVersion: "1.0.0"
 
-name: "arbitrum-subql-starter"
+name: "arbitrum-one-subql-starter"
 version: "0.0.1"
 runner:
   node:
@@ -9,14 +9,14 @@ runner:
   query:
     name: "@subql/query"
     version: "*"
-description: "This project can be use as a starting point for developing your new Arbitrum SubQuery project"
+description: "This project can be use as a starting point for developing your new Arbitrum One SubQuery project"
 repository: "https://github.com/subquery/ethereum-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  # chainId is the EVM Chain ID, for Arbitrum this is 42161
+  # chainId is the EVM Chain ID, for Arbitrum One this is 42161
   # https://chainlist.org/chain/42161
   chainId: "42161"
   # This endpoint must be a public non-pruned archive node
@@ -27,10 +27,10 @@ network:
   # https://documentation.onfinality.io/support/the-enhanced-api-service
   endpoint: ["https://arbitrum.api.onfinality.io/public"]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  dictionary: "https://gx.api.subquery.network/sq/subquery/arbitrum-dictionary-eth"
+  dictionary: "https://gx.api.subquery.network/sq/subquery/arbitrum-one-dictionary"
 
 dataSources:
-  - kind: ethereum/Runtime # We use ethereum runtime since Arbitrum is a layer-2 that is compatible
+  - kind: ethereum/Runtime # We use ethereum runtime since Arbitrum One is a layer-2 that is compatible
     startBlock: 2591 # This is the block that the contract was deployed on https://arbiscan.io/tx/0x8ebe1945f039f865af8b3079df3819534340ee41a5e6b8bfefb9c36a857778c9
     options:
       # Must be a key of assets
@@ -43,14 +43,14 @@ dataSources:
       file: "./dist/index.js"
       handlers:
         - handler: handleTransaction
-          kind: ethereum/TransactionHandler # We use ethereum handlers since Arbitrum is a layer-2 that is compatible
+          kind: ethereum/TransactionHandler # We use ethereum handlers since Arbitrum One is a layer-2 that is compatible
           filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
             function: approve(address spender, uint256 amount)
         - handler: handleLog
-          kind: ethereum/LogHandler # We use ethereum handlers since Arbitrum is a layer-2 that is compatible
+          kind: ethereum/LogHandler # We use ethereum handlers since Arbitrum One is a layer-2 that is compatible
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
