@@ -25,24 +25,25 @@ network:
   # When developing your project we suggest getting a private API key
   # You can get them from OnFinality for free https://app.onfinality.io
   # https://documentation.onfinality.io/support/the-enhanced-api-service
-  endpoint: [
+  endpoint:
+    [
       "https://gnosis.api.onfinality.io/public",
-      #"https://gnosischain-rpc.gateway.pokt.network	",
-      #"https://gnosis-mainnet.public.blastapi.io",
-      #"https://opt-mainnet.g.alchemy.com/v2/demo",
-      #"https://rpc.ankr.com/gnosis",
-      #"https://rpc.gnosischain.com",
+      "https://gnosischain-rpc.gateway.pokt.network	",
+      "https://gnosis-mainnet.public.blastapi.io",
+      "https://opt-mainnet.g.alchemy.com/v2/demo",
+      "https://rpc.ankr.com/gnosis",
+      "https://rpc.gnosischain.com",
     ]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
   #dictionary: "https://api.subquery.network/sq/subquery/gnosis-dictionary"
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Optimism is a layer-2 that is compatible
-    startBlock: 17482563
+    startBlock: 12188423 # When the POAP contract was deployed https://gnosisscan.io/tx/0x2e4873cb1390f5328d389276624d1ffa833e3934657d5a791ee145defff663a2
     options:
       # Must be a key of assets
       abi: poap
-      address: "0x22C1f6050E56d2876009903609a2cC3fEf83B415" # this is the contract address for POAPs on Gnosis https://etherscan.io/token/0x22c1f6050e56d2876009903609a2cc3fef83b415
+      address: "0x22c1f6050e56d2876009903609a2cc3fef83b415" # this is the contract address for POAPs on Gnosis https://gnosisscan.io/token/0x22c1f6050e56d2876009903609a2cc3fef83b415
     assets:
       poap:
         file: "./abis/poap.abi.json"
@@ -54,11 +55,10 @@ dataSources:
           filter:
             ## The function can either be the function fragment or signature
             # function: '0xaf68b302'
-            function: mintToken(uint256 eventId, uint256 tokenId, address receiver, uint256 expirationTime, bytes signature)
-        - handler: handleLog
-          kind: ethereum/LogHandler # We use ethereum handlers since Optimism is a layer-2 that is compatible
+            function: mintToken(uint256 eventId, address to)
+        - handler: handleTokenTransfer
+          kind: ethereum/LogHandler
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
-              - Transfer(address indexed from, address indexed to, uint256 amount)
-              # address: "0x60781C2586D68229fde47564546784ab3fACA982"
+              - Transfer(address indexed from, address indexed to, uint256 indexed tokenId)

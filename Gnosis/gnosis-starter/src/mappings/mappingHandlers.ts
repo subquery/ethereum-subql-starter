@@ -1,7 +1,13 @@
-import { TokenMint, Event, Address } from "../types";
+import { Token, Event, Address } from "../types";
 import assert from "assert";
-import { MintTokenTransaction } from "../types/abi-interfaces/PoapAbi";
+import {
+  EventTokenLog,
+  MintTokenTransaction,
+  TransferLog,
+} from "../types/abi-interfaces/PoapAbi";
 import { BigNumber, BigNumberish } from "ethers";
+import { EthereumLog } from "@subql/types-ethereum";
+import { TokenTransfer } from "../types/models/TokenTransfer";
 
 async function checkGetEvent(id: BigNumberish): Promise<Event> {
   let event = await Event.get(id.toString().toLowerCase());
@@ -31,19 +37,58 @@ export async function handleTokenMint(tx: MintTokenTransaction): Promise<void> {
   logger.info(`New Token Mint transaction at block ${tx.blockNumber}`);
   assert(tx.args, "No tx.args");
 
-  const [eventId, tokenID, receiverId, expirationTime, signature] = tx.args;
+  // logger.info(JSON.stringify(tx.args));
+  const [eventId, receiverId] = tx.args;
   const event = await checkGetEvent(await eventId);
   const receiver = await checkGetAddress(await receiverId);
 
-  const tokenMint = TokenMint.create({
-    id: tx.hash,
-    blockHeight: BigInt(tx.blockNumber),
-    date: new Date(Number(tx.blockTimestamp)),
-    eventId: event.id,
-    tokenID: BigNumber.from(await tokenID).toBigInt(),
-    receiverId: receiver.id,
-    expiration: new Date(Number(await expirationTime)),
-  });
+  // The tokenID is from the logs from this transaction
+  // This searches by the function fragment signature to get the right log
+  const log = tx.logs?.find((log) =>
+    log.topics.includes(
+      "0x4b3711cd7ece062b0828c1b6e08d814a72d4c003383a016c833cbb1b45956e34"
+    )
+  ) as EventTokenLog;
 
-  await tokenMint.save();
+  if (log) {
+    const tokenId = log.args?.tokenId;
+    assert(tokenId, "No tokenID");
+
+    const newToken = Token.create({
+      id: tokenId.toString(),
+      mintTx: tx.hash,
+      mintBlockHeight: BigInt(tx.blockNumber),
+      mintDate: new Date(Number(tx.blockTimestamp) * 1000), // Saved as a seconds epoch
+      mintReceiverId: receiver.id,
+      eventId: event.id,
+    });
+
+    await newToken.save();
+  }
+}
+
+export async function handleTokenTransfer(log: TransferLog) {
+  logger.info(`New Token Transfer log at block ${log.blockNumber}`);
+  assert(log.args, "No log.args");
+
+  // We ignore all transfers from 0x0000000000000000000000000000000000000000 since they are from the original mint
+  if (log.args.from != "0x0000000000000000000000000000000000000000") {
+    const from = await checkGetAddress(await log.args.from);
+    const to = await checkGetAddress(await log.args.to);
+    const token = await Token.get(await log.args.tokenId.toString());
+
+    assert(token, `No Token ${token}, this must be new to us`);
+
+    const newTokenTransfer = TokenTransfer.create({
+      id: log.transactionHash,
+      txHash: log.transactionHash,
+      date: new Date(Number(log.block.timestamp) * 1000), // Saved as a seconds epoch
+      blockHeight: BigInt(log.blockNumber),
+      fromId: from.id,
+      toId: to.id,
+      tokenId: token.id,
+    });
+
+    await newTokenTransfer.save();
+  }
 }
