@@ -90,14 +90,24 @@ For the `subql-starter` project, you can try to query with the following code to
 
 ```graphql
 query {
-  transfers(first: 5, orderBy: BLOCK_HEIGHT_ASC) {
+  tokens(first: 5, orderBy: MINT_BLOCK_HEIGHT_DESC) {
     nodes {
       id
-      blockHeight
-      from
-      to
-      value
-      contractAddress
+      mintBlockHeight
+      mintReceiverId
+      mintDate
+      eventId
+    }
+  }
+  addresses(first: 5, orderBy: TOKENS_BY_CURRENT_HOLDER_ID_COUNT_DESC) {
+    nodes {
+      id
+      tokensByCurrentHolderId(first: 5) {
+        totalCount
+        nodes {
+          id
+        }
+      }
     }
   }
 }
