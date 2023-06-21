@@ -28,10 +28,8 @@ network:
   endpoint:
     [
       "https://gnosis.api.onfinality.io/public",
-      "https://gnosischain-rpc.gateway.pokt.network	",
-      "https://gnosis-mainnet.public.blastapi.io",
+      "https://gnosischain-rpc.gateway.pokt.network",
       "https://opt-mainnet.g.alchemy.com/v2/demo",
-      "https://rpc.ankr.com/gnosis",
       "https://rpc.gnosischain.com",
     ]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
