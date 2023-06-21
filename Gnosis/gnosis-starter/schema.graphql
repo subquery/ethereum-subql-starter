@@ -12,6 +12,7 @@ type Token @entity {
   mintTx: String!
   mintDate: Date!
   mintReceiver: Address!
+  currentHolder: Address!
   event: Event!
 }
 

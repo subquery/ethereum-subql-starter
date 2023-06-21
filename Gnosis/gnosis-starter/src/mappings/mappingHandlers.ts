@@ -60,6 +60,7 @@ export async function handleTokenMint(tx: MintTokenTransaction): Promise<void> {
       mintBlockHeight: BigInt(tx.blockNumber),
       mintDate: new Date(Number(tx.blockTimestamp) * 1000), // Saved as a seconds epoch
       mintReceiverId: receiver.id,
+      currentHolderId: receiver.id,
       eventId: event.id,
     });
 
@@ -90,5 +91,8 @@ export async function handleTokenTransfer(log: TransferLog) {
     });
 
     await newTokenTransfer.save();
+
+    token.currentHolderId = to.id;
+    await token.save();
   }
 }
