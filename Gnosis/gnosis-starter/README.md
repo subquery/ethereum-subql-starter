@@ -91,6 +91,7 @@ For the `subql-starter` project, you can try to query with the following code to
 ```graphql
 query {
   transfers(first: 5, orderBy: BLOCK_HEIGHT_ASC) {
+    totalCount
     nodes {
       id
       blockHeight
@@ -102,3 +103,26 @@ query {
   }
 }
 ```
+
+Expected results
+
+```
+{
+  "data": {
+    "transfers": {
+      "totalCount": 1,
+      "nodes": [
+        {
+          "id": "0xb7b6c9cc58ded302e5c0a7d5343af35ea260c315fbe03ca7305f02cd8ea342f0",
+          "blockHeight": "11566752",
+          "from": "0x0000000000000000000000000000000000000000",
+          "to": "0xBF3d6f830CE263CAE987193982192Cd990442B53",
+          "value": "1000000000000000000",
+          "contractAddress": "0xE2e73A1c69ecF83F464EFCE6A5be353a37cA09b2"
+        }
+      ]
+    }
+  }
+}
+```
+
