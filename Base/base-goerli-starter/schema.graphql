@@ -11,7 +11,8 @@ type Drip @entity {
   date: Date!
 }
 
-type DailyDrips @entity {
-  id: ID! # Transaction hash
+#The following entity allows us to aggregate daily Drips for USDC faucet only. As of JulY 4th, this contract only drips USDC faucet anyway.
+type DailyUSDCDrips @entity {
+  id: ID! # this is the format YYYY-MM-DD T HH:MM:SS
   totalValue: BigInt!
 }
