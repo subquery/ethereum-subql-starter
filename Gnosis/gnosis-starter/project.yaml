@@ -48,7 +48,7 @@ dataSources:
       file: "./dist/index.js"
       handlers:
         - handler: handleTransaction
-          kind: ethereum/TransactionHandler # We use ethereum handlers since Optimism is a layer-2 that is compatible
+          kind: ethereum/TransactionHandler # We use ethereum handlers since Gnosis is EVM compatible
           filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
