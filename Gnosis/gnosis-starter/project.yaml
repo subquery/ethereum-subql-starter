@@ -55,7 +55,7 @@ dataSources:
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
             function: approve(address spender, uint256 rawAmount)
         - handler: handleLog
-          kind: ethereum/LogHandler # We use ethereum handlers since Optimism is a layer-2 that is compatible
+          kind: ethereum/LogHandler # We use ethereum handlers since Gnosis is EVM compatible
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
