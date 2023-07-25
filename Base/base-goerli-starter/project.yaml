@@ -1,6 +1,6 @@
 specVersion: "1.0.0"
 
-name: "polygon-subql-starter"
+name: "base-goerli-starter"
 version: "0.0.1"
 runner:
   node:
@@ -9,33 +9,33 @@ runner:
   query:
     name: "@subql/query"
     version: "*"
-description: "This project can be use as a starting point for developing your new Polygon SubQuery project"
+description: "This project can be use as a starting point for developing your new Base Goerli SubQuery project"
 repository: "https://github.com/subquery/ethereum-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  # chainId is the EVM Chain ID, for Polygon this is 137
-  # https://chainlist.org/chain/137
-  chainId: "137"
+  # chainId is the EVM Chain ID, for Base Goerli this is 84531
+  # https://chainlist.org/chain/84531
+  chainId: "84531"
   # This endpoint must be a public non-pruned archive node
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
   # You can get them from OnFinality for free https://app.onfinality.io
   # https://documentation.onfinality.io/support/the-enhanced-api-service
-  endpoint: ["https://polygon.api.onfinality.io/public"]
+  endpoint: ["https://goerli.base.org"]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  dictionary: "https://gx.api.subquery.network/sq/subquery/polygon-dictionary"
+  # dictionary: "https://api.subquery.network/sq/subquery/base-goerli-dictionary"
 
 dataSources:
-  - kind: ethereum/Runtime # We use ethereum runtime since Polygon is a layer-2 that is compatible
-    startBlock: 3678215 # This is the block that the contract was deployed on
+  - kind: ethereum/Runtime # We use ethereum runtime since Base is EVM-compatible
+    startBlock: 3060969 # This is the block that the contract was deployed on https://goerli.basescan.org/tx/0x3901609b27f80e44b4530c4beaf8484635c088a8e24524e02d7b2571d4f40840
     options:
       # Must be a key of assets
       abi: erc20
-      address: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619" # This is the contract address for wrapped ether https://polygonscan.com/address/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619
+      address: "0x2e9f75df8839ff192da27e977cd154fd1eae03cf" # This is the contract address for USDC https://goerli.basescan.org/token/0x2e9f75df8839ff192da27e977cd154fd1eae03cf
     assets:
       erc20:
         file: "./abis/erc20.abi.json"
@@ -43,14 +43,14 @@ dataSources:
       file: "./dist/index.js"
       handlers:
         - handler: handleTransaction
-          kind: ethereum/TransactionHandler # We use ethereum handlers since Polygon is a layer-2 that is compatible
+          kind: ethereum/TransactionHandler # We use ethereum handlers since Base is EVM-compatible
           filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
-            function: approve(address spender, uint256 rawAmount)
+            function: approve(address spender, uint256 amount)
         - handler: handleLog
-          kind: ethereum/LogHandler # We use ethereum handlers since Polygon is a layer-2 that is compatible
+          kind: ethereum/LogHandler # We use ethereum handlers since Base is EVM-compatible
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/

@@ -4,7 +4,7 @@
 
 type Transfer @entity {
   id: ID! # Transaction hash
-  blockHeight: String
+  blockHeight: BigInt
   to: String!
   from: String!
   value: BigInt!
@@ -13,7 +13,7 @@ type Transfer @entity {
 
 type Approval @entity {
   id: ID! # Transaction hash
-  blockHeight: String
+  blockHeight: BigInt
   owner: String!
   spender: String!
   value: BigInt!
