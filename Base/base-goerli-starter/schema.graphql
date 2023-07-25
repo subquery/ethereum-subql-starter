@@ -2,17 +2,20 @@
 # Add the `@index` or `@index(unique: true)` annotation after any non-key field
 # https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
 
-type Drip @entity {
+type Transfer @entity {
   id: ID! # Transaction hash
-  blockHeight: String
+  blockHeight: BigInt
   to: String!
+  from: String!
   value: BigInt!
-  tokenAddress: String!
-  date: Date!
+  contractAddress: String!
 }
 
-#The following entity allows us to aggregate daily Drips for USDC faucet only. As of JulY 4th, this contract only drips USDC faucet anyway.
-type DailyUSDCDrips @entity {
-  id: ID! # this is the format YYYY-MM-DD
-  totalValue: BigInt!
+type Approval @entity {
+  id: ID! # Transaction hash
+  blockHeight: BigInt
+  owner: String!
+  spender: String!
+  value: BigInt!
+  contractAddress: String!
 }

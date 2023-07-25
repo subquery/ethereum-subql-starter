@@ -1,8 +1,9 @@
 # SubQuery - Starter Package
 
-The Starter Package is an example that you can use as a starting point for developing your SubQuery project on the Base Goerli blockchain.
-This project indexes all the events from the [USDC faucet contract](https://goerli.etherscan.io/address/0x298e0B0a38fF8B99bf1a3b697B0efB2195cfE47D) and calculates the total amount of USDC faucet dripped per day.
+The Starter Package is an example that you can use as a starting point for developing your SubQuery project.
 A SubQuery package defines which data The SubQuery will index from the blockchain, and how it will store it.
+
+This SubQuery Base Goerli starter project indexes all EVM transfers event for USDC token https://goerli.basescan.org/address/0x2e9f75df8839ff192da27e977cd154fd1eae03cf
 
 ## Preparation
 
@@ -91,18 +92,15 @@ For the `subql-starter` project, you can try to query with the following code to
 
 ```graphql
 query {
-    drips (first: 10, orderBy: DATE_DESC) {
-    	nodes {
-        id
-        value
-        date
-        }
-    }	
-  	dailyUSDCDrips(orderBy: ID_DESC){
-      nodes{
-        id
-        totalValue
-      }
+  transfers(first: 2, orderBy: BLOCK_HEIGHT_ASC) {
+    nodes {
+      id
+      blockHeight
+      contractAddress
+      to
+      from
+      value
     }
+  }
 }
 ```
