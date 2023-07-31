@@ -1,8 +1,8 @@
-# SubQuery - Example Project for Base Goerli
+# SubQuery - Example Project for Base
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for the [USDC token](https://goerli.basescan.org/address/0x2e9f75df8839ff192da27e977cd154fd1eae03cf) on Base's Goerli Network**
+**This SubQuery project indexes all transfers and approval events for the [Wrapped ETH](https://basescan.org/address/0x4200000000000000000000000000000000000006) on Base Mainnet**
 
 ## Start
 
