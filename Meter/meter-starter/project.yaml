@@ -28,7 +28,7 @@ network:
   #  endpoint: ["https://meter.blockpi.network/v1/rpc/public"]
   endpoint: ["https://rpc-meter.jellypool.xyz/"]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  # dictionary: "https://gx.api.subquery.network/sq/subquery/meteor-dictionary" Not yet live
+  # dictionary: "https://gx.api.subquery.network/sq/subquery/meter-dictionary" Not yet live
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Meter is a layer-2 that is compatible
