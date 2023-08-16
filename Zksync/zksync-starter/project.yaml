@@ -27,7 +27,7 @@ network:
   # https://documentation.onfinality.io/support/the-enhanced-api-service
   endpoint: ["https://mainnet.era.zksync.io"]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  dictionary: "https://gx.api.subquery.network/sq/subquery/zksync-dictionary"
+  # dictionary: "https://gx.api.subquery.network/sq/subquery/zksync-dictionary" Not yet live
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Zksync is a layer-2 that is compatible

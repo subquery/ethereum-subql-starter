@@ -25,16 +25,16 @@ network:
   # When developing your project we suggest getting a private API key
   # You can get them from OnFinality for free https://app.onfinality.io
   # https://documentation.onfinality.io/support/the-enhanced-api-service
-#  endpoint: ["https://meter.blockpi.network/v1/rpc/public"]
+  #  endpoint: ["https://meter.blockpi.network/v1/rpc/public"]
   endpoint: ["https://rpc-meter.jellypool.xyz/"]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  dictionary: "https://gx.api.subquery.network/sq/subquery/meteor-dictionary"
+  # dictionary: "https://gx.api.subquery.network/sq/subquery/meteor-dictionary" Not yet live
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Meter is a layer-2 that is compatible
-    startBlock: 41279094  # This is the block that the contract was deployed on
+    startBlock: 41279094 # This is the block that the contract was deployed on
     options:
-#      # Must be a key of assets
+      # Must be a key of assets
       abi: erc20
       address: "0x983147fb73a45fc7f8b4dfa1cd61bdc7b111e5b6" # This is the contract address for wrapped ether https://scan.meter.io/address/0x983147fb73a45fc7f8b4dfa1cd61bdc7b111e5b6
     assets:
@@ -47,7 +47,7 @@ dataSources:
           kind: ethereum/TransactionHandler # We use ethereum handlers since Meter is a layer-2 that is compatible
           filter:
             ## The function can either be the function fragment or signature
-#             function: '0x095ea7b3'
+            #             function: '0x095ea7b3'
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
             function: approve(address owner, address spender, uint256 rawAmount)
         - handler: handleLog
