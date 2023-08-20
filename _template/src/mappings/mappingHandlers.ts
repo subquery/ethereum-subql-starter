@@ -9,30 +9,29 @@ export async function handleLog(log: TransferLog): Promise<void> {
   logger.info(`New transfer transaction log at block ${log.blockNumber}`);
   assert(log.args, "No log.args");
 
-  const transferRecord = Transfer.create({
+  const transaction = Transfer.create({
     id: log.transactionHash,
-    blockHeight: log.blockNumber.toString(),
-    value: log.args.value.toBigInt(),
-    from: log.args.from,
+    blockHeight: BigInt(log.blockNumber),
     to: log.args.to,
+    from: log.args.from,
+    value: log.args.value.toBigInt(),
     contractAddress: log.address,
   });
 
-  await transferRecord.save();
+  await transaction.save();
 }
 
 export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
-  assert(tx.args, "No tx.args");
   logger.info(`New Approval transaction at block ${tx.blockNumber}`);
+  assert(tx.args, "No tx.args");
 
-  const approvalRecord = Approval.create({
+  const approval = Approval.create({
     id: tx.hash,
-    blockHeight: tx.blockNumber.toString(),
     owner: tx.from,
     spender: await tx.args[0],
     value: BigInt(await tx.args[1].toString()),
     contractAddress: tx.to,
   });
 
-  await approvalRecord.save();
+  await approval.save();
 }

@@ -1,8 +1,8 @@
-# SubQuery - Example Project for Zksync
+# SubQuery - Example Project for %NETWORK_NAME%
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for the [wrapped USDC token](https://explorer.zksync.io/address/0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4) (`0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4`) on Zksync Network**
+**This SubQuery project indexes all transfers and approval events for the `%NETWORK_ERC20_TOKEN%` on %NETWORK_NAME%**
 
 ## Start
 
