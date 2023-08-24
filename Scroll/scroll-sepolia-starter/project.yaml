@@ -29,7 +29,7 @@ network:
   # dictionary: "https://api.subquery.network/sq/subquery/scroll-sepolia-dictionary"
 
 dataSources:
-  - kind: ethereum/Runtime # We use ethereum runtime since Base is EVM-compatible
+  - kind: ethereum/Runtime # We use ethereum runtime since Scroll Sepolia is EVM-compatible
     startBlock: 1 # This is the block that the contract was deployed on https://sepolia-blockscout.scroll.io/address/0x5300000000000000000000000000000000000004
     options:
       # Must be a key of assets
@@ -42,14 +42,14 @@ dataSources:
       file: "./dist/index.js"
       handlers:
         - handler: handleTransaction
-          kind: ethereum/TransactionHandler # We use ethereum handlers since Base is EVM-compatible
+          kind: ethereum/TransactionHandler # We use ethereum handlers since Scroll Sepolia is EVM-compatible
           filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
             function: approve(address spender, uint256 amount)
         - handler: handleLog
-          kind: ethereum/LogHandler # We use ethereum handlers since Base is EVM-compatible
+          kind: ethereum/LogHandler # We use ethereum handlers since Scroll Sepolia is EVM-compatible
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/

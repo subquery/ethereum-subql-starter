@@ -30,7 +30,7 @@ network:
   # dictionary: "https://api.subquery.network/sq/subquery/polygon-zkevm-dictionary"
 
 dataSources:
-  - kind: ethereum/Runtime # We use ethereum runtime since Base is EVM-compatible
+  - kind: ethereum/Runtime # We use ethereum runtime since Polygon zkEVM is EVM-compatible
     startBlock: 1 # This is the block that the contract was deployed on https://zkevm.polygonscan.com/token/0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9
     options:
       # Must be a key of assets
@@ -43,14 +43,14 @@ dataSources:
       file: "./dist/index.js"
       handlers:
         - handler: handleTransaction
-          kind: ethereum/TransactionHandler # We use ethereum handlers since Base is EVM-compatible
+          kind: ethereum/TransactionHandler # We use ethereum handlers since Polygon zkEVM is EVM-compatible
           filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
             function: approve(address spender, uint256 amount)
         - handler: handleLog
-          kind: ethereum/LogHandler # We use ethereum handlers since Base is EVM-compatible
+          kind: ethereum/LogHandler # We use ethereum handlers since Polygon zkEVM  is EVM-compatible
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
