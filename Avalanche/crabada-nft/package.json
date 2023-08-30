@@ -1,7 +1,7 @@
 {
-  "name": "optimism-subql-starter",
+  "name": "crabada-nft",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Optimism SubQuery project",
+  "description": "This project indexes all Crabada NFTs on Avalanche's C-chain",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
@@ -11,8 +11,8 @@
     "prepack": "rm -rf dist && npm run build",
     "test": "subql build && subql-node-ethereum test"
   },
-  "homepage": "https://github.com/subquery/ethereum-subql-starter",
-  "repository": "github:subquery/ethereum-subql-starter",
+  "homepage": "https://github.com/subquery/subquery-example-avalanche-crabada-nft",
+  "repository": "github:subquery/subquery-example-avalanche-crabada-nft",
   "files": [
     "dist",
     "schema.graphql",
@@ -24,7 +24,8 @@
     "@subql/common": "latest",
     "@subql/types-ethereum": "latest",
     "@subql/validator": "latest",
-    "assert": "^2.0.0"
+    "assert": "^2.0.0",
+    "abab": "^2.0.6"
   },
   "devDependencies": {
     "@subql/cli": "latest",

@@ -1,7 +1,7 @@
 {
-  "name": "optimism-subql-starter",
+  "name": "gnosis-poap",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Optimism SubQuery project",
+  "description": "This example project indexes all POAPs mints and transactions on the Gnosis mainnet",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
@@ -24,7 +24,8 @@
     "@subql/common": "latest",
     "@subql/types-ethereum": "latest",
     "@subql/validator": "latest",
-    "assert": "^2.0.0"
+    "assert": "^2.0.0",
+    "abab": "^2.0.6"
   },
   "devDependencies": {
     "@subql/cli": "latest",

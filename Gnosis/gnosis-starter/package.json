@@ -34,8 +34,5 @@
     "@subql/node-ethereum": "latest",
     "ethers": "^5.7.2",
     "typescript": "4.5.5"
-  },
-  "resolutions": {
-    "@polkadot/util": "11.1.3"
   }
 }

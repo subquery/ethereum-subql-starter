@@ -1,0 +1,55 @@
+specVersion: "1.0.0"
+
+name: "bsc-mobox-rewards"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "This project indexes all deposits and withdrawls to MOBOX pools"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  # chainId is the EVM Chain ID, for BSC this is 56
+  # https://chainlist.org/chain/56
+  chainId: "56"
+  # This endpoint must be a public non-pruned archive node
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  # You can get them from OnFinality for free https://app.onfinality.io
+  # https://documentation.onfinality.io/support/the-enhanced-api-service
+  endpoint: ["https://bsc-dataseed1.binance.org"]
+  # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
+  dictionary: "https://dict-tyk.subquery.network/query/binance"
+
+dataSources:
+  - kind: ethereum/Runtime # We use ethereum runtime since BSC is a layer-2 that is compatible
+    startBlock: 17047980 # The block on which the Mobox Farming contract was deployed
+    options:
+      # Must be a key of assets
+      abi: mobox_abi
+      address: "0xa5f8c5dbd5f286960b9d90548680ae5ebff07652" # this is the contract address for Mobox Farming contract https://bscscan.com/address/0xa5f8c5dbd5f286960b9d90548680ae5ebff07652#code
+    assets:
+      mobox_abi:
+        file: "mobox.abi.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleDeposit
+          kind: ethereum/LogHandler # We use ethereum handlers since BSC is a layer-2 that is compatible
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - Deposit(address indexed user, uint256 indexed pid, uint256 amount)
+        - handler: handleWithdraw
+          kind: ethereum/LogHandler # We use ethereum handlers since BSC is a layer-2 that is compatible
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - Withdraw(address indexed user, uint256 indexed pid, uint256 amount)

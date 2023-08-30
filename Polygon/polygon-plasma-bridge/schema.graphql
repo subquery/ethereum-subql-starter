@@ -1,0 +1,27 @@
+# To improve query performance, we strongly suggest adding indexes to any field that you plan to filter or sort by
+# Add the `@index` or `@index(unique: true)` annotation after any non-key field
+# https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
+
+type Deposit @entity {
+  id: ID! # Deposit Count Index
+  rootToken: String!
+  childToken: String!
+  user: User! # Foreign Key
+  amount: BigInt!
+  amountFriendly: BigInt!
+}
+
+type Withdrawl @entity {
+  id: ID! # Withdrawl Count Index
+  rootToken: String!
+  childToken: String!
+  user: User! # Foreign Key
+  amount: BigInt!
+  amountFriendly: BigInt!
+}
+
+type User @entity {
+  id: ID! # Wallet Address
+  totalDeposits: BigInt!
+  totalWithdrawls: BigInt!
+}

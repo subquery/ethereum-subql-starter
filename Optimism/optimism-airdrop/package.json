@@ -1,7 +1,7 @@
 {
-  "name": "optimism-subql-starter",
+  "name": "optimism-airdrop",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Optimism SubQuery project",
+  "description": "This project can be use as a starting point for developing your new Optimism SubQuery project. It indexes all claim events from the Optimism airdrop",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
