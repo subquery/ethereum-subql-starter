@@ -27,7 +27,7 @@ network:
   # https://documentation.onfinality.io/support/the-enhanced-api-service
   endpoint: ["https://avalanche.api.onfinality.io/public/ext/bc/C/rpc"]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  dictionary: "https://api.subquery.network/sq/subquery/avalanche-dictionary"
+  dictionary: "https://dict-tyk.subquery.network/query/avalanche"
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Avalanche is compatible

@@ -24,11 +24,9 @@ network:
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
-  endpoint:
-    - https://rpcapi.fantom.network
-    - https://fantom.publicnode.com
+  endpoint: ["https://rpcapi.fantom.network", "https://fantom.publicnode.com"]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  # dictionary: "https://api.subquery.network/sq/subquery/fantom-dictionary"
+  dictionary: "https://dict-tyk.subquery.network/query/fantom"
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Fantom Opera is EVM-compatible

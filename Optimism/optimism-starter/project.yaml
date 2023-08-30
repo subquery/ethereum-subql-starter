@@ -34,7 +34,7 @@ network:
       "https://rpc.ankr.com/optimism",
     ]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  dictionary: "https://api.subquery.network/sq/subquery/optimism-dictionary"
+  dictionary: "https://dict-tyk.subquery.network/query/optimism-mainnet"
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Optimism is a layer-2 that is compatible

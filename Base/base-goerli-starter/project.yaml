@@ -27,7 +27,7 @@ network:
   # https://documentation.onfinality.io/support/the-enhanced-api-service
   endpoint: ["https://goerli.base.org"]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  # dictionary: "https://api.subquery.network/sq/subquery/base-goerli-dictionary"
+  dictionary: "https://dict-tyk.subquery.network/query/base-goerli"
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Base is EVM-compatible
