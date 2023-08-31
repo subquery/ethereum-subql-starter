@@ -65,6 +65,7 @@ For this project, you can try to query with the following GraphQL code to get a 
   }
 }
 ```
+
 Your result should look similar to the following:
 
 ```json
