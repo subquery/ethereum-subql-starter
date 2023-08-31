@@ -30,7 +30,7 @@ network:
     - https://data-seed-prebsc-2-s1.bnbchain.org:8545
     - https://data-seed-prebsc-2-s2.bnbchain.org:8545
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  # dictionary: "https://api.subquery.network/sq/subquery/bsc-testnet-dictionary"
+  dictionary: "https://dict-tyk.subquery.network/query/binance-testnet"
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since BSC Testnet is EVM-compatible

@@ -27,7 +27,7 @@ network:
   endpoint:
     - https://rpc.ankr.com/avalanche_fuji
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  # dictionary: "https://api.subquery.network/sq/subquery/avalanche-fuji-dictionary"
+  dictionary: "https://dict-tyk.subquery.network/query/avalanche-testnet"
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Avalanche Fuji is EVM-compatible
