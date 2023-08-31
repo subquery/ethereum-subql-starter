@@ -25,7 +25,7 @@ network:
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
   endpoint:
-    - https://eth-sepolia.public.blastapi.io
+    - wss://sepolia.gateway.tenderly.co
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
   dictionary: "https://dict-tyk.subquery.network/query/sepolia"
 

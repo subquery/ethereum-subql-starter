@@ -69,7 +69,36 @@ For this project, you can try to query with the following GraphQL code to get a 
 The result should look something like this:
 
 ```json
-
+{
+  "data": {
+    "query": {
+      "transfers": {
+        "totalCount": 2,
+        "nodes": [
+          {
+            "id": "0xc6ec0db9969abd242733e1c08bd3f613e2017c86846d4c47ccec7cc29ec108eb",
+            "blockHeight": "4085662",
+            "from": "0xE52e23326668117034A0eC6A288E5bB117B7f2C6",
+            "to": "0x9791B7a69E5Fa8F9fe7F07b4817b815A89abEF5C",
+            "value": "2100000000000000",
+            "contractAddress": "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9"
+          },
+          {
+            "id": "0x391d9cc18e4237572687b992633883112c74fd0a4b068162c6d2054bdc2f5db3",
+            "blockHeight": "4085662",
+            "from": "0xE52e23326668117034A0eC6A288E5bB117B7f2C6",
+            "to": "0x36764Af31381057e722A003A69D089D54Fe2c61b",
+            "value": "1050000000000000",
+            "contractAddress": "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9"
+          }
+        ]
+      }
+    },
+    "approvals": {
+      "nodes": []
+    }
+  }
+}
 ```
 
 You can explore the different possible queries and entities to help you with GraphQL using the documentation draw on the right.
