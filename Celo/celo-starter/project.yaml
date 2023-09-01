@@ -31,7 +31,7 @@ network:
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Celo is EVM-compatible
-    startBlock: 1 # This is the block that the contract was deployed on https://explorer.celo.org/mainnet/token/0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207
+    startBlock: 21177820 # This is the block that the contract was deployed on https://explorer.celo.org/mainnet/token/0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207
     options:
       # Must be a key of assets
       abi: erc20
