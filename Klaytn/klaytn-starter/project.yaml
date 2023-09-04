@@ -17,8 +17,8 @@ schema:
   file: "./schema.graphql"
 
 network:
-  # chainId is the EVM Chain ID, for Klaytn this is 1101
-  # https://chainlist.org/chain/1101
+  # chainId is the EVM Chain ID, for Klaytn this is 8217
+  # https://chainlist.org/chain/8217
   chainId: "8217"
   # This endpoint must be a public non-pruned archive node
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
