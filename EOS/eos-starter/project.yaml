@@ -31,7 +31,7 @@ network:
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since EOS is a layer-1 that is EVM compatible
-    startBlock: 13178455 # This is the block that the contract was deployed on
+    startBlock: 13178455 # This is the block at which EOS starts being EVM compatible
     options:
       # Must be a key of assets
       abi: erc20
