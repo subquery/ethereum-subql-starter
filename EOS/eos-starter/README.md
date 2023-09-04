@@ -1,8 +1,8 @@
-# SubQuery - Example Project for Polygon
+# SubQuery - Example Project for EOS
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for the [wrapped Ether token](https://polygonscan.com/address/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619) (`0x7ceb23fd6bc0add59e62ac25578270cff1b9f619`) on Polgon Network**
+**This SubQuery project indexes all transfers and approval events for the [wrapped EOS token](https://explorer.evm.eosnetwork.com/address/0xc00592aA41D32D137dC480d9f6d0Df19b860104F) (`0xc00592aA41D32D137dC480d9f6d0Df19b860104F`) on Polgon Network**
 
 ## Start
 
