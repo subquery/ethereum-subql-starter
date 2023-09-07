@@ -10,14 +10,14 @@ runner:
     name: "@subql/query"
     version: "*"
 description: "This project can be use as a starting point for developing your
-  new Polygon zkEVM Sepolia SubQuery project"
+  new Polygon zkEVM SubQuery project"
 repository: "https://github.com/subquery/ethereum-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  # chainId is the EVM Chain ID, for Polygon zkEVM Sepolia this is 1101
+  # chainId is the EVM Chain ID, for Polygon zkEVM this is 1101
   # https://chainlist.org/chain/1101
   chainId: "1101"
   # This endpoint must be a public non-pruned archive node
