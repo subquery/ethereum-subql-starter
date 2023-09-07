@@ -1,8 +1,8 @@
-# SubQuery - Example Project for Polygon zkEVM
+# SubQuery - Example Project for Theta Mainnet
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for the [Wrapped Eth](https://zkevm.polygonscan.com/token/0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9) on Polygon zkEVM's Network**
+**This SubQuery project indexes all transfers and approval events for the [BUSD Token](http://www.thetascan.io/contracts/tnt20/?data=0x7b37d0787a3424a0810e02b24743a45ebd5530b2) on Theta Network**
 
 ## Start
 
