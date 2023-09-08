@@ -16,7 +16,7 @@ schema:
   file: "./schema.graphql"
 
 network:
-  # chainId is the EVM Chain ID, for Ethereum this is 1
+  # chainId is the EVM Chain ID, for Linea this is 59144
   # https://chainlist.org/chain/
   chainId: "59144"
   # This endpoint must be a public non-pruned archive node
