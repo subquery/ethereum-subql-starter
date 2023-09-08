@@ -32,7 +32,7 @@ export async function handleUpdatedGravatar(
 
   // We first check if the Gravatar already exists, if not we create it
   let gravatar = await Gravatar.get(id);
-  if (gravatar == null || gravatar == undefined) {
+  if (!gravatar) {
     gravatar = Gravatar.create({
       id,
       createdBlock: BigInt(log.blockNumber),
