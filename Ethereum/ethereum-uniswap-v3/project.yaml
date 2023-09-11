@@ -19,7 +19,7 @@ network:
   #  endpoint: "fill it in"
   chainId: "1"
   dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary"
-  endpoint: "http://eth.api.onfinality.io/public"
+  endpoint: "https://eth.llamarpc.com"
 
 dataSources:
   - kind: ethereum/Runtime
@@ -47,7 +47,7 @@ dataSources:
           filter:
             topics:
               - PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)
-    # ethereum/contract
+  # ethereum/contract
   - kind: ethereum/Runtime
     startBlock: 12369651
     options:

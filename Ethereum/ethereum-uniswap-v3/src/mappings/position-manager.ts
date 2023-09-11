@@ -230,7 +230,7 @@ export async function handleCollect(
 export async function handleTransfer(
   event: EthereumLog<TransferEvent["args"]>
 ): Promise<void> {
-  const position = await getPosition(event, event.args.tokenId);
+  const position = await getPosition(event, event.args[2]);
 
   // position was not able to be fetched
   if (position === undefined || position === null) {
