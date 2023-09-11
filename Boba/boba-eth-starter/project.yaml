@@ -17,7 +17,7 @@ schema:
   file: "./schema.graphql"
 
 network:
-  # chainId is the EVM Chain ID, for Boba Eth this is 1101
+  # chainId is the EVM Chain ID, for Boba Eth this is 288
   # https://chainlist.org/chain/1101
   chainId: "288"
   # This endpoint must be a public non-pruned archive node
