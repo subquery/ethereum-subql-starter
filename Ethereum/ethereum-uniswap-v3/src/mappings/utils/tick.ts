@@ -14,36 +14,36 @@ export function createTick(
   poolId: string,
   event: EthereumLog<MintEvent["args"]>
 ): Tick {
-  const tick = new Tick(tickId);
-  tick.tickIdx = BigInt(tickIdx);
-  tick.poolId = poolId;
-  tick.poolAddress = poolId;
-
-  tick.createdAtTimestamp = event.block.timestamp;
-  tick.createdAtBlockNumber = BigInt(event.block.number);
-  tick.liquidityGross = ZERO_BI;
-  tick.liquidityNet = ZERO_BI;
-  tick.liquidityProviderCount = ZERO_BI;
-
-  tick.price0 = ONE_BD.toNumber();
-  tick.price1 = ONE_BD.toNumber();
-
   // 1.0001^tick is token1/token0.
   // return bigNumber.js bignumber and convert to number
   const price0 = Math.pow(1.0001, tickIdx);
-  tick.price0 = price0;
-  tick.price1 = safeDivNumToNum(1, tick.price0);
-  tick.volumeToken0 = ZERO_BD.toNumber();
-  tick.volumeToken1 = ZERO_BD.toNumber();
-  tick.volumeUSD = ZERO_BD.toNumber();
-  tick.feesUSD = ZERO_BD.toNumber();
-  tick.untrackedVolumeUSD = ZERO_BD.toNumber();
-  tick.collectedFeesToken0 = ZERO_BD.toNumber();
-  tick.collectedFeesToken1 = ZERO_BD.toNumber();
-  tick.collectedFeesUSD = ZERO_BD.toNumber();
-  tick.liquidityProviderCount = ZERO_BI;
-  tick.feeGrowthOutside0X128 = ZERO_BI;
-  tick.feeGrowthOutside1X128 = ZERO_BI;
+
+  const tick = Tick.create({
+    id: tickId,
+    tickIdx: BigInt(tickIdx),
+    poolId: poolId,
+    poolAddress: poolId,
+
+    createdAtTimestamp: event.block.timestamp,
+    createdAtBlockNumber: BigInt(event.block.number),
+    liquidityGross: ZERO_BI,
+    liquidityNet: ZERO_BI,
+    liquidityProviderCount: ZERO_BI,
+
+    price0: ONE_BD.toNumber(),
+    price1: safeDivNumToNum(1, price0),
+    volumeToken0: ZERO_BD.toNumber(),
+    volumeToken1: ZERO_BD.toNumber(),
+    volumeUSD: ZERO_BD.toNumber(),
+    feesUSD: ZERO_BD.toNumber(),
+    untrackedVolumeUSD: ZERO_BD.toNumber(),
+    collectedFeesToken0: ZERO_BD.toNumber(),
+    collectedFeesToken1: ZERO_BD.toNumber(),
+    collectedFeesUSD: ZERO_BD.toNumber(),
+    feeGrowthOutside0X128: ZERO_BI,
+    feeGrowthOutside1X128: ZERO_BI,
+  });
+
   return tick;
 }
 

@@ -63,21 +63,29 @@ export async function updatePoolDayData(
   ]);
 
   if (poolDayData === undefined) {
-    poolDayData = new PoolDayData(dayPoolID);
-    poolDayData.date = dayStartTimestamp.toNumber();
-    poolDayData.poolId = pool.id;
-    // things that dont get initialized always
-    poolDayData.volumeToken0 = 0;
-    poolDayData.volumeToken1 = 0;
-    poolDayData.volumeUSD = 0;
-    poolDayData.feesUSD = 0;
-    poolDayData.txCount = ZERO_BI;
-    poolDayData.feeGrowthGlobal0X128 = ZERO_BI;
-    poolDayData.feeGrowthGlobal1X128 = ZERO_BI;
-    poolDayData.open = pool.token0Price;
-    poolDayData.high = pool.token0Price;
-    poolDayData.low = pool.token0Price;
-    poolDayData.close = pool.token0Price;
+    poolDayData = PoolDayData.create({
+      id: dayPoolID,
+      date: dayStartTimestamp.toNumber(),
+      poolId: pool.id,
+      // things that dont get initialized always
+      volumeToken0: 0,
+      volumeToken1: 0,
+      volumeUSD: 0,
+      feesUSD: 0,
+      txCount: ZERO_BI,
+      feeGrowthGlobal0X128: ZERO_BI,
+      feeGrowthGlobal1X128: ZERO_BI,
+      open: pool.token0Price,
+      high: pool.token0Price,
+      low: pool.token0Price,
+      close: pool.token0Price,
+      liquidity: pool.liquidity,
+      sqrtPrice: pool.sqrtPrice,
+      token0Price: pool.token0Price,
+      token1Price: pool.token1Price,
+      tick: pool.tick,
+      tvlUSD: pool.totalValueLockedUSD,
+    });
   }
 
   if (pool.token0Price > poolDayData.high) {
@@ -87,15 +95,8 @@ export async function updatePoolDayData(
     poolDayData.low = pool.token0Price;
   }
 
-  poolDayData.liquidity = pool.liquidity;
-  poolDayData.sqrtPrice = pool.sqrtPrice;
-  poolDayData.feeGrowthGlobal0X128 = pool.feeGrowthGlobal0X128;
-  poolDayData.feeGrowthGlobal1X128 = pool.feeGrowthGlobal1X128;
-  poolDayData.token0Price = pool.token0Price;
-  poolDayData.token1Price = pool.token1Price;
-  poolDayData.tick = pool.tick;
-  poolDayData.tvlUSD = pool.totalValueLockedUSD;
   poolDayData.txCount = poolDayData.txCount + ONE_BI;
+
   await poolDayData.save();
 
   return poolDayData;
@@ -116,22 +117,29 @@ export async function updatePoolHourData(
     await PoolHourData.get(hourPoolID),
   ]);
   if (poolHourData === undefined) {
-    poolHourData = new PoolHourData(hourPoolID);
-    poolHourData = new PoolHourData(hourPoolID);
-    poolHourData.periodStartUnix = hourStartUnix.toNumber();
-    poolHourData.poolId = pool.id;
-    // things that dont get initialized always
-    poolHourData.volumeToken0 = 0;
-    poolHourData.volumeToken1 = 0;
-    poolHourData.volumeUSD = 0;
-    poolHourData.txCount = ZERO_BI;
-    poolHourData.feesUSD = 0;
-    poolHourData.feeGrowthGlobal0X128 = ZERO_BI;
-    poolHourData.feeGrowthGlobal1X128 = ZERO_BI;
-    poolHourData.open = pool.token0Price;
-    poolHourData.high = pool.token0Price;
-    poolHourData.low = pool.token0Price;
-    poolHourData.close = pool.token0Price;
+    poolHourData = PoolHourData.create({
+      id: hourPoolID,
+      periodStartUnix: hourStartUnix.toNumber(),
+      poolId: pool.id,
+      // things that dont get initialized always
+      volumeToken0: 0,
+      volumeToken1: 0,
+      volumeUSD: 0,
+      feesUSD: 0,
+      txCount: ZERO_BI,
+      feeGrowthGlobal0X128: ZERO_BI,
+      feeGrowthGlobal1X128: ZERO_BI,
+      open: pool.token0Price,
+      high: pool.token0Price,
+      low: pool.token0Price,
+      close: pool.token0Price,
+      liquidity: pool.liquidity,
+      sqrtPrice: pool.sqrtPrice,
+      token0Price: pool.token0Price,
+      token1Price: pool.token1Price,
+      tick: pool.tick,
+      tvlUSD: pool.totalValueLockedUSD,
+    });
   }
 
   if (pool.token0Price > poolHourData.high) {
@@ -173,17 +181,22 @@ export async function updateTokenDayData(
   const tokenPrice = token.derivedETH * bundle.ethPriceUSD;
 
   if (tokenDayData === undefined) {
-    tokenDayData = new TokenDayData(tokenDayID);
-    tokenDayData.date = dayStartTimestamp.toNumber();
-    tokenDayData.tokenId = token.id;
-    tokenDayData.volume = 0;
-    tokenDayData.volumeUSD = 0;
-    tokenDayData.feesUSD = 0;
-    tokenDayData.untrackedVolumeUSD = 0;
-    tokenDayData.open = tokenPrice;
-    tokenDayData.high = tokenPrice;
-    tokenDayData.low = tokenPrice;
-    tokenDayData.close = tokenPrice;
+    tokenDayData = TokenDayData.create({
+      id: tokenDayID,
+      date: dayStartTimestamp.toNumber(),
+      tokenId: token.id,
+      volume: 0,
+      volumeUSD: 0,
+      feesUSD: 0,
+      untrackedVolumeUSD: 0,
+      open: tokenPrice,
+      high: tokenPrice,
+      low: tokenPrice,
+      close: tokenPrice,
+      priceUSD: token.derivedETH * bundle.ethPriceUSD,
+      totalValueLocked: token.totalValueLocked,
+      totalValueLockedUSD: token.totalValueLockedUSD,
+    });
   }
 
   if (tokenPrice > tokenDayData.high) {
@@ -194,10 +207,6 @@ export async function updateTokenDayData(
     tokenDayData.low = tokenPrice;
   }
 
-  tokenDayData.close = tokenPrice;
-  tokenDayData.priceUSD = token.derivedETH * bundle.ethPriceUSD;
-  tokenDayData.totalValueLocked = token.totalValueLocked;
-  tokenDayData.totalValueLockedUSD = token.totalValueLockedUSD;
   await tokenDayData.save();
 
   return tokenDayData;
@@ -220,17 +229,22 @@ export async function updateTokenHourData(
   ]);
   const tokenPrice = BigNumber.from(token.derivedETH).mul(bundle.ethPriceUSD);
   if (tokenHourData === undefined) {
-    tokenHourData = new TokenHourData(tokenHourID);
-    tokenHourData.periodStartUnix = hourStartUnix.toNumber();
-    tokenHourData.tokenId = token.id;
-    tokenHourData.volume = 0;
-    tokenHourData.volumeUSD = 0;
-    tokenHourData.untrackedVolumeUSD = 0;
-    tokenHourData.feesUSD = 0;
-    tokenHourData.open = tokenPrice.toNumber();
-    tokenHourData.high = tokenPrice.toNumber();
-    tokenHourData.low = tokenPrice.toNumber();
-    tokenHourData.close = tokenPrice.toNumber();
+    tokenHourData = TokenHourData.create({
+      id: tokenHourID,
+      periodStartUnix: hourStartUnix.toNumber(),
+      tokenId: token.id,
+      volume: 0,
+      volumeUSD: 0,
+      untrackedVolumeUSD: 0,
+      feesUSD: 0,
+      open: tokenPrice.toNumber(),
+      high: tokenPrice.toNumber(),
+      low: tokenPrice.toNumber(),
+      close: tokenPrice.toNumber(),
+      totalValueLocked: token.totalValueLocked,
+      totalValueLockedUSD: token.totalValueLockedUSD,
+      priceUSD: tokenPrice.toNumber(),
+    });
   }
 
   if (tokenPrice.gt(tokenHourData.high)) {
@@ -241,10 +255,6 @@ export async function updateTokenHourData(
     tokenHourData.low = tokenPrice.toNumber();
   }
 
-  tokenHourData.close = tokenPrice.toNumber();
-  tokenHourData.priceUSD = tokenPrice.toNumber();
-  tokenHourData.totalValueLocked = token.totalValueLocked;
-  tokenHourData.totalValueLockedUSD = token.totalValueLockedUSD;
   await tokenHourData.save();
 
   return tokenHourData;
@@ -260,10 +270,20 @@ export async function updateTickDayData(
   const tickDayDataID = tick.id.concat("-").concat(dayID.toString());
   let tickDayData = await TickDayData.get(tickDayDataID);
   if (tickDayData === undefined) {
-    tickDayData = new TickDayData(tickDayDataID);
-    tickDayData.date = dayStartTimestamp.toNumber();
-    tickDayData.poolId = tick.poolId;
-    tickDayData.tickId = tick.id;
+    tickDayData = TickDayData.create({
+      id: tickDayDataID,
+      date: dayStartTimestamp.toNumber(),
+      poolId: tick.poolId,
+      tickId: tick.id,
+      liquidityGross: tick.liquidityGross,
+      liquidityNet: tick.liquidityNet,
+      volumeToken0: tick.volumeToken0,
+      volumeToken1: tick.volumeToken0,
+      volumeUSD: tick.volumeUSD,
+      feesUSD: tick.feesUSD,
+      feeGrowthOutside0X128: tick.feeGrowthOutside0X128,
+      feeGrowthOutside1X128: tick.feeGrowthOutside1X128,
+    });
   }
   tickDayData.liquidityGross = tick.liquidityGross;
   tickDayData.liquidityNet = tick.liquidityNet;

@@ -10,11 +10,8 @@ import {
   ADDRESS_ZERO,
   FACTORY_ADDRESS,
   ONE_BI,
-  ZERO_BD,
   ZERO_BI,
 } from "./utils";
-import { BigNumber } from "@ethersproject/bignumber";
-// import {BigNumber} from "ethers"
 import {
   Pool,
   Token,
@@ -64,11 +61,6 @@ export async function handlePoolCreated(
 
     await bundle.save();
   }
-
-  factory.poolCount = factory.poolCount + ONE_BI;
-
-  // let pool = new Pool(event.args.pool.toHexString()) as Pool
-  const pool = new Pool(event.args.pool);
 
   let [token0, token1] = await Promise.all([
     Token.get(event.args.token0),
@@ -137,6 +129,39 @@ export async function handlePoolCreated(
     });
   }
 
+  factory.poolCount = factory.poolCount + ONE_BI;
+
+  const pool = Pool.create({
+    id: event.args.pool,
+    token0Id: token0.id,
+    token1Id: token1.id,
+    feeTier: BigInt(event.args.fee),
+    createdAtTimestamp: event.block.timestamp,
+    createdAtBlockNumber: BigInt(event.blockNumber),
+    liquidityProviderCount: ZERO_BI,
+    txCount: ZERO_BI,
+    liquidity: ZERO_BI,
+    sqrtPrice: ZERO_BI,
+    feeGrowthGlobal0X128: ZERO_BI,
+    feeGrowthGlobal1X128: ZERO_BI,
+    token0Price: 0,
+    token1Price: 0,
+    observationIndex: ZERO_BI,
+    totalValueLockedToken0: 0,
+    totalValueLockedToken1: 0,
+    totalValueLockedUSD: 0,
+    totalValueLockedETH: 0,
+    totalValueLockedUSDUntracked: 0,
+    volumeToken0: 0,
+    volumeToken1: 0,
+    volumeUSD: 0,
+    feesUSD: 0,
+    untrackedVolumeUSD: 0,
+    collectedFeesToken0: 0,
+    collectedFeesToken1: 0,
+    collectedFeesUSD: 0,
+  });
+
   // update white listed pools
   if (WHITELIST_TOKENS.includes(token0.id)) {
     const newPool = WhiteListPools.create({
@@ -154,34 +179,6 @@ export async function handlePoolCreated(
     });
     await newPool.save();
   }
-
-  pool.token0Id = token0.id;
-  pool.token1Id = token1.id;
-  pool.feeTier = BigInt(event.args.fee);
-  pool.createdAtTimestamp = event.block.timestamp;
-  pool.createdAtBlockNumber = BigInt(event.blockNumber);
-  pool.liquidityProviderCount = ZERO_BI;
-  pool.txCount = ZERO_BI;
-  pool.liquidity = ZERO_BI;
-  pool.sqrtPrice = ZERO_BI;
-  pool.feeGrowthGlobal0X128 = ZERO_BI;
-  pool.feeGrowthGlobal1X128 = ZERO_BI;
-  pool.token0Price = 0;
-  pool.token1Price = 0;
-  pool.observationIndex = ZERO_BI;
-  pool.totalValueLockedToken0 = 0;
-  pool.totalValueLockedToken1 = 0;
-  pool.totalValueLockedUSD = 0;
-  pool.totalValueLockedETH = 0;
-  pool.totalValueLockedUSDUntracked = 0;
-  pool.volumeToken0 = 0;
-  pool.volumeToken1 = 0;
-  pool.volumeUSD = 0;
-  pool.feesUSD = 0;
-  pool.untrackedVolumeUSD = 0;
-  pool.collectedFeesToken0 = 0;
-  pool.collectedFeesToken1 = 0;
-  pool.collectedFeesUSD = 0;
 
   await Promise.all([
     token0.save(),

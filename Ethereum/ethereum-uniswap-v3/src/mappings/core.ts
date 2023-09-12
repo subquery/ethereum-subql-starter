@@ -25,7 +25,6 @@ import {
 } from "./utils";
 import { EthereumLog } from "@subql/types-ethereum";
 import { BigNumber } from "@ethersproject/bignumber";
-import { Pool__factory } from "../types/contracts";
 import {
   InitializeEvent,
   MintEvent,
@@ -33,6 +32,7 @@ import {
   SwapEvent,
   FlashEvent,
 } from "../types/contracts/Pool";
+import { Pool__factory } from "../types/contracts/factories/Pool__factory";
 
 export async function handleInitialize(
   event: EthereumLog<InitializeEvent["args"]>

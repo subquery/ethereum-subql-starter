@@ -51,10 +51,14 @@ export async function loadTransaction(
 ): Promise<Transaction> {
   let transaction = await Transaction.get(event.transactionHash);
   if (transaction === undefined) {
-    transaction = new Transaction(event.transactionHash);
+    transaction = Transaction.create({
+      id: event.transactionHash,
+      blockNumber: BigInt(event.blockNumber),
+      timestamp: event.block.timestamp,
+      gasPrice: BigInt(0),
+      gasUsed: BigInt(0),
+    });
   }
-  transaction.blockNumber = BigInt(event.blockNumber);
-  transaction.timestamp = event.block.timestamp;
 
   // transaction.gasPrice = event.block.gasPrice
   const eventTransaction = event.block.transactions.find(

@@ -3,11 +3,11 @@
 
 import { Position, PositionSnapshot, Token } from "../types";
 import { NonfungiblePositionManager__factory } from "../types/contracts";
-import { TransferEvent } from "../types/contracts/ERC20";
 import {
   IncreaseLiquidityEvent,
   DecreaseLiquidityEvent,
   CollectEvent,
+  TransferEvent,
 } from "../types/contracts/NonfungiblePositionManager";
 import {
   ADDRESS_ZERO,

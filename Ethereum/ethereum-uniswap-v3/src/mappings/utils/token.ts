@@ -5,7 +5,8 @@ import { StaticTokenDefinition } from "./staticTokenDefinition";
 import { isNullEthValue } from ".";
 import { BigNumber } from "@ethersproject/bignumber";
 import { ERC20SymbolBytes__factory } from "../../types/contracts/factories/ERC20SymbolBytes__factory";
-import { ERC20__factory, ERC20NameBytes__factory } from "../../types/contracts";
+import { ERC20__factory } from "../../types/contracts/factories/ERC20__factory";
+import { ERC20NameBytes__factory } from "../../types/contracts/factories/ERC20NameBytes__factory";
 
 export async function fetchTokenSymbol(tokenAddress: string): Promise<string> {
   const contract = ERC20__factory.connect(tokenAddress, api);
