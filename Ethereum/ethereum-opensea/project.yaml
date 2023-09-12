@@ -1,0 +1,51 @@
+specVersion: "1.0.0"
+
+name: "opensea"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "This project can be use as a starting point for developing your new Ethereum SubQuery project"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  # chainId is the EVM Chain ID, for Ethereum this is 1
+  # https://chainlist.org/chain/1
+  chainId: "1"
+  # This endpoint must be a public non-pruned archive node
+  # We recommend providing more than one endpoint for improved reliability, performance, and uptime
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  endpoint: ["https://eth.llamarpc.com"]
+  # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
+  dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary"
+
+dataSources:
+  - kind: ethereum/Runtime
+    name: OpenSea
+    startBlock: 15040595
+    options:
+      # Must be a key of assets
+      abi: OpenSea
+      address: "0x7f268357a8c2552623316e2562d90e642bb538e5"
+    assets:
+      OpenSea:
+        file: "./abis/OpenSeaV2.json"
+      erc165:
+        file: "./abis/ERC165.json"
+      NftMetadata:
+        file: "./abis/NftMetadata.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleMatch
+          kind: ethereum/TransactionHandler
+          filter:
+            function: atomicMatch_(address[14],uint256[18],uint8[8],bytes,bytes,bytes,bytes,bytes,bytes,uint8[2],bytes32[5])
