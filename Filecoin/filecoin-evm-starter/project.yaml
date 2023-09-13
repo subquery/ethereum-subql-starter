@@ -1,0 +1,59 @@
+specVersion: "1.0.0"
+
+name: "filecoin-evm-starter"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "This project can be use as a starting point for developing your
+  new Filecoin EVM SubQuery project"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  # chainId is the EVM Chain ID, for Filecoin EVM this is 314
+  # https://chainlist.org/chain/314
+  chainId: "314"
+  # This endpoint must be a public non-pruned archive node
+  # We recommend providing more than one endpoint for improved reliability, performance, and uptime
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  endpoint:
+    - https://api.node.glif.io
+  # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
+  # dictionary: "https://dict-tyk.subquery.network/query/filecoin-evm"
+
+dataSources:
+  - kind: ethereum/Runtime # We use ethereum runtime since Filecoin EVM is EVM-compatible
+    startBlock: 2777862 # This is usually the block that the contract was deployed on https://filfox.info/en/address/f410f3gtsjbakiy3qyanfbqpfceehvm5ap62tvtf44oq
+    options:
+      # Must be a key of assets
+      abi: erc20
+      address: "0xD9A724840a46370c01a50C1E511087ab3a07FB53" # This is the contract address for Wrapped FIL https://filfox.info/en/address/f410f3gtsjbakiy3qyanfbqpfceehvm5ap62tvtf44oq
+    assets:
+      erc20:
+        file: "./abis/erc20.abi.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleTransaction
+          kind: ethereum/TransactionHandler # We use ethereum handlers since Filecoin EVM is EVM-compatible
+          filter:
+            ## The function can either be the function fragment or signature
+            # function: '0x095ea7b3'
+            # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
+            function: approve(address spender, uint256 amount)
+        - handler: handleLog
+          kind: ethereum/LogHandler # We use ethereum handlers since Filecoin EVM  is EVM-compatible
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - Transfer(address indexed from, address indexed to, uint256
+                amount)
+              # address: "0x60781C2586D68229fde47564546784ab3fACA982"
