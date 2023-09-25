@@ -2,12 +2,14 @@ import { FeedConfirmedEvent } from "./types/contracts/FeedRegistry";
 import { DataFeed } from "./types";
 import { createDataFeedDatasource } from "./types";
 import { EthereumLog } from "@subql/types-ethereum";
+import assert from "assert";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export async function handleFeedConfirmed(
   event: EthereumLog<FeedConfirmedEvent["args"]>
 ): Promise<void> {
+  assert(event.args);
   // Feed Confirmed event is emitted when a feed is added, updated, or removed
   let prevFeed = await DataFeed.get(event.args.previousAggregator);
   // if we haven't since this previous feed before, or the next feed is not the zero address, then this is a new feed and we need to create it

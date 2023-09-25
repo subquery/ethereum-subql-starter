@@ -2,6 +2,7 @@ import { AnswerUpdatedEvent } from "./types/contracts/AccessControlledOffchainAg
 import { DataFeed, DataPoint } from "./types";
 import { FeedRegistry__factory } from "./types/contracts/factories/FeedRegistry__factory";
 import { EthereumLog } from "@subql/types-ethereum";
+import assert from "assert";
 
 import { AccessControlledOffchainAggregator__factory } from "./types/contracts";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -9,6 +10,7 @@ const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export async function handleAnswerUpdated(
   event: EthereumLog<AnswerUpdatedEvent["args"]>
 ): Promise<void> {
+  assert(event.args);
   const datasource = FeedRegistry__factory.connect(event.address, api);
   let dataFeed = await DataFeed.get(datasource.address);
   if (dataFeed) {
