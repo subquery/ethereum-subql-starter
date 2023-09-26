@@ -1,0 +1,54 @@
+specVersion: "1.0.0"
+
+name: "opbnb-subql-starter"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "This project can be use as a starting point for developing your new opBNB SubQuery project"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  # chainId is the EVM Chain ID, for opBNB this is 204
+  # https://chainlist.org/chain/204
+  chainId: "204"
+  # This endpoint must be a public non-pruned archive node
+  # We recommend providing more than one endpoint for improved reliability, performance, and uptime
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  endpoint: ["https://opbnb-mainnet-rpc.bnbchain.org"]
+
+dataSources:
+  - kind: ethereum/Runtime # We use ethereum runtime since opBNB is a layer-2 that is compatible
+    startBlock: 2652849 # The block on which the Ethereum token was deployed
+    options:
+      # Must be a key of assets
+      abi: erc20
+      address: "0xe7798f023fc62146e8aa1b36da45fb70855a77ea" # this is the contract address for Ethereum Token https://opbnbscan.com/token/0xe7798f023fc62146e8aa1b36da45fb70855a77ea
+    assets:
+      erc20:
+        file: "./abis/erc20.abi.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleTransaction
+          kind: ethereum/TransactionHandler # We use ethereum handlers since opBNB is a layer-2 that is compatible
+          filter:
+            ## The function can either be the function fragment or signature
+            # function: '0x095ea7b3'
+            # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
+            function: approve(address spender, uint256 rawAmount)
+        - handler: handleLog
+          kind: ethereum/LogHandler # We use ethereum handlers since opBNB is a layer-2 that is compatible
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - Transfer(address indexed from, address indexed to, uint256 amount)
+              # address: "0x60781C2586D68229fde47564546784ab3fACA982"
