@@ -33,6 +33,7 @@ import {
   FlashEvent,
 } from "../types/contracts/Pool";
 import { Pool__factory } from "../types/contracts/factories/Pool__factory";
+import assert from "assert";
 
 export async function handleInitialize(
   event: EthereumLog<InitializeEvent["args"]>
@@ -41,8 +42,12 @@ export async function handleInitialize(
     Pool.get(event.address),
     getEthPriceInUSD(),
   ]);
+  assert(pool);
+  assert(event.args);
   pool.sqrtPrice = event.args.sqrtPriceX96.toBigInt();
   pool.tick = BigNumber.from(event.args.tick).toBigInt();
+  assert(pool.token0Id);
+  assert(pool.token1Id);
 
   // update token prices
   const [token0, token1] = await Promise.all([
@@ -50,10 +55,13 @@ export async function handleInitialize(
     Token.get(pool.token1Id),
   ]);
   const bundle = await Bundle.get("1");
+  assert(bundle);
   bundle.ethPriceUSD = ethPrice.toNumber();
 
   await Promise.all([updatePoolDayData(event), updatePoolHourData(event)]);
 
+  assert(token0);
+  assert(token1);
   const [derivedETH0, derivedETH1] = await Promise.all([
     findEthPerToken(token0),
     findEthPerToken(token1),
@@ -79,6 +87,9 @@ export async function handleMint(
     );
     return;
   }
+
+  assert(pool.token0Id);
+  assert(pool.token1Id);
   const [bundle, factory, token0, token1, transaction] = await Promise.all([
     Bundle.get("1"),
     Factory.get(FACTORY_ADDRESS),
@@ -87,6 +98,10 @@ export async function handleMint(
     loadTransaction(event),
   ]);
 
+  assert(event.args);
+  assert(token0);
+  assert(token1);
+  assert(bundle);
   const amount0 = convertTokenToDecimal(event.args.amount0, token0.decimals);
   const amount1 = convertTokenToDecimal(event.args.amount1, token1.decimals);
 
@@ -94,6 +109,7 @@ export async function handleMint(
     amount0.toNumber() * (token0.derivedETH * bundle.ethPriceUSD) +
     amount1.toNumber() * (token1.derivedETH * bundle.ethPriceUSD);
 
+  assert(factory);
   // reset tvl aggregates until new amounts calculated
   factory.totalValueLockedETH =
     factory.totalValueLockedETH - pool.totalValueLockedETH;
@@ -214,6 +230,8 @@ export async function handleBurn(
 ): Promise<void> {
   const poolAddress = event.address;
   const pool = await Pool.get(poolAddress);
+  assert(pool?.token0Id);
+  assert(pool?.token1Id);
 
   const [bundle, factory, token0, token1, transaction] = await Promise.all([
     Bundle.get("1"),
@@ -222,14 +240,19 @@ export async function handleBurn(
     Token.get(pool.token1Id),
     loadTransaction(event),
   ]);
+  assert(event.args);
+  assert(token0);
+  assert(token1);
 
   const amount0 = convertTokenToDecimal(event.args.amount0, token0.decimals);
   const amount1 = convertTokenToDecimal(event.args.amount1, token1.decimals);
+  assert(bundle);
 
   const amountUSD =
     amount0.toNumber() * token0.derivedETH * bundle.ethPriceUSD +
     amount1.toNumber() * token1.derivedETH * bundle.ethPriceUSD;
 
+  assert(factory);
   // reset tvl aggregates until new amounts calculated
   factory.totalValueLockedETH =
     factory.totalValueLockedETH - pool.totalValueLockedETH;
@@ -304,6 +327,8 @@ export async function handleBurn(
     Tick.get(upperTickId),
   ]);
   const amount = event.args.amount;
+  assert(lowerTick);
+  assert(upperTick);
   lowerTick.liquidityGross = lowerTick.liquidityGross - amount.toBigInt();
   lowerTick.liquidityNet = lowerTick.liquidityNet - amount.toBigInt();
   upperTick.liquidityGross = upperTick.liquidityGross - amount.toBigInt();
@@ -348,17 +373,23 @@ export async function handleSwap(
     poolContract.feeGrowthGlobal0X128(),
     poolContract.feeGrowthGlobal1X128(),
   ]);
+  assert(pool);
 
   // hot fix for bad pricing
   if (pool.id == "0x9663f2ca0454accad3e094448ea6f77443880454") {
     return;
   }
+  assert(pool.token0Id);
+  assert(pool.token1Id);
 
   const [token0, token1] = await Promise.all([
     Token.get(pool.token0Id),
     Token.get(pool.token1Id),
   ]);
   const oldTick = pool.tick;
+  assert(event.args);
+  assert(token0);
+  assert(token1);
 
   // amounts - 0/1 are token deltas: can be positive or negative
   const amount0 = convertTokenToDecimal(event.args.amount0, token0.decimals);
@@ -374,6 +405,7 @@ export async function handleSwap(
   if (amount1.lt(ZERO_BD)) {
     amount1Abs = amount1.mul(BigNumber.from("-1"));
   }
+  assert(bundle);
 
   const amount0ETH = amount0Abs.mul(token0.derivedETH);
   const amount1ETH = amount1Abs.mul(token1.derivedETH);
@@ -399,6 +431,7 @@ export async function handleSwap(
     .mul(pool.feeTier)
     .div(BigNumber.from("1000000"));
 
+  assert(factory);
   // global updates
   factory.txCount = factory.txCount + ONE_BI; //BigNumber.from(factory.txCount).add(ONE_BI).toBigInt()
   factory.totalVolumeETH =
@@ -602,6 +635,7 @@ export async function handleSwap(
   }
 
   const numIters = BigNumber.from(oldTick).sub(newTick).abs().div(tickSpacing);
+  assert(oldTick);
 
   if (numIters.gt(BigNumber.from(100))) {
     // In case more than 100 ticks need to be updated ignore the update in
@@ -635,6 +669,7 @@ export async function handleFlash(
     poolContract.feeGrowthGlobal0X128(),
     poolContract.feeGrowthGlobal1X128(),
   ]);
+  assert(pool);
   pool.feeGrowthGlobal0X128 = feeGrowthGlobal0X128.toBigInt();
   pool.feeGrowthGlobal1X128 = feeGrowthGlobal1X128.toBigInt();
   await pool.save();

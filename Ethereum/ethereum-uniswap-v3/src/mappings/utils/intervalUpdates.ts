@@ -17,6 +17,7 @@ import {
 } from "../../types";
 import { EthereumLog } from "@subql/types-ethereum";
 import { BigNumber } from "@ethersproject/bignumber";
+import assert from "assert";
 
 /**
  * Tracks global aggregate data over daily windows
@@ -34,6 +35,7 @@ export async function updateUniswapDayData(
     Factory.get(FACTORY_ADDRESS),
     UniswapDayData.get(dayID.toString()),
   ]);
+  assert(uniswap);
   if (uniswapDayData === undefined) {
     uniswapDayData = UniswapDayData.create({
       id: dayID.toString(),
@@ -61,7 +63,7 @@ export async function updatePoolDayData(
     Pool.get(event.address),
     PoolDayData.get(dayPoolID),
   ]);
-
+  assert(pool);
   if (poolDayData === undefined) {
     poolDayData = PoolDayData.create({
       id: dayPoolID,
@@ -116,6 +118,7 @@ export async function updatePoolHourData(
     await Pool.get(event.address),
     await PoolHourData.get(hourPoolID),
   ]);
+  assert(pool);
   if (poolHourData === undefined) {
     poolHourData = PoolHourData.create({
       id: hourPoolID,
@@ -178,6 +181,7 @@ export async function updateTokenDayData(
     TokenDayData.get(tokenDayID),
     Bundle.get("1"),
   ]);
+  assert(bundle);
   const tokenPrice = token.derivedETH * bundle.ethPriceUSD;
 
   if (tokenDayData === undefined) {
@@ -227,6 +231,7 @@ export async function updateTokenHourData(
     TokenHourData.get(tokenHourID),
     Bundle.get("1"),
   ]);
+  assert(bundle);
   const tokenPrice = BigNumber.from(token.derivedETH).mul(bundle.ethPriceUSD);
   if (tokenHourData === undefined) {
     tokenHourData = TokenHourData.create({

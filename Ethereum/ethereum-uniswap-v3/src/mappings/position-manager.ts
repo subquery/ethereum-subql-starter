@@ -19,11 +19,12 @@ import {
 } from "./utils";
 import { EthereumLog } from "@subql/types-ethereum";
 import { BigNumber } from "ethers";
+import assert = require("assert");
 
 async function getPosition(
   event: EthereumLog,
   tokenId: BigNumber
-): Promise<Position> | null {
+): Promise<Position | null> {
   let position = await Position.get(tokenId.toString());
 
   if (position === undefined) {
@@ -126,6 +127,7 @@ export async function handleIncreaseLiquidity(
     return;
   }
 
+  assert(event.args);
   const position = await getPosition(event, event.args.tokenId);
 
   // position was not able to be fetched
@@ -137,11 +139,14 @@ export async function handleIncreaseLiquidity(
   if (position.poolId === "0x8fe8d9bb8eeba3ed688069c3d6b556c9ca258248") {
     return;
   }
+  assert(event.args);
 
   const [token0, token1] = await Promise.all([
     Token.get(position.token0Id),
     Token.get(position.token1Id),
   ]);
+  assert(token0);
+  assert(token1);
 
   const amount0 = convertTokenToDecimal(event.args.amount0, token0.decimals);
   const amount1 = convertTokenToDecimal(event.args.amount1, token1.decimals);
@@ -171,6 +176,7 @@ export async function handleDecreaseLiquidity(
   if (event.blockNumber == 14317993) {
     return;
   }
+  assert(event.args);
 
   let position = await getPosition(event, event.args.tokenId);
 
@@ -188,6 +194,8 @@ export async function handleDecreaseLiquidity(
     Token.get(position.token0Id),
     Token.get(position.token1Id),
   ]);
+  assert(token0);
+  assert(token1);
 
   const amount0 = convertTokenToDecimal(event.args.amount0, token0.decimals);
   const amount1 = convertTokenToDecimal(event.args.amount1, token1.decimals);
@@ -204,6 +212,7 @@ export async function handleDecreaseLiquidity(
 export async function handleCollect(
   event: EthereumLog<CollectEvent["args"]>
 ): Promise<void> {
+  assert(event.args);
   let position = await getPosition(event, event.args.tokenId);
   // position was not able to be fetched
   if (position === undefined || position === null) {
@@ -214,6 +223,7 @@ export async function handleCollect(
   }
 
   const token0 = await Token.get(position.token0Id);
+  assert(token0);
   const amount0 = convertTokenToDecimal(event.args.amount0, token0.decimals);
   position.collectedFeesToken0 = amount0
     .add(position.collectedFeesToken0)
@@ -230,6 +240,7 @@ export async function handleCollect(
 export async function handleTransfer(
   event: EthereumLog<TransferEvent["args"]>
 ): Promise<void> {
+  assert(event.args);
   const position = await getPosition(event, event.args.tokenId);
 
   // position was not able to be fetched
