@@ -1,7 +1,7 @@
 {
   "name": "subquery-example-opensea",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Ethereum SubQuery project, it indexes the standard Uniswap v3 project on Ethereum",
+  "description": "This project can be use as a starting point for developing your new Ethereum SubQuery project, it indexes data from the Opensea marketplace on Ethereum",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
