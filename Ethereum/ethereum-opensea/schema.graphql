@@ -1,27 +1,3 @@
-enum Network {
-  ARBITRUM_ONE
-  ARWEAVE_MAINNET
-  AURORA
-  AVALANCHE
-  BOBA
-  BSC # aka BNB Chain
-  CELO
-  COSMOS
-  CRONOS
-  MAINNET # Ethereum Mainnet
-  FANTOM
-  FUSE
-  HARMONY
-  JUNO
-  MOONBEAM
-  MOONRIVER
-  NEAR_MAINNET
-  OPTIMISM
-  OSMOSIS
-  MATIC # aka Polygon
-  XDAI # aka Gnosis Chain
-}
-
 enum NftStandard {
   ERC721
   ERC1155
@@ -45,27 +21,53 @@ enum SaleStrategy {
   PRIVATE_SALE
 }
 
+enum _BasicOrderRouteType {
+  " 0: provide Ether (or other native token) to receive offered ERC721 item."
+  ETH_TO_ERC721
+
+  " 1: provide Ether (or other native token) to receive offered ERC1155 item."
+  ETH_TO_ERC1155
+
+  " 2: provide ERC20 item to receive offered ERC721 item."
+  ERC20_TO_ERC721
+
+  " 3: provide ERC20 item to receive offered ERC1155 item."
+  ERC20_TO_ERC1155
+
+  " 4: provide ERC721 item to receive offered ERC20 item."
+  ERC721_TO_ERC20
+
+  " 5: provide ERC1155 item to receive offered ERC20 item."
+  ERC1155_TO_ERC20
+}
+
+" Order fulfillment methods for trades, helps to identify strategy"
+enum _OrderFulfillmentMethod {
+  " Basic order fulfilled using one of the _BasicOrderRouteType routes"
+  FULFILL_BASIC_ORDER
+
+  " Fulfill an order with an arbitrary number of items for offer and consideration"
+  FULFILL_ORDER
+
+  " Fill an order, fully or partially, with an arbitrary number of items for offer and consideration alongside criteria resolvers "
+  FULFILL_ADVANCED_ORDER
+
+  " Attempt to fill a group of orders, each with an arbitrary number of items for offer and consideration."
+  FULFILL_AVAILABLE_ORDERS
+
+  " Attempt to fill a group of orders, fully or partially, with an arbitrary number of items for offer and consideration per order alongside criteria resolvers"
+  FULFILL_AVAILABLE_ADVANCED_ORDERS
+
+  " Match an arbitrary number of orders, each with an arbitrary number of items for offer and consideration along with a set of fulfillments allocating offer components to consideration components."
+  MATCH_ORDERS
+
+  " Match an arbitrary number of full or partial orders, each with an arbitrary number of items for offer and consideration, supplying criteria resolvers"
+  MATCH_ADVANCED_ORDERS
+}
+
 type Marketplace @entity {
   " Smart contract address of the protocol's main contract (Factory, Registry, etc) "
   id: ID!
-
-  " Name of the NFT marketplace, for example LooksRare "
-  name: String!
-
-  " Slug of the NFT marketplace, for example looksrare "
-  slug: String!
-
-  " The blockchain network this subgraph is indexing on. "
-  network: Network!
-
-  " Version of the subgraph schema, in SemVer format (e.g. 1.0.0) "
-  schemaVersion: String!
-
-  " Version of the subgraph implementation, in SemVer format (e.g. 1.0.0) "
-  subgraphVersion: String!
-
-  " Version of the methodology used to compute metrics, loosely based on SemVer format (e.g. 1.0.0) "
-  methodologyVersion: String!
 
   " Number of collections listed on the marketplace. "
   collectionCount: Int!
@@ -100,10 +102,10 @@ type Collection @entity {
   symbol: String
 
   " Total supply of the collection, mirrored from the smart contract. "
-  totalSupply: BigInt
+  totalSupply: Float
 
-  # " NFT Standard the collection uses. "
-  # nftStandard: NftStandard!
+  " NFT Standard the collection uses. "
+  nftStandard: NftStandard!
 
   " Royalty fee rate in percentage. E.g. 2.5% should be 2.5 "
   royaltyFee: Float!
@@ -142,13 +144,13 @@ type Trade @entity {
   transactionHash: String!
 
   " Event log index. "
-  logIndex: Int
+  logIndex: Int!
 
-  # " Block timestamp where the trade is executed. "
-  # timestamp: BigInt!
+  " Block timestamp where the trade is executed. "
+  timestamp: BigInt!
 
-  # " Block number where the trade is executed. "
-  # blockNumber: BigInt!
+  " Block number where the trade is executed. "
+  blockNumber: BigInt!
 
   " Whether the trade is in a bundle. "
   isBundle: Boolean!
@@ -165,8 +167,8 @@ type Trade @entity {
   " Price (in ETH). If only 1 tokenId is involved, then the price is determined by the token only. If the trade is incurred by a batch purchasing (available in x2y2), then the price is the average price in the batch. "
   priceETH: Float!
 
-  # " Stretegy that the trade is executed. "
-  # strategy: SaleStrategy!
+  " Stretegy that the trade is executed. "
+  strategy: SaleStrategy!
 
   " Buyer account address "
   buyer: String!
@@ -182,11 +184,11 @@ type MarketplaceDailySnapshot @entity {
   " The marketplace that this snapshot belongs to. "
   marketplace: Marketplace!
 
-  # " Block number where the snapshot is taken. "
-  # blockNumber: BigInt!
+  " Block number where the snapshot is taken. "
+  blockNumber: BigInt!
 
-  # " Block timestamp when the snapshot is taken. "
-  # timestamp: BigInt!
+  " Block timestamp when the snapshot is taken. "
+  timestamp: BigInt!
 
   " Number of collections listed on the marketplace. "
   collectionCount: Int!
@@ -226,11 +228,11 @@ type CollectionDailySnapshot @entity {
   " The collection that this snapshot belongs to. "
   collection: Collection!
 
-  # " Block number where the snapshot is taken. "
-  # blockNumber: BigInt!
+  " Block number where the snapshot is taken. "
+  blockNumber: BigInt!
 
-  # " Block timestamp when the snapshot is taken. "
-  # timestamp: BigInt!
+  " Block timestamp when the snapshot is taken. "
+  timestamp: BigInt!
 
   " Royalty fee rate in percentage. E.g. 2.5% should be 2.5 "
   royaltyFee: Float!
@@ -263,9 +265,18 @@ type CollectionDailySnapshot @entity {
   dailyTradedItemCount: Int!
 }
 
+" A helper entity that maps a trade's order fulfillment method"
+type _OrderFulfillment @entity {
+  id: ID!
+
+  " The trade being fulfilled"
+  trade: Trade!
+
+  " The order filfillment method"
+  orderFulfillmentMethod: String
+}
+
 " A helper utility entity that works as a set for deduplication purpose. "
 type _Item @entity {
-  # MARKETPLACE_ACCOUNT-{ Account }
-  # COLLECTION_ACCOUNT-{ Buyer/Seller }-{ Collection ID }-{ Account }
   id: ID!
 }

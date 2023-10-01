@@ -23,29 +23,30 @@ network:
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
-  endpoint: ["https://eth.llamarpc.com"]
+  endpoint: ["https://eth.api.onfinality.io/public"]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
   dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary"
 
 dataSources:
   - kind: ethereum/Runtime
-    name: OpenSea
-    startBlock: 15040595
+    startBlock: 14946474
     options:
       # Must be a key of assets
-      abi: OpenSea
-      address: "0x7f268357a8c2552623316e2562d90e642bb538e5"
+      abi: SeaportExchange
+      address: "0x00000000006c3852cbef3e08e8df289169ede581"
     assets:
-      OpenSea:
-        file: "./abis/OpenSeaV2.json"
-      erc165:
+      SeaportExchange:
+        file: "./abis/SeaportExchange.abi.json"
+      ERC165:
         file: "./abis/ERC165.json"
       NftMetadata:
         file: "./abis/NftMetadata.json"
     mapping:
       file: "./dist/index.js"
       handlers:
-        - handler: handleMatch
-          kind: ethereum/TransactionHandler
+        - handler: handleOrderFulfilled
+          kind: ethereum/LogHandler
           filter:
-            function: atomicMatch_(address[14],uint256[18],uint8[8],bytes,bytes,bytes,bytes,bytes,bytes,uint8[2],bytes32[5])
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - OrderFulfilled(bytes32,address,address,address,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256,address)[])
