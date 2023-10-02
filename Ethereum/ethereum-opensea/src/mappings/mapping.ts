@@ -328,7 +328,7 @@ export async function handleOrderFulfilled(
     marketplaceSnapshot.dailyTradedCollectionCount += 1;
   }
   marketplaceSnapshot.dailyTradedItemCount += newDailyTradedItem;
-  // marketplaceSnapshot.save();
+  marketplaceSnapshot.save();
 }
 
 async function getOrCreateCollection(
