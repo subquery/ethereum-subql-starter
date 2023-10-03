@@ -34,7 +34,7 @@ import assert from "assert";
 import {
   SpentItemStructOutput,
   ReceivedItemStructOutput,
-} from "../types/contracts/SeaportExchange";
+} from "../types/contracts/SeaportExchangeAbi";
 import { BigNumber } from "ethers";
 import { ERC165__factory } from "../types/contracts/factories/ERC165__factory";
 
