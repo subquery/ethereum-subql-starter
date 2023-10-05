@@ -8,9 +8,9 @@ import {
 const project: EthereumProject = {
     specVersion: "1.0.0",
     version: "0.0.1",
-    name: "ethereum-subql-starter",
+    name: "arbitrum-nova-subql-starter",
     description:
-        "This project can be use as a starting point for developing your new Ethereum SubQuery project",
+        "This project can be use as a starting point for developing your new Arbitrum Nova SubQuery project",
     runner: {
         node: {
             name: "@subql/node-ethereum",
@@ -26,11 +26,11 @@ const project: EthereumProject = {
     },
     network: {
         /**
-         * chainId is the EVM Chain ID, for Ethereum this is 1
-         * https://chainlist.org/chain/1
+         * chainId is the EVM Chain ID, for Arbitrum Nova this is 42170
+         * https://chainlist.org/chain/42170
          */
         chainId:
-            "1",
+            "42170",
         /**
          * This endpoint must be a public non-pruned archive node
          * Public nodes may be rate limited, which can affect indexing speed
@@ -38,19 +38,20 @@ const project: EthereumProject = {
          * You can get them from OnFinality for free https://app.onfinality.io
          * https://documentation.onfinality.io/support/the-enhanced-api-service
          */
-        endpoint: ["https://eth.api.onfinality.io/public"],
-        dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary"
+        endpoint:  ["https://nova.arbitrum.io/rpc"],
+        // dictionary: "https://gx.api.subquery.network/sq/subquery/arbitrum-nova-dictionary" - we don't have one for Nova
+
     },
     dataSources: [
         {
             kind: EthereumDatasourceKind.Runtime,
-            startBlock: 4719568,
+            startBlock: 15143,
 
             options: {
                 // Must be a key of assets
                 abi:'erc20',
-                // # this is the contract address for wrapped ether https://etherscan.io/address/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-                address:'0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+                // This is the contract address for wrapped Eth https://nova.arbiscan.io/token/0x765277EebeCA2e31912C9946eAe1021199B39C61
+                address:'0x765277EebeCA2e31912C9946eAe1021199B39C61',
             },
             assets: new Map([
                 ['erc20', { file: "./abis/erc20.abi.json" }],
@@ -60,7 +61,7 @@ const project: EthereumProject = {
                 handlers: [
                     {
                         kind: EthereumHandlerKind.Call,
-                        handler: "handleTransaction",
+                        handler: "handleLog",
                         filter: {
                             /**
                              * The function can either be the function fragment or signature
@@ -72,7 +73,7 @@ const project: EthereumProject = {
                     },
                     {
                         kind: EthereumHandlerKind.Event,
-                        handler: "handleLog",
+                        handler: "handleTransaction",
                         filter: {
                             /**
                              * Follows standard log filters https://docs.ethers.io/v5/concepts/events/

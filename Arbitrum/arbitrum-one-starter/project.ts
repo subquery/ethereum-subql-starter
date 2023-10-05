@@ -8,9 +8,8 @@ import {
 const project: EthereumProject = {
     specVersion: "1.0.0",
     version: "0.0.1",
-    name: "ethereum-subql-starter",
-    description:
-        "This project can be use as a starting point for developing your new Ethereum SubQuery project",
+    name: "arbitrum-one-subql-starter",
+    description: "This project can be use as a starting point for developing your new Arbitrum One SubQuery project",
     runner: {
         node: {
             name: "@subql/node-ethereum",
@@ -26,11 +25,11 @@ const project: EthereumProject = {
     },
     network: {
         /**
-         * chainId is the EVM Chain ID, for Ethereum this is 1
-         * https://chainlist.org/chain/1
+         * chainId is the EVM Chain ID, for Arbitrum One this is 42161
+         * https://chainlist.org/chain/42161
          */
         chainId:
-            "1",
+            "42161",
         /**
          * This endpoint must be a public non-pruned archive node
          * Public nodes may be rate limited, which can affect indexing speed
@@ -38,19 +37,19 @@ const project: EthereumProject = {
          * You can get them from OnFinality for free https://app.onfinality.io
          * https://documentation.onfinality.io/support/the-enhanced-api-service
          */
-        endpoint: ["https://eth.api.onfinality.io/public"],
-        dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary"
+        endpoint: ["https://arbitrum.api.onfinality.io/public"],
+        dictionary: "https://dict-tyk.subquery.network/query/arbitrum"
     },
     dataSources: [
         {
             kind: EthereumDatasourceKind.Runtime,
-            startBlock: 4719568,
-
+            // This is the block that the contract was deployed on https://arbiscan.io/tx/0x8ebe1945f039f865af8b3079df3819534340ee41a5e6b8bfefb9c36a857778c9
+            startBlock: 2591,
             options: {
                 // Must be a key of assets
                 abi:'erc20',
-                // # this is the contract address for wrapped ether https://etherscan.io/address/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-                address:'0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+                // This is the contract address for wrapped BTC https://arbiscan.io/token/0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f
+                address:'0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f',
             },
             assets: new Map([
                 ['erc20', { file: "./abis/erc20.abi.json" }],

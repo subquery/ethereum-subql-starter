@@ -8,9 +8,8 @@ import {
 const project: EthereumProject = {
     specVersion: "1.0.0",
     version: "0.0.1",
-    name: "ethereum-subql-starter",
-    description:
-        "This project can be use as a starting point for developing your new Ethereum SubQuery project",
+    name: "arbitrum-one-subql-starter",
+    description: "This SubQuery Arbitrum Example project indexes all Arbitrum WINR Staking Rewards.",
     runner: {
         node: {
             name: "@subql/node-ethereum",
@@ -26,11 +25,11 @@ const project: EthereumProject = {
     },
     network: {
         /**
-         * chainId is the EVM Chain ID, for Ethereum this is 1
-         * https://chainlist.org/chain/1
+         * chainId is the EVM Chain ID, for Arbitrum One this is 42161
+         * https://chainlist.org/chain/42161
          */
         chainId:
-            "1",
+            "42161",
         /**
          * This endpoint must be a public non-pruned archive node
          * Public nodes may be rate limited, which can affect indexing speed
@@ -38,47 +37,35 @@ const project: EthereumProject = {
          * You can get them from OnFinality for free https://app.onfinality.io
          * https://documentation.onfinality.io/support/the-enhanced-api-service
          */
-        endpoint: ["https://eth.api.onfinality.io/public"],
-        dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary"
+        endpoint: ["https://arbitrum.api.onfinality.io/public"],
+        dictionary: "https://dict-tyk.subquery.network/query/arbitrum"
     },
     dataSources: [
         {
             kind: EthereumDatasourceKind.Runtime,
-            startBlock: 4719568,
-
+            // This is the block of the first claim dividend https://arbiscan.io/tx/0x300b6199816f44029408efc850fb9d6f8751bbedec3e273909eac6f3a61ee3b3
+            startBlock: 91573785,
             options: {
                 // Must be a key of assets
-                abi:'erc20',
-                // # this is the contract address for wrapped ether https://etherscan.io/address/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-                address:'0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+                abi:'winr-staking',
+                // This is the contract address for WINR Staking https://arbiscan.io/tx/0x44e9396155f6a90daaea687cf48c309128afead3be9faf20c5de3d81f6f318a6
+                address:'0xddAEcf4B02A3e45b96FC2d7339c997E072b0d034',
             },
             assets: new Map([
-                ['erc20', { file: "./abis/erc20.abi.json" }],
+                ['winr-staking', { file: "./abis/winr-staking.abi.json" }],
             ]),
             mapping: {
                 file: "./dist/index.js",
                 handlers: [
                     {
-                        kind: EthereumHandlerKind.Call,
-                        handler: "handleTransaction",
-                        filter: {
-                            /**
-                             * The function can either be the function fragment or signature
-                             * function: '0x095ea7b3'
-                             * function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
-                             */
-                            function: "approve(address spender, uint256 rawAmount)",
-                        },
-                    },
-                    {
                         kind: EthereumHandlerKind.Event,
-                        handler: "handleLog",
+                        handler: "handleDividendBatch",
                         filter: {
                             /**
                              * Follows standard log filters https://docs.ethers.io/v5/concepts/events/
                              * address: "0x60781C2586D68229fde47564546784ab3fACA982"
                              */
-                            topics: ["Transfer(address indexed from, address indexed to, uint256 amount)"],
+                            topics: ["ClaimDividendBatch(address indexed user, uint256 reward)"],
                         },
                     },
                 ],
