@@ -22,6 +22,7 @@ import {
 } from "../types";
 import { EthereumLog } from "@subql/types-ethereum";
 import { PoolCreatedEvent } from "../types/contracts/Factory";
+import assert from "assert";
 
 export async function handlePoolCreated(
   event: EthereumLog<PoolCreatedEvent["args"]>
@@ -30,6 +31,7 @@ export async function handlePoolCreated(
   if (event.address === "0x8fe8d9bb8eeba3ed688069c3d6b556c9ca258248") {
     return;
   }
+  assert(event.args);
 
   await createPoolDatasource({
     address: event.args.pool,

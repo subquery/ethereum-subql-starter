@@ -7,6 +7,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { ERC20SymbolBytes__factory } from "../../types/contracts/factories/ERC20SymbolBytes__factory";
 import { ERC20__factory } from "../../types/contracts/factories/ERC20__factory";
 import { ERC20NameBytes__factory } from "../../types/contracts/factories/ERC20NameBytes__factory";
+import assert from "assert";
 
 export async function fetchTokenSymbol(tokenAddress: string): Promise<string> {
   const contract = ERC20__factory.connect(tokenAddress, api);
@@ -54,6 +55,7 @@ export async function fetchTokenName(tokenAddress: string): Promise<string> {
       // try with the static definition
       const staticTokenDefinition =
         StaticTokenDefinition.fromAddress(tokenAddress);
+      assert(staticTokenDefinition);
       if (staticTokenDefinition !== undefined) {
         nameValue = staticTokenDefinition.name;
       }
@@ -77,7 +79,7 @@ export async function fetchTokenTotalSupply(
 
 export async function fetchTokenDecimals(
   tokenAddress: string
-): Promise<BigNumber> | null {
+): Promise<BigNumber | null> {
   // try types uint8 for decimals
   let decimalValue = null;
   try {
@@ -91,7 +93,6 @@ export async function fetchTokenDecimals(
       return staticTokenDefinition.decimals;
     } else {
       logger.warn(`Could not get token ${tokenAddress} decimals`);
-      return decimalValue;
     }
   }
   return BigNumber.from(decimalValue);

@@ -5,6 +5,7 @@ import { Transaction } from "../../types";
 import { ZERO_BD } from "./constants";
 import { BigNumber } from "@ethersproject/bignumber";
 import { EthereumLog } from "@subql/types-ethereum";
+import assert from "assert";
 
 export function exponentToBigDecimal(decimals: bigint): BigNumber {
   if (Number(decimals) === 0) {
@@ -66,6 +67,7 @@ export async function loadTransaction(
       transaction.transactionIndex ==
       BigNumber.from(event.transactionIndex).toBigInt()
   );
+  assert(eventTransaction);
   transaction.gasUsed = (await eventTransaction.receipt()).gasUsed;
   transaction.gasPrice = eventTransaction.gasPrice;
   await transaction.save();

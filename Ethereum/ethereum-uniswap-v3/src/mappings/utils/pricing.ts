@@ -6,6 +6,7 @@ import { Bundle, Pool, Token, WhiteListPools } from "../../types";
 import { BigNumber } from "@ethersproject/bignumber";
 import { exponentToBigDecimal, safeDiv, safeDivNumToNum } from "./index";
 import { formatUnits, parseUnits } from "@ethersproject/units";
+import assert from "assert";
 
 const WETH_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 const USDC_WETH_03_POOL = "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8";
@@ -95,6 +96,8 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
   const tokenWhitelist = await WhiteListPools.getByTokenId(token.id);
   // hardcoded fix for incorrect rates
   // if whitelist includes token - get the safe price
+  assert(bundle);
+  assert(tokenWhitelist);
   if (STABLE_COINS.includes(token.id)) {
     priceSoFar = safeDiv(ONE_BD, BigNumber.from(bundle.ethPriceUSD));
   } else {
@@ -103,12 +106,16 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
     for (let i = 0; i < tokenWhitelist.length; ++i) {
       const poolAddress = tokenWhitelist[i].poolId;
       const pool = await Pool.get(poolAddress);
+      assert(pool);
+      assert(pool.token0Id);
+      assert(pool.token1Id);
 
       if (BigNumber.from(pool.liquidity).gt(ZERO_BI)) {
         if (pool.token0Id == token.id) {
           // whitelist token is token1
           const token1 = await Token.get(pool.token1Id);
           // get the derived ETH in pool
+          assert(token1);
           const ethLocked = BigNumber.from(pool.totalValueLockedToken1).mul(
             token1.derivedETH
           );
@@ -125,6 +132,7 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
         }
         if (pool.token1Id == token.id) {
           const token0 = await Token.get(pool.token0Id);
+          assert(token0);
           // get the derived ETH in pool
           const ethLocked = BigNumber.from(pool.totalValueLockedToken0).mul(
             token0.derivedETH
@@ -159,6 +167,7 @@ export async function getTrackedAmountUSD(
   token1: Token
 ): Promise<BigNumber> {
   const bundle = await Bundle.get("1");
+  assert(bundle);
   const price0USD = BigNumber.from(token0.derivedETH).mul(bundle.ethPriceUSD);
   const price1USD = BigNumber.from(token1.derivedETH).mul(bundle.ethPriceUSD);
 
