@@ -24,10 +24,11 @@ network:
   # chainId is the EVM Chain ID, for Ethereum Sepolia this is 11155111
   # https://chainlist.org/chain/11155111
   chainId: "11155111"
-  # This endpoint must be a public non-pruned archive node
+  # These endpoint(s) should be non-pruned archive nodes
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
+  # We suggest providing an array of endpoints for increased speed and reliability
   endpoint:
     - wss://sepolia.gateway.tenderly.co
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing

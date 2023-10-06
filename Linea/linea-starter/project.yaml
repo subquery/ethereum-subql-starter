@@ -23,10 +23,11 @@ network:
   # chainId is the EVM Chain ID, for Linea this is 59144
   # https://chainlist.org/chain/59144
   chainId: "59144"
-  # This endpoint must be a public non-pruned archive node
+  # These endpoint(s) should be non-pruned archive nodes
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
+  # We suggest providing an array of endpoints for increased speed and reliability
   # You can get them from OnFinality for free https://app.onfinality.io
   # https://documentation.onfinality.io/support/the-enhanced-api-service
   # https://chainlist.org/?search=linea

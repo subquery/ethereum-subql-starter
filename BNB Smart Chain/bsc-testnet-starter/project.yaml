@@ -24,10 +24,11 @@ network:
   # chainId is the EVM Chain ID, for BSC Testnet this is 97
   # https://chainlist.org/chain/97
   chainId: "97"
-  # This endpoint must be a public non-pruned archive node
+  # These endpoint(s) should be non-pruned archive nodes
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
+  # We suggest providing an array of endpoints for increased speed and reliability
   endpoint:
     - https://data-seed-prebsc-1-s2.bnbchain.org:8545
     - https://data-seed-prebsc-1-s1.bnbchain.org:8545

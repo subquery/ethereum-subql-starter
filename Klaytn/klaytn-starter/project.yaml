@@ -24,10 +24,11 @@ network:
   # chainId is the EVM Chain ID, for Klaytn this is 8217
   # https://chainlist.org/chain/8217
   chainId: "8217"
-  # This endpoint must be a public non-pruned archive node
+  # These endpoint(s) should be non-pruned archive nodes
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
+  # We suggest providing an array of endpoints for increased speed and reliability
   endpoint:
     - https://klaytn.blockpi.network/v1/rpc/public
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing

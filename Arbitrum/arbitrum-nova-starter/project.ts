@@ -31,11 +31,10 @@ const project: EthereumProject = {
      */
     chainId: "42170",
     /**
-     * This endpoint must be a public non-pruned archive node
+     * These endpoint(s) should be non-pruned archive nodes
      * Public nodes may be rate limited, which can affect indexing speed
      * When developing your project we suggest getting a private API key
-     * You can get them from OnFinality for free https://app.onfinality.io
-     * https://documentation.onfinality.io/support/the-enhanced-api-service
+     # We suggest providing an array of endpoints for increased speed and reliability
      */
     endpoint: ["https://nova.arbitrum.io/rpc"],
     // dictionary: "https://gx.api.subquery.network/sq/subquery/arbitrum-nova-dictionary" - we don't have one for Nova

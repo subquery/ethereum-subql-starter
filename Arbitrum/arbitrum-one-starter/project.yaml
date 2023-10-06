@@ -23,10 +23,11 @@ network:
   # chainId is the EVM Chain ID, for Arbitrum One this is 42161
   # https://chainlist.org/chain/42161
   chainId: "42161"
-  # This endpoint must be a public non-pruned archive node
+  # These endpoint(s) should be non-pruned archive nodes
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
+  # We suggest providing an array of endpoints for increased speed and reliability
   endpoint: ["https://arbitrum.api.onfinality.io/public"]
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
   dictionary: "https://dict-tyk.subquery.network/query/arbitrum"

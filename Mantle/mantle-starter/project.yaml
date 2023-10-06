@@ -24,10 +24,11 @@ network:
   # chainId is the EVM Chain ID, for Mantle this is 5000
   # https://chainlist.org/chain/5000
   chainId: "5000"
-  # This endpoint must be a public non-pruned archive node
+  # These endpoint(s) should be non-pruned archive nodes
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
+  # We suggest providing an array of endpoints for increased speed and reliability
   endpoint:
     [
       "https://rpc.mantle.xyz",
