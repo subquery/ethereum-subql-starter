@@ -2,7 +2,7 @@
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for the [wrapped Ether token](https://lineascan.build/token/0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f) (`0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f`) on Linea  Mainnet**
+**This SubQuery project indexes all transfers and approval events for the [wrapped Ether token](https://lineascan.build/token/0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f) (`0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f`) on Linea Mainnet**
 
 ## Start
 
@@ -16,7 +16,7 @@ Don't forget to install dependencies with `npm install` or `yarn install`!
 
 Although this is a working example SubQuery project, you can edit the SubQuery project by changing the following files:
 
-- The project manifest in `project.yaml` defines the key project configuration and mapping handler filters
+- The project manifest in `project.ts` defines the key project configuration and mapping handler filters
 - The GraphQL Schema (`schema.graphql`) defines the shape of the resulting data that you are using SubQuery to index
 - The Mapping functions in `src/mappings/` directory are typescript functions that handle transformation logic
 
@@ -40,29 +40,29 @@ For this project, you can try to query with the following GraphQL code to get a 
 
 ```graphql
 {
-    query {
-        transfers(first: 5, orderBy: VALUE_DESC) {
-            totalCount
-            nodes {
-                id
-                blockHeight
-                from
-                to
-                value
-                contractAddress
-            }
-        }
+  query {
+    transfers(first: 5, orderBy: VALUE_DESC) {
+      totalCount
+      nodes {
+        id
+        blockHeight
+        from
+        to
+        value
+        contractAddress
+      }
     }
-    approvals(first: 5, orderBy: BLOCK_HEIGHT_DESC) {
-        nodes {
-            id
-            blockHeight
-            owner
-            spender
-            value
-            contractAddress
-        }
+  }
+  approvals(first: 5, orderBy: BLOCK_HEIGHT_DESC) {
+    nodes {
+      id
+      blockHeight
+      owner
+      spender
+      value
+      contractAddress
     }
+  }
 }
 ```
 

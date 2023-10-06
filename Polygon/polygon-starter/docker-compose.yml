@@ -45,7 +45,6 @@ services:
       interval: 3s
       timeout: 5s
       retries: 10
-
 #  graphql-engine:
 #    image: onfinality/subql-query:latest
 #    ports:

@@ -4,7 +4,7 @@
 
 **This SubQuery project indexes all claiming events for the [Bridge to Base NFT](https://basescan.org/token/0xEa2a41c02fA86A4901826615F9796e603C6a4491) on Base Mainnet**
 
-Here is a description from Base team about this NFT collection: *This NFT commemorates you being early — you’re one of the first to teleport into the next generation of the internet as we work to bring billions of people onchain.*
+Here is a description from Base team about this NFT collection: _This NFT commemorates you being early — you’re one of the first to teleport into the next generation of the internet as we work to bring billions of people onchain._
 
 ## Start
 
@@ -18,7 +18,7 @@ Don't forget to install dependencies with `npm install` or `yarn install`!
 
 Although this is a working example SubQuery project, you can edit the SubQuery project by changing the following files:
 
-- The project manifest in `project.yaml` defines the key project configuration and mapping handler filters
+- The project manifest in `project.ts` defines the key project configuration and mapping handler filters
 - The GraphQL Schema (`schema.graphql`) defines the shape of the resulting data that you are using SubQuery to index
 - The Mapping functions in `src/mappings/` directory are typescript functions that handle transformation logic
 
@@ -42,20 +42,20 @@ For this project, you can try to query with the following GraphQL code to get a 
 
 ```graphql
 query {
-    claims(first: 5) {
-      nodes {
-        id
-        blockHeight
-        timestamp
-        claimer
-        receiver
-        tokenId
-        quantity
-      }
+  claims(first: 5) {
+    nodes {
+      id
+      blockHeight
+      timestamp
+      claimer
+      receiver
+      tokenId
+      quantity
     }
-  
-  dailyAggregations(orderBy:TOTAL_QUANTITY_ASC){
-    nodes{
+  }
+
+  dailyAggregations(orderBy: TOTAL_QUANTITY_ASC) {
+    nodes {
       id
       totalQuantity
     }
@@ -127,7 +127,6 @@ Result:
     }
   }
 }
-
 ```
 
 You can explore the different possible queries and entities to help you with GraphQL using the documentation draw on the right.

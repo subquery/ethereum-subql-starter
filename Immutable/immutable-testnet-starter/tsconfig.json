@@ -12,7 +12,7 @@
     "target": "es2017",
     "strict": true
   },
- "include": [
+  "include": [
     "src/**/*",
     "node_modules/@subql/types-core/dist/global.d.ts",
     "node_modules/@subql/types-ethereum/dist/global.d.ts"
