@@ -23,7 +23,7 @@ package-lock.json
 # Package files
 *.jar
 
-# Maven
+# Generated files
 target/
 dist/
 src/types
