@@ -52,7 +52,7 @@ const project: EthereumProject = {
                 address:'0x1F98431c8aD98523631AE4a59f267346ea31F984'
             },
             assets: new Map([
-                ['Factory', { file: "./abis/Factory.json" }],
+                ['Factory', { file: "./abis/factory.json" }],
                 ['ERC20', { file: "./abis/ERC20.json" }],
 
                 ['ERC20SymbolBytes', { file: "./abis/ERC20SymbolBytes.json" }],
