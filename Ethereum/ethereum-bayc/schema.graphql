@@ -1,0 +1,32 @@
+# To improve query performance, we strongly suggest adding indexes to any field that you plan to filter or sort by
+# Add the `@index` or `@index(unique: true)` annotation after any non-key field
+# https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
+
+type Transfer @entity {
+  id: ID!
+  from: String!
+  to: String!
+  tokenId: BigInt!
+  blockNumber: BigInt!
+  transactionHash: String!
+}
+
+type BoredApe @entity {
+  id: ID!
+  creator: String!
+  newOwner: String!
+  tokenURI: String!
+  blockNumber: BigInt!
+}
+
+type Property @entity {
+  id: ID!
+  image: String
+  background: String
+  clothes: String
+  earring: String
+  eyes: String
+  fur: String
+  hat: String
+  mouth: String
+}
