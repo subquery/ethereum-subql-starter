@@ -1,56 +1,25 @@
-import { TransferEvent } from "../types/contracts/BaycAbi";
-import { Transfer, BoredApe, Property } from "../types";
-import { BaycAbi__factory } from "../types/contracts";
+import { TransferLog } from "../types/abi-interfaces/BaycAbi";
+import { Transfer, BoredApe, Properties } from "../types";
+import { MintApeTransaction } from "../types/abi-interfaces/BaycAbi";
 import fetch from "node-fetch";
+import assert from "assert";
 
-export async function handleTransfer(event: TransferEvent): Promise<void> {
-  let transfer = Transfer.create({
-    id: event.transactionHash + event.logIndex,
-    from: event.args.from,
-    to: event.args.to,
-    tokenId: event.args.tokenId.toBigInt(),
-    blockNumber: BigInt(event.blockNumber),
-    transactionHash: event.transactionHash,
-  });
-  transfer.save();
-
-  let contractAddress = BaycAbi__factory.connect(event.address, api);
+async function getOrCreateApe(event: TransferLog): Promise<BoredApe> {
+  assert(event.args);
   let boredApe = await BoredApe.get(event.args.tokenId.toString());
 
   if (boredApe == undefined) {
-    boredApe = BoredApe.create({
-      id: event.args.tokenId.toString(),
-      creator: event.args.to,
-      tokenURI: await contractAddress.tokenURI(event.args.tokenId),
-      newOwner: event.args.to,
-      blockNumber: BigInt(event.blockNumber),
-    });
-  }
-
-  boredApe.newOwner = event.args.to;
-  boredApe.blockNumber = BigInt(event.blockNumber);
-  boredApe.save();
-
-  const ipfshash = "QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq";
-  let tokenURI = "/" + event.args.tokenId.toString();
-
-  let property = await Property.get(event.args.tokenId.toString());
-
-  if (property == null) {
+    const ipfshash = "QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq";
+    let tokenURI = "/" + event.args.tokenId.toString();
     let fullURI = ipfshash + tokenURI;
 
     let content = await (await fetch("https://ipfs.io/ipfs/" + fullURI)).json();
 
+    const properties: Properties = {};
+
     if (content) {
-      let image = content.image;
+      properties.image = content.image;
       let attributes = content.attributes;
-      let background: string | undefined = undefined;
-      let clothes: string | undefined = undefined;
-      let earring: string | undefined = undefined;
-      let eyes: string | undefined = undefined;
-      let fur: string | undefined = undefined;
-      let hat: string | undefined = undefined;
-      let mouth: string | undefined = undefined;
       if (attributes) {
         for (const attribute of attributes) {
           let trait_type = attribute.trait_type;
@@ -65,48 +34,81 @@ export async function handleTransfer(event: TransferEvent): Promise<void> {
 
             if (trait && value) {
               if (trait == "Background") {
-                background = value;
+                properties.background = value;
               }
 
               if (trait == "Clothes") {
-                clothes = value;
+                properties.clothes = value;
               }
 
               if (trait == "Earring") {
-                earring = value;
+                properties.earring = value;
               }
 
               if (trait == "Eyes") {
-                eyes = value;
+                properties.eyes = value;
               }
 
               if (trait == "Fur") {
-                fur = value;
+                properties.fur = value;
               }
 
               if (trait == "Hat") {
-                hat = value;
+                properties.hat = value;
               }
 
               if (trait == "Mouth") {
-                mouth = value;
+                properties.mouth = value;
               }
             }
           }
         }
       }
-      let property = await Property.create({
-        id: event.args.tokenId.toString(),
-        image: image,
-        background: background,
-        earring: earring,
-        eyes: eyes,
-        fur: fur,
-        hat: hat,
-        mouth: mouth,
-        clothes: clothes,
-      });
-      property.save();
     }
+
+    boredApe = BoredApe.create({
+      id: event.args.tokenId.toString(),
+      creator: event.args.to,
+      currentOwner: event.args.to,
+      blockNumber: BigInt(event.blockNumber),
+      prorepties: properties,
+    });
   }
+
+  boredApe.save();
+  return boredApe;
+}
+
+export async function handleMint(
+  transaction: MintApeTransaction
+): Promise<void> {
+  assert(transaction.logs);
+  let transferLog: TransferLog = transaction.logs.find(
+    (e) =>
+      e.topics[0] ===
+      "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+  ) as TransferLog;
+  handleTransfer(transferLog);
+}
+
+export async function handleTransfer(event: TransferLog): Promise<void> {
+  assert(event.args);
+  let boredApe = await getOrCreateApe(event);
+
+  let transfer = Transfer.create({
+    id: event.transactionHash + event.logIndex,
+    from: event.args.from,
+    to: event.args.to,
+    tokenId: event.args.tokenId.toBigInt(),
+    blockNumber: BigInt(event.blockNumber),
+    transactionHash: event.transactionHash,
+    timestamp: event.transaction.blockTimestamp,
+    date: new Date(Number(event.transaction.blockTimestamp)),
+    boredApeId: boredApe.id,
+  });
+  transfer.save();
+
+  boredApe.currentOwner = event.args.to;
+  boredApe.blockNumber = BigInt(event.blockNumber);
+  boredApe.save();
 }

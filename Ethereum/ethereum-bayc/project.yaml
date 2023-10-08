@@ -31,11 +31,8 @@ dataSources:
     mapping:
       file: ./dist/index.js
       handlers:
-        - kind: ethereum/LogHandler
-          handler: handleTransfer
+        - kind: ethereum/TransactionHandler
+          handler: handleMint
           filter:
-            topics:
-              - >-
-                Transfer(address indexed from, address indexed to, uint256
-                amount)
+            function: mintApe(uint256)
 repository: https://github.com/subquery/ethereum-subql-starter

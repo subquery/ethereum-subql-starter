@@ -54,15 +54,10 @@ const project: EthereumProject = {
         file: "./dist/index.js",
         handlers: [
           {
-            kind: EthereumHandlerKind.Event,
-            handler: "handleTransfer",
+            kind: EthereumHandlerKind.Call,
+            handler: "handleMint",
             filter: {
-              /**
-               * Follows standard log filters https://docs.ethers.io/v5/concepts/events/
-               */
-              topics: [
-                "Transfer(address indexed from, address indexed to, uint256 amount)",
-              ],
+              function: "mintApe(uint256)",
             },
           },
         ],

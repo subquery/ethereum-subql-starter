@@ -9,18 +9,20 @@ type Transfer @entity {
   tokenId: BigInt!
   blockNumber: BigInt!
   transactionHash: String!
+  timestamp: BigInt!
+  date: Date!
+  boredApe: BoredApe!
 }
 
 type BoredApe @entity {
   id: ID!
   creator: String!
-  newOwner: String!
-  tokenURI: String!
+  currentOwner: String!
   blockNumber: BigInt!
+  prorepties: Properties!
 }
 
-type Property @entity {
-  id: ID!
+type Properties @jsonField {
   image: String
   background: String
   clothes: String
