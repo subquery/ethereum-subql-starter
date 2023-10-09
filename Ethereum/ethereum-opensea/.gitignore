@@ -27,6 +27,7 @@ package-lock.json
 target/
 dist/
 src/types
+#project.yaml
 
 # JetBrains IDE
 .idea/

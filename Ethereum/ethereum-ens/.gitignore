@@ -27,6 +27,7 @@ package-lock.json
 target/
 dist/
 src/types
+#project.yaml
 
 # JetBrains IDE
 .idea/
@@ -54,3 +55,6 @@ Thumbs.db
 *.wmv
 
 .data
+.yarn
+
+.DS_Store
