@@ -8,9 +8,9 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "eos-starter",
+  name: "heco-starter",
   description:
-    "This project can be use as a starting point for developing your new EOS SubQuery project",
+    "This project can be use as a starting point for developing your Heco Chains SubQuery project",
   runner: {
     node: {
       name: "@subql/node-ethereum",
@@ -26,28 +26,28 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for EOS this is 17777
-     * https://chainlist.org/chain/17777
+     * chainId is the EVM Chain ID, for Heco this is 128
+     * https://chainlist.org/chain/128
      */
-    chainId: "17777",
+    chainId: "128",
     /**
      * These endpoint(s) should be non-pruned archive nodes
      * Public nodes may be rate limited, which can affect indexing speed
      * When developing your project we suggest getting a private API key
      # We suggest providing an array of endpoints for increased speed and reliability
      */
-    endpoint: ["https://api.evm.eosnetwork.com/"],
+    endpoint: ["wss://ws-mainnet.hecochain.com"],
+    // dictionary: 'https://gx.api.subquery.network/sq/subquery/heko-dictionary' // Not ready yet
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 13178455,
-
+      startBlock: 29205957, // The start block the contract was deployed on https://www.hecoinfo.com/en-us/token/0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f
       options: {
         // Must be a key of assets
         abi: "erc20",
-        // This is the contract address for wrapped EOS https://explorer.evm.eosnetwork.com/address/0xc00592aA41D32D137dC480d9f6d0Df19b860104F
-        address: "0xc00592aA41D32D137dC480d9f6d0Df19b860104F",
+        // This is the contract address for Wrapped HT https://www.hecoinfo.com/en-us/token/0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f
+        address: "0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
       mapping: {

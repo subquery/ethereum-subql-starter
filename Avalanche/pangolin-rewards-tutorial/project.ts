@@ -68,4 +68,5 @@ const project: EthereumProject = {
   repository: "https://github.com/jamesbayly/pangolin-rewards-tutorial",
 };
 
+// Must set default to the project instance
 export default project;
