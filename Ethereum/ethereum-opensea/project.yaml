@@ -1,0 +1,57 @@
+# NOTE THIS FILE IS HAS BEEN DEPRECATED AND REPLACED BY THE TYPESCRIPT DEFINITION (PROJECT.TS)
+# The CLI will automatically look for the project.ts as priority, if you want to ensure you
+# use the project manifest, please delete project.ts
+
+specVersion: "1.0.0"
+
+name: "opensea"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "This project can be use as a starting point for developing your new Ethereum SubQuery project, it indexes NFT data from the Opensea marketplace"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  # chainId is the EVM Chain ID, for Ethereum this is 1
+  # https://chainlist.org/chain/1
+  chainId: "1"
+  # These endpoint(s) should be non-pruned archive nodes
+  # We recommend providing more than one endpoint for improved reliability, performance, and uptime
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  # We suggest providing an array of endpoints for increased speed and reliability
+  endpoint: ["https://eth.api.onfinality.io/public"]
+  # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
+  dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary"
+
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 14946474
+    options:
+      # Must be a key of assets
+      abi: SeaportExchange
+      address: "0x00000000006c3852cbef3e08e8df289169ede581"
+    assets:
+      SeaportExchange:
+        file: "./abis/SeaportExchange.abi.json"
+      ERC165:
+        file: "./abis/ERC165.json"
+      NftMetadata:
+        file: "./abis/NftMetadata.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleOrderFulfilled
+          kind: ethereum/LogHandler
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - OrderFulfilled(bytes32,address,address,address,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256,address)[])

@@ -1,4 +1,4 @@
-# SubQuery - Example Project for Polygon zkEVM Sepolia
+# SubQuery - Example Project for Polygon zkEVM
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
@@ -16,7 +16,7 @@ Don't forget to install dependencies with `npm install` or `yarn install`!
 
 Although this is a working example SubQuery project, you can edit the SubQuery project by changing the following files:
 
-- The project manifest in `project.yaml` defines the key project configuration and mapping handler filters
+- The project manifest in `project.ts` defines the key project configuration and mapping handler filters
 - The GraphQL Schema (`schema.graphql`) defines the shape of the resulting data that you are using SubQuery to index
 - The Mapping functions in `src/mappings/` directory are typescript functions that handle transformation logic
 

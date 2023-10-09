@@ -1,0 +1,24 @@
+type DataFeed @entity {
+  id: ID!
+  name: String
+  asset: String
+  assetAddress: String!
+  denomination: String
+  denominationAddress: String!
+  decimals: Int
+  live: Boolean!
+  phaseId: Int!
+  timeCreated: BigInt!
+  timeLastPrice: BigInt
+  timeDeprecated: BigInt
+  prices: [DataPoint!] @derivedFrom(field: "feed")
+}
+
+type DataPoint @entity {
+  id: ID!
+  feed: DataFeed!
+  price: BigInt!
+  roundId: BigInt!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+}

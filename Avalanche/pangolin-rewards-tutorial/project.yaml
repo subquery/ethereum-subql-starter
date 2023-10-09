@@ -1,0 +1,46 @@
+specVersion: 1.0.0
+name: pangolin-rewards-subql-tutorial
+version: 0.0.1
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: The goal of this quick start guide is to index all Pangolin token Approve logs
+repository: "https://github.com/jamesbayly/pangolin-rewards-tutorial"
+schema:
+  file: ./schema.graphql
+network:
+  # chainId is the EVM Chain ID, for Avalanche-C chain is 43114
+  # https://chainlist.org/chain/43114
+  chainId: "43114"
+  # These endpoint(s) should be non-pruned archive nodes
+  # We recommend providing more than one endpoint for improved reliability, performance, and uptime
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  # We suggest providing an array of endpoints for increased speed and reliability
+  endpoint: ["https://avalanche.api.onfinality.io/public/ext/bc/C/rpc"]
+  # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
+  dictionary: "https://api.subquery.network/sq/subquery/avalanche-dictionary"
+dataSources:
+  - kind: ethereum/Runtime # We use ethereum runtime since Avalanche is compatible
+    startBlock: 7906490 # Block when the first reward is made
+    options:
+      # Must be a key of assets
+      abi: erc20
+      ## Pangolin reward contract https://snowtrace.io/token/0x88afdae1a9f58da3e68584421937e5f564a0135b
+      address: "0x88afdae1a9f58da3e68584421937e5f564a0135b"
+    assets:
+      erc20:
+        file: "./abis/PangolinRewards.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleLog
+          kind: ethereum/LogHandler # We use ethereum handlers since Avalanche is compatible
+          filter:
+            ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+            topics:
+              - RewardPaid(address user, uint256 reward)

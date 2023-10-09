@@ -1,0 +1,53 @@
+# NOTE THIS FILE IS HAS BEEN DEPRECATED AND REPLACED BY THE TYPESCRIPT DEFINITION (PROJECT.TS)
+# The CLI will automatically look for the project.ts as priority, if you want to ensure you
+# use the project manifest, please delete project.ts
+
+specVersion: "1.0.0"
+
+name: "arbitrum-one-winr-rewards"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "This SubQuery Arbitrum Example project indexes all Arbitrum WINR Staking Rewards."
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  # chainId is the EVM Chain ID, for Arbitrum this is 42161
+  # https://chainlist.org/chain/42161
+  chainId: "42161"
+  # These endpoint(s) should be non-pruned archive nodes
+  # We recommend providing more than one endpoint for improved reliability, performance, and uptime
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  # We suggest providing an array of endpoints for increased speed and reliability
+  endpoint: ["https://arbitrum.api.onfinality.io/public"]
+  # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
+  dictionary: "https://dict-tyk.subquery.network/query/arbitrum"
+dataSources:
+  - kind: ethereum/Runtime # We use ethereum runtime since Arbitrum is a layer-2 that is compatible
+    startBlock: 91573785 # This is the block of the first claim dividend https://arbiscan.io/tx/0x300b6199816f44029408efc850fb9d6f8751bbedec3e273909eac6f3a61ee3b3
+    options:
+      # Must be a key of assets
+      abi: winr-staking
+      address: "0xddAEcf4B02A3e45b96FC2d7339c997E072b0d034" # This is the contract address for WINR Staking https://arbiscan.io/tx/0x44e9396155f6a90daaea687cf48c309128afead3be9faf20c5de3d81f6f318a6
+    assets:
+      winr-staking:
+        file: "./abis/winr-staking.abi.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleDividendBatch
+          kind: ethereum/LogHandler # We use ethereum handlers since Arbitrum is a layer-2 that is compatible
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - ClaimDividendBatch(address indexed user, uint256 reward)
+              # address: "0x60781C2586D68229fde47564546784ab3fACA982"

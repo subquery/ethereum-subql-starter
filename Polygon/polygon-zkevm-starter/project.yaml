@@ -1,3 +1,7 @@
+# NOTE THIS FILE IS HAS BEEN DEPRECATED AND REPLACED BY THE TYPESCRIPT DEFINITION (PROJECT.TS)
+# The CLI will automatically look for the project.ts as priority, if you want to ensure you
+# use the project manifest, please delete project.ts
+
 specVersion: "1.0.0"
 
 name: "polygon-zkevm-starter"
@@ -10,27 +14,28 @@ runner:
     name: "@subql/query"
     version: "*"
 description: "This project can be use as a starting point for developing your
-  new Polygon zkEVM Sepolia SubQuery project"
+  new Polygon zkEVM SubQuery project"
 repository: "https://github.com/subquery/ethereum-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  # chainId is the EVM Chain ID, for Polygon zkEVM Sepolia this is 1101
+  # chainId is the EVM Chain ID, for Polygon zkEVM this is 1101
   # https://chainlist.org/chain/1101
   chainId: "1101"
-  # This endpoint must be a public non-pruned archive node
+  # These endpoint(s) should be non-pruned archive nodes
   # We recommend providing more than one endpoint for improved reliability, performance, and uptime
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
+  # We suggest providing an array of endpoints for increased speed and reliability
   endpoint:
     - https://zkevm-rpc.com
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  # dictionary: "https://api.subquery.network/sq/subquery/polygon-zkevm-dictionary"
+  dictionary: "https://dict-tyk.subquery.network/query/polygon-zkevm"
 
 dataSources:
-  - kind: ethereum/Runtime # We use ethereum runtime since Base is EVM-compatible
+  - kind: ethereum/Runtime # We use ethereum runtime since Polygon zkEVM is EVM-compatible
     startBlock: 1 # This is the block that the contract was deployed on https://zkevm.polygonscan.com/token/0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9
     options:
       # Must be a key of assets
@@ -43,14 +48,14 @@ dataSources:
       file: "./dist/index.js"
       handlers:
         - handler: handleTransaction
-          kind: ethereum/TransactionHandler # We use ethereum handlers since Base is EVM-compatible
+          kind: ethereum/TransactionHandler # We use ethereum handlers since Polygon zkEVM is EVM-compatible
           filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
             function: approve(address spender, uint256 amount)
         - handler: handleLog
-          kind: ethereum/LogHandler # We use ethereum handlers since Base is EVM-compatible
+          kind: ethereum/LogHandler # We use ethereum handlers since Polygon zkEVM  is EVM-compatible
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/

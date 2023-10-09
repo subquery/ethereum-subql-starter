@@ -1,0 +1,58 @@
+# NOTE THIS FILE IS HAS BEEN DEPRECATED AND REPLACED BY THE TYPESCRIPT DEFINITION (PROJECT.TS)
+# The CLI will automatically look for the project.ts as priority, if you want to ensure you
+# use the project manifest, please delete project.ts
+
+specVersion: "1.0.0"
+
+name: "polygon-plasma-bridge"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "This example project indexes all token deposits from the Polygon Plamsa Bridge"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  # chainId is the EVM Chain ID, for Polygon this is 137
+  # https://chainlist.org/chain/137
+  chainId: "137"
+  # These endpoint(s) should be non-pruned archive nodes
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  # We suggest providing an array of endpoints for increased speed and reliability
+  endpoint: "https://polygon.api.onfinality.io/public"
+  # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
+  dictionary: "https://gx.api.subquery.network/sq/subquery/polygon-dictionary"
+
+dataSources:
+  - kind: ethereum/Runtime # We use ethereum runtime since Polygon is a layer-2 that is compatible
+    startBlock: 8323392
+    options:
+      # Must be a key of assets
+      abi: plasma
+      address: "0xd9c7c4ed4b66858301d0cb28cc88bf655fe34861" # Plasma contract
+    assets:
+      plasma:
+        file: "./abis/plasma.abi.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleDeposit
+          kind: ethereum/LogHandler # We use ethereum handlers since Polygon is a layer-2 that is compatible
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - TokenDeposited (address indexed rootToken, address indexed childToken, address indexed user, uint256 amount, uint256 depositCount)
+        - handler: handleWithdrawl
+          kind: ethereum/LogHandler # We use ethereum handlers since Polygon is a layer-2 that is compatible
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - TokenWithdrawn (address indexed rootToken, address indexed childToken, address indexed user, uint256 amount, uint256 withrawCount)

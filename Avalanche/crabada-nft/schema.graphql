@@ -1,0 +1,29 @@
+type Crab @entity {
+  id: ID!
+  address: Address!
+  daddy: Crab
+  mommy: Crab
+  dna: BigInt
+  birthday: BigInt
+  breeding_count: Int
+  minted_block: BigInt! # Should be bigInt
+  minted_timestamp: BigInt! # unix epoch timestamp
+  minter_address: Address! # event transaction from
+  current_owner: Address! # event args to
+  metadata_url: String
+}
+
+type Transfer @entity {
+  id: ID!
+  tokenId: String!
+  block: BigInt
+  timestamp: BigInt
+  transaction_hash: String # event transaction hash
+  crab: Crab
+  from: Address!
+  to: Address!
+}
+
+type Address @entity {
+  id: ID! # Address?
+}
