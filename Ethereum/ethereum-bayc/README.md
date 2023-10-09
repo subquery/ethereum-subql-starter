@@ -39,30 +39,25 @@ You can observe the three services start, and once all are running (it may take 
 For this project, you can try to query with the following GraphQL code to get a taste of how it works.
 
 ```graphql
-{
-  query {
-    transfers(first: 5, orderBy: VALUE_DESC) {
-      totalCount
-      nodes {
-        id
-        blockHeight
-        from
-        to
-        value
-        contractAddress
-      }
-    }
-  }
-  approvals(first: 5, orderBy: BLOCK_HEIGHT_DESC) {
+query {
+  transfers(first: 1) {
     nodes {
       id
-      blockHeight
-      owner
-      spender
-      value
-      contractAddress
+      from
+      to
+      tokenId
+      blockNumber
+      transactionHash
+      timestamp
+      date
+      boredApe {
+        id
+        creator
+        currentOwner
+        blockNumber
+        prorepties
+      }
     }
-  }
 }
 ```
 
