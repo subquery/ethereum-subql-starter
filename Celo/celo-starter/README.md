@@ -1,8 +1,8 @@
-# SubQuery - Example Project for Scroll Sepolia
+# SubQuery - Example Project for Celo
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for the [Wrapped Eth](https://sepolia-blockscout.scroll.io/address/0x5300000000000000000000000000000000000004) on Scroll's Sepolia Test Network**
+**This SubQuery project indexes all transfers and approval events for the [Wrapped Eth](https://explorer.celo.org/mainnet/token/0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207) on Celo Mainnet**
 
 ## Start
 
