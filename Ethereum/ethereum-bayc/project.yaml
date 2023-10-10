@@ -35,4 +35,11 @@ dataSources:
           handler: handleMint
           filter:
             function: mintApe(uint256)
+        - kind: ethereum/LogHandler
+          handler: handleTransfer
+          filter:
+            topics:
+              - >-
+                Transfer(address indexed from, address indexed to, uint256
+                amount)
 repository: https://github.com/subquery/ethereum-subql-starter

@@ -1,5 +1,5 @@
 import { TransferLog } from "../types/abi-interfaces/BaycAbi";
-import { Transfer, BoredApe, Properties } from "../types";
+import { Transfer, BoredApe, Properties, Mint } from "../types";
 import { MintApeTransaction } from "../types/abi-interfaces/BaycAbi";
 import fetch from "node-fetch";
 import assert from "assert";
@@ -88,7 +88,15 @@ export async function handleMint(
       e.topics[0] ===
       "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
   ) as TransferLog;
-  handleTransfer(transferLog);
+  let boredApe = await getOrCreateApe(transferLog);
+  let mint = Mint.create({
+    id: transaction.hash.toString(),
+    minter: transaction.from.toString(),
+    boredApeId: boredApe.id,
+    timestamp: transaction.blockTimestamp,
+    date: new Date(Number(transaction.blockTimestamp)),
+  });
+  mint.save();
 }
 
 export async function handleTransfer(event: TransferLog): Promise<void> {

@@ -60,6 +60,18 @@ const project: EthereumProject = {
               function: "mintApe(uint256)",
             },
           },
+          {
+            kind: EthereumHandlerKind.Event,
+            handler: "handleTransfer",
+            filter: {
+              /**
+               * Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+               */
+              topics: [
+                "Transfer(address indexed from, address indexed to, uint256 amount)",
+              ],
+            },
+          },
         ],
       },
     },
