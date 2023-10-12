@@ -10,7 +10,7 @@ const project: EthereumProject = {
   version: "0.0.1",
   name: "ethereum-subql-starter",
   description:
-    "This project can be use as a starting point for developing your new Ethereum SubQuery project",
+    "This project can be use as a starting point for developing your new Ethereum SubQuery project, indexes all transfers for the BAYC on Ethereum",
   runner: {
     node: {
       name: "@subql/node-ethereum",
@@ -79,4 +79,5 @@ const project: EthereumProject = {
   repository: "https://github.com/subquery/ethereum-subql-starter",
 };
 
+// Must set default to the project instance
 export default project;
