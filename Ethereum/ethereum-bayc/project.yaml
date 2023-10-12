@@ -1,0 +1,45 @@
+# // Auto-generated , DO NOT EDIT
+specVersion: 1.0.0
+version: 0.0.1
+name: ethereum-subql-starter
+description: >-
+  This project can be use as a starting point for developing your new Ethereum
+  SubQuery project
+runner:
+  node:
+    name: '@subql/node-ethereum'
+    version: '>=3.0.0'
+  query:
+    name: '@subql/query'
+    version: '*'
+schema:
+  file: ./schema.graphql
+network:
+  chainId: '1'
+  endpoint:
+    - https://eth.api.onfinality.io/public
+  dictionary: https://gx.api.subquery.network/sq/subquery/eth-dictionary
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 12287507
+    options:
+      abi: bayc
+      address: '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D'
+    assets:
+      bayc:
+        file: ./abis/bayc.abi.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/TransactionHandler
+          handler: handleMint
+          filter:
+            function: mintApe(uint256)
+        - kind: ethereum/LogHandler
+          handler: handleTransfer
+          filter:
+            topics:
+              - >-
+                Transfer(address indexed from, address indexed to, uint256
+                amount)
+repository: https://github.com/subquery/ethereum-subql-starter
