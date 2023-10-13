@@ -31,10 +31,10 @@ const project: EthereumProject = {
      */
     chainId: "128",
     /**
-     * These endpoint(s) should be non-pruned archive nodes
+     * These endpoint(s) should be public non-pruned archive node
+     * We recommend providing more than one endpoint for improved reliability, performance, and uptime
      * Public nodes may be rate limited, which can affect indexing speed
      * When developing your project we suggest getting a private API key
-     # We suggest providing an array of endpoints for increased speed and reliability
      */
     endpoint: ["wss://ws-mainnet.hecochain.com"],
     // dictionary: 'https://gx.api.subquery.network/sq/subquery/heko-dictionary' // Not ready yet
