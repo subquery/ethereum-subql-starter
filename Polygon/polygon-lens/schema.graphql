@@ -1,0 +1,33 @@
+type Profile @entity {
+  id: ID!
+  handle: String
+  imageURI: String
+  creator: Account
+  owner: Account
+  followNFT: String
+  followNFTURI: String
+  posts: [Post!] @derivedFrom(field: "profile")
+  createdAt: BigInt
+  follows: [Follow]! @derivedFrom(field: "toProfile")
+}
+
+type Post @entity {
+  id: ID!
+  contentURI: String
+  profile: Profile
+  collectModule: String
+  collectModuleReturnData: String
+  timestamp: BigInt
+}
+
+type Account @entity {
+  id: ID!
+  profiles: [Profile!] @derivedFrom(field: "owner")
+}
+
+type Follow @entity {
+  id: ID!
+  fromAccount: Account
+  toProfile: Profile
+  timestamp: BigInt
+}
