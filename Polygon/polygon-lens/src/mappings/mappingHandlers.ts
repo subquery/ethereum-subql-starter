@@ -81,30 +81,29 @@ export async function handlePostCreated(event: PostCreatedLog): Promise<void> {
   post.profileId = profile.id;
   post.timestamp = event.args.timestamp.toBigInt();
   post.contentURI = event.args.contentURI;
-
+  profile.save();
   post.save();
 }
 
 export async function handleFollowed(event: FollowedLog): Promise<void> {
   logger.warn("Handling FollowedLog");
-  let newFollows: string[] = [];
   assert(event.args, "No log args");
-  newFollows = event.args.profileIds.map<string>(
-    (profileId: BigNumber): string => profileId.toString()
-  );
-
-  for (let profile in newFollows) {
+  for (let index in event.args.profileIds) {
+    let profileId = event.args.profileIds[index];
+    logger.warn(profileId.toString());
+    let profile = await getOrCreateProfile(profileId.toString());
     let follow = await getOrCreateFollow(
       event.args.follower
         .concat("-")
         .concat(event.transaction.hash)
         .concat("-")
-        .concat(profile)
+        .concat(profileId.toString())
     );
     let follower = await getOrCreateAccount(event.args.follower);
     follow.fromAccountId = follower.id;
-    follow.toProfileId = profile;
+    follow.toProfileId = profile.id;
     follow.timestamp = event.args.timestamp.toBigInt();
+    profile.save();
     follow.save();
     follower.save();
   }
