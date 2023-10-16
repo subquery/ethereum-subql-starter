@@ -35,7 +35,7 @@ export function getNewPublicactionId(profileId: BigInt, pubId: BigInt): string {
 
 export async function getOrCreatePost(pubId: BigInt): Promise<Post> {
   let post = await Post.get(pubId.toString());
-  if (post === undefined) {
+  if (!post) {
     post = await Post.create({
       id: pubId.toString(),
     });
