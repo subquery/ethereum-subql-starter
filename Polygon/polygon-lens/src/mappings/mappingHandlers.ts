@@ -11,7 +11,7 @@ export async function getOrCreateAccount(
   accountAddress: string
 ): Promise<Account> {
   let account = await Account.get(accountAddress);
-  if (account == null) {
+  if (!account) {
     account = Account.create({
       id: accountAddress,
     });
