@@ -45,7 +45,7 @@ export async function getOrCreatePost(pubId: BigInt): Promise<Post> {
 
 export async function getOrCreateProfile(profileId: string): Promise<Profile> {
   let profile = await Profile.get(profileId);
-  if (profile === undefined) {
+  if (!profile) {
     profile = Profile.create({
       id: profileId,
     });
