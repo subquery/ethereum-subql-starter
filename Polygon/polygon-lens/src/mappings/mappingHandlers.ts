@@ -23,7 +23,7 @@ export async function getOrCreateFollow(
   accountAddress: string
 ): Promise<Follow> {
   let follow = await Follow.get(accountAddress);
-  if (follow == null) {
+  if (!follow) {
     follow = Follow.create({ id: accountAddress });
   }
   return follow;
