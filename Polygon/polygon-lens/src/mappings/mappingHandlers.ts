@@ -5,7 +5,6 @@ import {
 } from "../types/abi-interfaces/LensHubAbi";
 import { Account, Post, Profile, Follow } from "../types";
 import assert from "assert";
-import { BigNumber } from "ethers";
 
 export async function getOrCreateAccount(
   accountAddress: string
@@ -68,9 +67,7 @@ export async function handleProfileCreated(
   profile.followNFTURI = event.args.followNFTURI;
   profile.handle = event.args.handle;
   profile.imageURI = event.args.imageURI;
-  creator.save();
-  to.save();
-  profile.save();
+  Promise.all([creator.save(), to.save(), profile.save()]);
 }
 
 export async function handlePostCreated(event: PostCreatedLog): Promise<void> {
@@ -81,8 +78,7 @@ export async function handlePostCreated(event: PostCreatedLog): Promise<void> {
   post.profileId = profile.id;
   post.timestamp = event.args.timestamp.toBigInt();
   post.contentURI = event.args.contentURI;
-  profile.save();
-  post.save();
+  Promise.all([profile.save(), post.save()]);
 }
 
 export async function handleFollowed(event: FollowedLog): Promise<void> {
@@ -103,8 +99,6 @@ export async function handleFollowed(event: FollowedLog): Promise<void> {
     follow.fromAccountId = follower.id;
     follow.toProfileId = profile.id;
     follow.timestamp = event.args.timestamp.toBigInt();
-    profile.save();
-    follow.save();
-    follower.save();
+    Promise.all([profile.save(), follow.save(), follower.save()]);
   }
 }
