@@ -1,7 +1,7 @@
 {
-  "name": "ethereum-DelegateRegistry",
+  "name": "ethereum-snapshot",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Ethereum SubQuery project",
+  "description": "This project indexes the Snapshot Protocol delegation data from various chains",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",

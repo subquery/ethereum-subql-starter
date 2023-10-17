@@ -1,10 +1,7 @@
-# // Auto-generated , DO NOT EDIT
 specVersion: 1.0.0
 version: 0.0.1
-name: ethereum-subql-starter
-description: >-
-  This project can be use as a starting point for developing your new Ethereum
-  SubQuery project
+name: ethereum-snapshot
+description: This project indexes the Snapshot Protocol delegation data from various chains
 runner:
   node:
     name: "@subql/node-ethereum"
