@@ -10,7 +10,7 @@ const project: EthereumProject = {
   version: "0.0.1",
   name: "polygon-lens",
   description:
-    "This project can be use as a starting point for developing your new polygon SubQuery project",
+    "This SubQuery project indexes Profile Creation, Post, Follow events for the Lens Protocol on Polygon Network",
   runner: {
     node: {
       name: "@subql/node-ethereum",
