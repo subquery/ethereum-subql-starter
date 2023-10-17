@@ -1,0 +1,44 @@
+# // Auto-generated , DO NOT EDIT
+specVersion: 1.0.0
+version: 0.0.1
+name: ethereum-subql-starter
+description: >-
+  This project can be use as a starting point for developing your new Ethereum
+  SubQuery project
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: ">=3.0.0"
+  query:
+    name: "@subql/query"
+    version: "*"
+schema:
+  file: ./schema.graphql
+network:
+  chainId: "5"
+  endpoint:
+    - wss://ethereum-goerli.publicnode.com
+  # dictionary: TODO add a dictionary
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 7383494
+    options:
+      abi: DelegateRegistry
+      address: "0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446"
+    assets:
+      DelegateRegistry:
+        file: ./abis/DelegateRegistry.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleGoerliSetDelegateEvent
+          filter:
+            topics:
+              - SetDelegate(address,bytes32,address)
+        - kind: ethereum/LogHandler
+          handler: handleGoerliClearDelegateEvent
+          filter:
+            topics:
+              - ClearDelegate(address,bytes32,address)
+repository: https://github.com/subquery/ethereum-subql-starter
