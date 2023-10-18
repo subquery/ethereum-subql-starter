@@ -1,0 +1,111 @@
+specVersion: 1.0.0
+version: 0.0.1
+name: ethereum-snapshot
+description: This project indexes the Snapshot Protocol delegation data from various chains
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: ">=3.0.0"
+  query:
+    name: "@subql/query"
+    version: "*"
+schema:
+  file: ./schema.graphql
+network:
+  chainId: "1"
+  endpoint:
+    - https://eth.llamarpc.com
+  dictionary: https://gx.api.subquery.network/sq/subquery/eth-dictionary
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 11225329
+    options:
+      abi: DelegateRegistry
+      address: "0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446"
+    assets:
+      DelegateRegistry:
+        file: ./abis/DelegateRegistry.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEthereumSetDelegateEvent
+          filter:
+            topics:
+              - SetDelegate(address,bytes32,address)
+        - kind: ethereum/LogHandler
+          handler: handleEthereumClearDelegateEvent
+          filter:
+            topics:
+              - ClearDelegate(address,bytes32,address)
+  - kind: ethereum/Runtime
+    startBlock: 7450116
+    options:
+      abi: GnosisSafeProxyFactory
+      address: "0x12302fE9c02ff50939BaAaaf415fc226C078613C"
+    assets:
+      GnosisSafeProxyFactory:
+        file: ./abis/GnosisSafeProxyFactory_v1.0.0.json
+      GnosisSafe:
+        file: ./abis/GnosisSafe.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleProxyCreation_1_0_0
+          filter:
+            topics:
+              - ProxyCreation(address)
+  - kind: ethereum/Runtime
+    startBlock: 9084508
+    options:
+      abi: GnosisSafeProxyFactory
+      address: "0x76E2cFc1F5Fa8F6a5b3fC4c8F4788F0116861F9B"
+    assets:
+      GnosisSafeProxyFactory:
+        file: ./abis/GnosisSafeProxyFactory_v1.1.1.json
+      GnosisSafe:
+        file: ./abis/GnosisSafe.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleProxyCreation_1_1_0
+          filter:
+            topics:
+              - ProxyCreation(address)
+  - kind: ethereum/Runtime
+    startBlock: 12504126
+    options:
+      abi: GnosisSafeProxyFactory
+      address: "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2"
+    assets:
+      GnosisSafeProxyFactory:
+        file: ./abis/GnosisSafeProxyFactory_v1.3.0.json
+      GnosisSafe:
+        file: ./abis/GnosisSafe.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleProxyCreation_1_3_0
+          filter:
+            topics:
+              - ProxyCreation(address,address)
+templates:
+  - kind: ethereum/Runtime
+    name: GnosisSafe
+    options:
+      abi: GnosisSafe
+    assets:
+      GnosisSafe:
+        file: ./abis/GnosisSafe.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEthSignMsg
+          filter:
+            topics:
+              - SignMsg(indexed bytes32)
+repository: https://github.com/subquery/ethereum-subql-starter
