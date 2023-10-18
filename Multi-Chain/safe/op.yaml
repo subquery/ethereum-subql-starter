@@ -1,7 +1,7 @@
 specVersion: 1.0.0
 version: 0.0.1
-name: ethereum-snapshot
-description: This project indexes the Snapshot Protocol delegation data from various chains
+name: ethereum-safe
+description: This project indexes the Safe signature data from various chains
 runner:
   node:
     name: "@subql/node-ethereum"
@@ -15,7 +15,7 @@ network:
   chainId: "10"
   endpoint:
     - https://optimism.llamarpc.com
-  # dictionary: https://dict-tyk.subquery.network/query/optimism-mainnet
+  dictionary: https://dict-tyk.subquery.network/query/optimism-mainnet
 dataSources:
   - kind: ethereum/Runtime
     startBlock: 110991101

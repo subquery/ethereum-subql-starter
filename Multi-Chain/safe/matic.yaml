@@ -1,7 +1,7 @@
 specVersion: 1.0.0
 version: 0.0.1
-name: ethereum-snapshot
-description: This project indexes the Snapshot Protocol delegation data from various chains
+name: ethereum-safe
+description: This project indexes the Safe signature data from various chains
 runner:
   node:
     name: "@subql/node-ethereum"
@@ -15,7 +15,7 @@ network:
   chainId: "137"
   endpoint:
     - https://polygon.llamarpc.com
-  # dictionary: https://gx.api.subquery.network/sq/subquery/polygon-dictionary
+  dictionary: https://gx.api.subquery.network/sq/subquery/polygon-dictionary
 dataSources:
   - kind: ethereum/Runtime
     startBlock: 45222934
