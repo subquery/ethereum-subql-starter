@@ -5,5 +5,4 @@ if (!global.atob) {
 }
 
 //Exports all handler functions
-export * from "./mappings/setDelegate";
-export * from "./mappings/clearDelegate";
+export * from "./mappings/factory";

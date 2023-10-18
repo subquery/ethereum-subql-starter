@@ -1,0 +1,7 @@
+type Sig @entity {
+  id: ID!
+  account: String!
+  msgHash: String!
+  timestamp: BigInt!
+  network: String!
+}
