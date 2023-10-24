@@ -1,0 +1,142 @@
+specVersion: 1.0.0
+version: 0.0.1
+name: {{network}}-galxy
+description: This project indexes the Galxy NFTs from various chains
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: ">=3.0.0"
+  query:
+    name: "@subql/query"
+    version: "*"
+schema:
+  file: ./schema.graphql
+network:
+  chainId: "{{id}}"
+  endpoint:
+    - Insert node endpoint
+  dictionary: Insert Subquery Dictionary endpoint
+dataSources:
+{{#SpaceStationV1}}
+  - kind: ethereum/Runtime
+    name: {{name}}
+    startBlock: {{block}}
+    options:
+      abi: SpaceStationV1
+      address: "{{address}}"
+    assets:
+      SpaceStationV1:
+        file: ./abis/SpaceStationV1.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEventClaim{{network}}
+          filter:
+            topics:
+              - EventClaim(uint256,uint256,uint256,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatch{{network}}
+          filter:
+            topics:
+              - EventClaimBatch(uint256,uint256[],uint256[],address)
+        - kind: ethereum/LogHandler
+          handler: handleEventForge{{network}}
+          filter:
+            topics:
+              - EventForge(uint256,uint256,uint256,address)
+{{/SpaceStationV1}}
+{{#SpaceStationV2}}
+  - kind: ethereum/Runtime
+    startBlock: {{block}}
+    name: {{name}}
+    options:
+      abi: SpaceStationV2
+      address: "{{address}}"
+    assets:
+      SpaceStationV2:
+        file: ./abis/SpaceStationV2.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimV2{{network}}
+          filter:
+            topics:
+              - EventClaim(uint256,uint256,uint256,address,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatchV2{{network}}
+          filter:
+            topics:
+              - EventClaimBatch(uint256,uint256[],uint256[],address,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatchCappedV2{{network}}
+          filter:
+            topics:
+              - EventClaimBatchCapped(uint256,uint256[],uint256[],address,address,uint256,uint256)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimCappedV2{{network}}
+          filter:
+            topics:
+              - EventClaimCapped(uint256,uint256,uint256,address,address,uint256,uint256)
+        - kind: ethereum/LogHandler
+          handler: handleEventForgeV2{{network}}
+          filter:
+            topics:
+              - EventForge(uint256,uint256,uint256,address,address)
+{{/SpaceStationV2}}
+{{#StarNFTFactory}}
+  - kind: ethereum/Runtime
+    startBlock: {{block}}
+    name: {{name}}
+    options:
+      abi: StarNFTFactory
+      address: "{{address}}"
+    assets:
+      StarNFTFactory:
+        file: ./abis/StarNFTFactory.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleStarNFTCreated{{network}}
+          filter:
+            topics:
+              - NFTCreated(address,address,address,address,uint256,string,string,bool)
+{{/StarNFTFactory}}
+{{#StarNFT}}
+  - kind: ethereum/Runtime
+    startBlock: {{block}}
+    name: {{name}}
+    options:
+      abi: StarNFT
+      address: "{{address}}"
+    assets:
+      StarNFT:
+        file: ./abis/StarNFT.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleTransfer{{network}}
+          filter:
+            topics:
+              - Transfer(address,address,uint256)
+{{/StarNFT}}
+templates:
+  - kind: ethereum/Runtime
+    name: StarNFT
+    options:
+      abi: StarNFT
+    assets:
+      StarNFT:
+        file: ./abis/StarNFT.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleTransfer{{network}}
+          filter:
+            topics:
+              - Transfer(address,address,uint256)
+repository: https://github.com/subquery/ethereum-subql-starter
