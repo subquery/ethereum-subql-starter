@@ -1,7 +1,7 @@
 {
-  "name": "polygon-lens",
+  "name": "ethereum-snapshot",
   "version": "0.0.1",
-  "description": "This project can be used as a starting point for indexing such web3 social media entities as Profile Creation, Post and Follow for the Lens Protocol",
+  "description": "This project indexes Safe multisig signatures data from various chains",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
@@ -24,7 +24,9 @@
     "@subql/common": "latest",
     "@subql/types-ethereum": "latest",
     "@subql/validator": "latest",
-    "assert": "^2.0.0"
+    "assert": "^2.0.0",
+    "@types/node-fetch": "latest",
+    "abab": "^2.0.6"
   },
   "devDependencies": {
     "@subql/cli": "latest",
@@ -32,6 +34,6 @@
     "@subql/testing": "latest",
     "@subql/node-ethereum": "latest",
     "ethers": "^5.7.2",
-    "typescript": "latest"
+    "typescript": "4.5.5"
   }
 }

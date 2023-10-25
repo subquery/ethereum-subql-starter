@@ -6,17 +6,3 @@ type Delegation @entity {
   timestamp: BigInt!
   network: String!
 }
-
-type Block @entity {
-  id: ID!
-  number: BigInt!
-  timestamp: BigInt!
-}
-
-type Sig @entity {
-  id: ID!
-  account: String!
-  msgHash: String!
-  timestamp: BigInt!
-  network: String!
-}

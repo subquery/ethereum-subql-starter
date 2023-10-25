@@ -40,11 +40,11 @@ export async function handleProxyCreation_1_3_0(
 }
 
 async function createSig(event: SignMsgLog, network: string): Promise<void> {
-  assert(event.args);
+  logger.warn("createSig is tiggered");
   let sig = await Sig.create({
     id: event.transaction.hash,
     account: event.address,
-    msgHash: event.args?.msgHash,
+    msgHash: event.topics[1].slice(2),
     timestamp: event.block.timestamp,
     network: network,
   });
@@ -52,16 +52,13 @@ async function createSig(event: SignMsgLog, network: string): Promise<void> {
 }
 
 export async function handleEthSignMsg(event: SignMsgLog): Promise<void> {
-  assert(event.args, "No args in log");
   await createSig(event, "ethereum");
 }
 
 export async function handleMaticSignMsg(event: SignMsgLog): Promise<void> {
-  assert(event.args, "No args in log");
   await createSig(event, "matic");
 }
 
 export async function handleOpSignMsg(event: SignMsgLog): Promise<void> {
-  assert(event.args, "No args in log");
   await createSig(event, "op");
 }
