@@ -1,40 +1,40 @@
 {
-    "network": "Bsc",
-    "id": "56",
-    "SpaceStationV1": [
-        {
-            "name": "SpaceStationV1",
-            "address": "0x835f22b4280aAf357d12DBf03721651b3A8b0167",
-            "block": 16092808
-        },
-        {
-            "name": "SpaceStationV1_1",
-            "address": "0x5C1274456be4dd280429B9A8319e552cAD2595fA",
-            "block": 16092808
-        },
-        {
-            "name": "SpaceStationV1_2",
-            "address": "0x760B8237e457e6A2b5b196ae073EF0301b8316a2",
-            "block": 16092808
-        }
-    ],
-    "SpaceStationV2": [
-        {
-            "name": "SpaceStationV2",
-            "address": "0x2D18f2d27D50C9b4013DEBA3D54f60996bD8847E",
-            "block": 17448223
-        }
-    ],
-    "StarNFT": [
-        {
-            "name": "StarNFT",
-            "address": "0x9F471abCddc810E561873b35b8aad7d78e21a48e",
-            "block": 16092808
-        },
-        {
-            "name": "StarNFT_1",
-            "address": "0xADc466855ebe8d1402C5F7e6706Fccc3AEdB44a0",
-            "block": 19282888
-        }
-    ]
+  "network": "Bsc",
+  "id": "56",
+  "SpaceStationV1": [
+    {
+      "name": "SpaceStationV1",
+      "address": "0x835f22b4280aAf357d12DBf03721651b3A8b0167",
+      "block": 16092808
+    },
+    {
+      "name": "SpaceStationV1_1",
+      "address": "0x5C1274456be4dd280429B9A8319e552cAD2595fA",
+      "block": 16092808
+    },
+    {
+      "name": "SpaceStationV1_2",
+      "address": "0x760B8237e457e6A2b5b196ae073EF0301b8316a2",
+      "block": 16092808
+    }
+  ],
+  "SpaceStationV2": [
+    {
+      "name": "SpaceStationV2",
+      "address": "0x2D18f2d27D50C9b4013DEBA3D54f60996bD8847E",
+      "block": 17448223
+    }
+  ],
+  "StarNFT": [
+    {
+      "name": "StarNFT",
+      "address": "0x9F471abCddc810E561873b35b8aad7d78e21a48e",
+      "block": 16092808
+    },
+    {
+      "name": "StarNFT_1",
+      "address": "0xADc466855ebe8d1402C5F7e6706Fccc3AEdB44a0",
+      "block": 19282888
+    }
+  ]
 }

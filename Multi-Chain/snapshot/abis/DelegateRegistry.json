@@ -120,9 +120,7 @@
   "ast": {
     "absolutePath": "/Users/fabien/WebstormProjects/gnosis/delegate-registry/contracts/DelegateRegistry.sol",
     "exportedSymbols": {
-      "DelegateRegistry": [
-        143
-      ]
+      "DelegateRegistry": [143]
     },
     "id": 144,
     "license": "LGPL-3.0-only",
@@ -130,15 +128,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          ">=",
-          "0.7",
-          ".0",
-          "<",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", ">=", "0.7", ".0", "<", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "42:31:0"
       },
@@ -149,9 +139,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 143,
-        "linearizedBaseContracts": [
-          143
-        ],
+        "linearizedBaseContracts": [143],
         "name": "DelegateRegistry",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -511,10 +499,7 @@
                       "id": 31,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "1033:7:0",
                       "typeDescriptions": {
@@ -665,10 +650,7 @@
                       "id": 39,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "1101:7:0",
                       "typeDescriptions": {
@@ -696,9 +678,7 @@
                   "src": "1101:57:0"
                 },
                 {
-                  "assignments": [
-                    50
-                  ],
+                  "assignments": [50],
                   "declarations": [
                     {
                       "constant": false,
@@ -884,10 +864,7 @@
                       "id": 58,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "1230:7:0",
                       "typeDescriptions": {
@@ -1415,9 +1392,7 @@
               "src": "1848:302:0",
               "statements": [
                 {
-                  "assignments": [
-                    104
-                  ],
+                  "assignments": [104],
                   "declarations": [
                     {
                       "constant": false,
@@ -1651,10 +1626,7 @@
                       "id": 112,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "1920:7:0",
                       "typeDescriptions": {
@@ -2005,9 +1977,7 @@
   "legacyAST": {
     "absolutePath": "/Users/fabien/WebstormProjects/gnosis/delegate-registry/contracts/DelegateRegistry.sol",
     "exportedSymbols": {
-      "DelegateRegistry": [
-        143
-      ]
+      "DelegateRegistry": [143]
     },
     "id": 144,
     "license": "LGPL-3.0-only",
@@ -2015,15 +1985,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          ">=",
-          "0.7",
-          ".0",
-          "<",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", ">=", "0.7", ".0", "<", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "42:31:0"
       },
@@ -2034,9 +1996,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 143,
-        "linearizedBaseContracts": [
-          143
-        ],
+        "linearizedBaseContracts": [143],
         "name": "DelegateRegistry",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -2396,10 +2356,7 @@
                       "id": 31,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "1033:7:0",
                       "typeDescriptions": {
@@ -2550,10 +2507,7 @@
                       "id": 39,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "1101:7:0",
                       "typeDescriptions": {
@@ -2581,9 +2535,7 @@
                   "src": "1101:57:0"
                 },
                 {
-                  "assignments": [
-                    50
-                  ],
+                  "assignments": [50],
                   "declarations": [
                     {
                       "constant": false,
@@ -2769,10 +2721,7 @@
                       "id": 58,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "1230:7:0",
                       "typeDescriptions": {
@@ -3300,9 +3249,7 @@
               "src": "1848:302:0",
               "statements": [
                 {
-                  "assignments": [
-                    104
-                  ],
+                  "assignments": [104],
                   "declarations": [
                     {
                       "constant": false,
@@ -3536,10 +3483,7 @@
                       "id": 112,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        -18,
-                        -18
-                      ],
+                      "overloadedDeclarations": [-18, -18],
                       "referencedDeclaration": -18,
                       "src": "1920:7:0",
                       "typeDescriptions": {
