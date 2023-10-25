@@ -30,18 +30,22 @@ import {
 } from "../types/models";
 import { keccak256 } from "@ethersproject/keccak256";
 import assert from "assert";
+import {NameRegisteredLog} from "../types/abi-interfaces/EthRegistrarController";
 
 var rootNode = byteArrayFromHex(
   "93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
 );
 
 export async function handleNameRegistered(
-  event: NameRegisteredEvent
+  event: NameRegisteredLog
 ): Promise<void> {
+  if(!event.args){
+    return
+  }
   let account = new Account(event.args.owner);
   await account.save();
 
-  let label = uint256ToByteArray(event.args.id.toHexString());
+  let label = uint256ToByteArray(event.args.label);
   let domain = await Domain.get(
     keccak256(concat(rootNode.toString(), label.toString()))
   );
@@ -51,7 +55,7 @@ export async function handleNameRegistered(
   let registration = Registration.create({
     id: label.toString(),
     domainId: domain.id,
-    registrationDate: BigInt((await event.getBlock()).timestamp),
+    registrationDate: event.block.timestamp,
     expiryDate: event.args.expires.toBigInt(),
     registrantId: account.id,
   });
