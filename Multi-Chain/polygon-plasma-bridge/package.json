@@ -1,7 +1,7 @@
 {
   "name": "polygon-plasma-bridge",
   "version": "0.0.1",
-  "description": "This example project indexes all token deposits from the Polygon Plamsa Bridge",
+  "description": "This sample project indexes transactions on the Plasma Bridge, transferring assets from Polygon to Ethereum",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",

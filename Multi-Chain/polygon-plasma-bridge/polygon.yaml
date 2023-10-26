@@ -28,7 +28,7 @@ network:
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Polygon is a layer-2 that is compatible
-    startBlock: 47552208
+    startBlock: 49174752
     options:
       # Must be a key of assets
       abi: plasma
@@ -39,15 +39,9 @@ dataSources:
     mapping:
       file: "./dist/index.js"
       handlers:
-        - handler: handlePolygonEvent
+        - handler: handlePolygonDeposit
           kind: ethereum/LogHandler # We use ethereum handlers since Polygon is a layer-2 that is compatible
-        #   filter:
-        #     topics:
-        #       ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
-        #       - TokenDeposited (address indexed rootToken, address indexed childToken, address indexed user, uint256 amount, uint256 depositCount)
-        # - handler: handleWithdrawl
-        #   kind: ethereum/LogHandler # We use ethereum handlers since Polygon is a layer-2 that is compatible
-        #   filter:
-        #     topics:
-        #       ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
-        #       - TokenWithdrawn (address indexed rootToken, address indexed childToken, address indexed user, uint256 amount, uint256 withrawCount)
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - TokenDeposited (address,address,address,uint256,uint256)

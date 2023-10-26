@@ -2,7 +2,7 @@
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all token deposits and users from the Polygon Plamsa Bridge on the Polgon Network**
+**This sample project indexes transactions on the Plasma Bridge, transferring assets from Polygon to Ethereum**
 
 ## Start
 
@@ -39,29 +39,29 @@ You can observe the three services start, and once all are running (it may take 
 For this project, you can try to query with the following GraphQL code to get a taste of how it works.
 
 ```graphql
-query {
-  deposits(first: 5, orderBy: AMOUNT_DESC) {
-    nodes {
-      id
-      rootToken
-      childToken
-      userId
-      amount
-      amountFriendly
-    }
-  }
-  users(first: 5, orderBy: TOTAL_DEPOSITS_DESC) {
-    nodes {
-      id
-      totalDeposits
-      deposits(first: 5, orderBy: AMOUNT_DESC) {
-        totalCount
-        nodes {
-          id
+{
+  query {
+    bridgeTransactions(first: 3) {
+      nodes {
+        id
+        depositOnEthereum {
+          nodeId
+          token
+          amount
+          tx
+          user {
+            id
+          }
+        }
+        depositOnPolygon {
+          nodeId
           rootToken
           childToken
           amount
-          amountFriendly
+          tx
+          user {
+            id
+          }
         }
       }
     }
