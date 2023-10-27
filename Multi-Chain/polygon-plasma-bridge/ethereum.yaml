@@ -1,0 +1,47 @@
+specVersion: "1.0.0"
+
+name: "polygon-plasma-bridge"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "This example project indexes all token deposits from the Polygon Plamsa Bridge"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  # chainId is the EVM Chain ID, for Polygon this is 137
+  # https://chainlist.org/chain/137
+  chainId: "1"
+  # This endpoint must be a public non-pruned archive node
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  endpoint: "https://eth.api.onfinality.io/public"
+  # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
+  dictionary: "https://gx.api.subquery.network/sq/subquery/polygon-dictionary"
+
+dataSources:
+  - kind: ethereum/Runtime # We use ethereum runtime since Polygon is a layer-2 that is compatible
+    startBlock: 18434359
+    options:
+      # Must be a key of assets
+      abi: plasma-eth
+      address: "0x401F6c983eA34274ec46f84D70b31C151321188b"
+    assets:
+      plasma-eth:
+        file: "./abis/plasma-eth.abi.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleEthereumDepositBlock
+          kind: ethereum/LogHandler # We use ethereum handlers since Polygon is a layer-2 that is compatible
+          filter:
+            topics:
+              ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+              - NewDepositBlock (address,address,uint256,uint256)
