@@ -37,7 +37,7 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://eth.api.onfinality.io/public"],
-    dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary",
+    dictionary: "https://dict-tyk.subquery.network/query/eth-mainnet",
   },
   dataSources: [
     {
