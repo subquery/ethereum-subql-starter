@@ -15,7 +15,7 @@ network:
   chainId: "1"
   endpoint:
     - https://eth.llamarpc.com
-  dictionary: https://gx.api.subquery.network/sq/subquery/eth-dictionary
+  dictionary: "https://dict-tyk.subquery.network/query/eth-mainnet"
 dataSources:
   - kind: ethereum/Runtime
     startBlock: 11225329
