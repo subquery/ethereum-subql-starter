@@ -38,7 +38,6 @@ const project: EthereumProject = {
      */
     endpoint: ["https://rpc.zkatana.gelato.digital"],
     // Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-    dictionary: "https://dict-tyk.subquery.network/query/astar",
   },
   dataSources: [
     {
