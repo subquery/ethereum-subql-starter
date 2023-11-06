@@ -35,3 +35,4 @@ export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
 
   await approval.save();
 }
+
