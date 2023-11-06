@@ -39,8 +39,7 @@ const project: EthereumProject = {
      */
     endpoint: ["https://polygon.api.onfinality.io/public"],
     // Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-    dictionary:
-      "https://gx.api.subquery.network/sq/subquery/polygon-dictionary",
+    dictionary: "https://dict-tyk.subquery.network/query/polygon"
   },
   dataSources: [
     {

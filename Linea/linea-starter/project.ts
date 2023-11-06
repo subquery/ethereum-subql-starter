@@ -38,7 +38,7 @@ const project: EthereumProject = {
      */
     endpoint: ["https://linea.blockpi.network/v1/rpc/public"],
     // Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-    // dictionary: "https://gx.api.subquery.network/sq/subquery/linea-dictionary"
+    dictionary: 'https://dict-tyk.subquery.network/query/linea-mainnet'
   },
   dataSources: [
     {

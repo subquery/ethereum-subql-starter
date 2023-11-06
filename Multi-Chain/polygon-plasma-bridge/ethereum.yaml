@@ -24,7 +24,7 @@ network:
   # When developing your project we suggest getting a private API key
   endpoint: "https://eth.api.onfinality.io/public"
   # Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-  dictionary: "https://gx.api.subquery.network/sq/subquery/polygon-dictionary"
+  dictionary: "https://dict-tyk.subquery.network/query/eth-mainnet"
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Polygon is a layer-2 that is compatible

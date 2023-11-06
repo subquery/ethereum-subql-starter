@@ -15,7 +15,7 @@ network:
   chainId: "5"
   endpoint:
     - wss://ethereum-goerli.publicnode.com
-  # dictionary: TODO add a dictionary
+  dictionary:
 dataSources:
   - kind: ethereum/Runtime
     startBlock: 7383494
