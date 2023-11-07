@@ -34,10 +34,10 @@ import {
 } from "../types/contracts/Pool";
 import { Pool__factory } from "../types/contracts/factories/Pool__factory";
 import assert from "assert";
-import {MintLog, SwapLog, SwapTransaction} from "../types/abi-interfaces/Pool";
+import {InitializeLog, MintLog, SwapLog, SwapTransaction} from "../types/abi-interfaces/Pool";
 
 export async function handleInitialize(
-  event: EthereumLog<InitializeEvent["args"]>
+  event: InitializeLog
 ): Promise<void> {
   const [pool, ethPrice] = await Promise.all([
     Pool.get(event.address),
