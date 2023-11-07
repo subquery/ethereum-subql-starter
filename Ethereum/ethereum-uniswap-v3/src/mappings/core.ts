@@ -34,9 +34,10 @@ import {
 } from "../types/contracts/Pool";
 import { Pool__factory } from "../types/contracts/factories/Pool__factory";
 import assert from "assert";
+import {InitializeLog, MintLog, SwapLog, SwapTransaction} from "../types/abi-interfaces/Pool";
 
 export async function handleInitialize(
-  event: EthereumLog<InitializeEvent["args"]>
+  event: InitializeLog
 ): Promise<void> {
   const [pool, ethPrice] = await Promise.all([
     Pool.get(event.address),
@@ -76,8 +77,9 @@ export async function handleInitialize(
 }
 
 export async function handleMint(
-  event: EthereumLog<MintEvent["args"]>
+  event: MintLog
 ): Promise<void> {
+
   const poolAddress = event.address;
   const pool = await Pool.get(poolAddress);
 
@@ -353,7 +355,7 @@ export async function handleBurn(
 }
 
 export async function handleSwap(
-  event: EthereumLog<SwapEvent["args"]>
+  event: SwapLog
 ): Promise<void> {
   const poolContract = Pool__factory.connect(event.address, api);
   const [
@@ -374,6 +376,7 @@ export async function handleSwap(
     poolContract.feeGrowthGlobal1X128(),
   ]);
   assert(pool);
+
 
   // hot fix for bad pricing
   if (pool.id == "0x9663f2ca0454accad3e094448ea6f77443880454") {

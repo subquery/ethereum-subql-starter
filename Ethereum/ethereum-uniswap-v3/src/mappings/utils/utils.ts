@@ -48,28 +48,20 @@ export function convertTokenToDecimal(
 }
 
 export async function loadTransaction(
-  event: EthereumLog
+  log: EthereumLog
 ): Promise<Transaction> {
-  let transaction = await Transaction.get(event.transactionHash);
+  let transaction = await Transaction.get(log.transactionHash);
   if (transaction === undefined) {
     transaction = Transaction.create({
-      id: event.transactionHash,
-      blockNumber: BigInt(event.blockNumber),
-      timestamp: event.block.timestamp,
+      id: log.transactionHash,
+      blockNumber: BigInt(log.blockNumber),
+      timestamp: log.block.timestamp,
       gasPrice: BigInt(0),
       gasUsed: BigInt(0),
     });
   }
-
-  // transaction.gasPrice = event.block.gasPrice
-  const eventTransaction = event.block.transactions.find(
-    (transaction) =>
-      transaction.transactionIndex ==
-      BigNumber.from(event.transactionIndex).toBigInt()
-  );
-  assert(eventTransaction);
-  transaction.gasUsed = (await eventTransaction.receipt()).gasUsed;
-  transaction.gasPrice = eventTransaction.gasPrice;
+  transaction.gasUsed = (await log.transaction.receipt()).gasUsed;
+  transaction.gasPrice = log.transaction.gasPrice;
   await transaction.save();
   return transaction;
 }
