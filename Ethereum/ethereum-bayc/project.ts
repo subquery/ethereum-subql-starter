@@ -37,7 +37,7 @@ const project: EthereumProject = {
      # We suggest providing an array of endpoints for increased speed and reliability
      */
     endpoint: ["https://eth.api.onfinality.io/public"],
-    dictionary: "https://gx.api.subquery.network/sq/subquery/eth-dictionary",
+    dictionary: "https://dict-tyk.subquery.network/query/eth-mainnet",
   },
   dataSources: [
     {

@@ -15,7 +15,7 @@ network:
   chainId: "137"
   endpoint:
     - https://polygon.llamarpc.com
-  dictionary: https://gx.api.subquery.network/sq/subquery/polygon-dictionary
+  dictionary: https://dict-tyk.subquery.network/query/polygon
 dataSources:
   - kind: ethereum/Runtime
     name: SpaceStationV1

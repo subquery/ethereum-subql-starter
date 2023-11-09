@@ -42,7 +42,7 @@ const project: EthereumProject = {
       // "https://opt-mainnet.g.alchemy.com/v2/demo",
       "https://rpc.gnosischain.com",
     ],
-    dictionary: "https://api.subquery.network/sq/subquery/gnosis-dictionary",
+    dictionary: "https://dict-tyk.subquery.network/query/gnosis-mainnet",
   },
   dataSources: [
     {
