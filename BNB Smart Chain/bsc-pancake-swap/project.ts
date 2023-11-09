@@ -8,9 +8,9 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "pancake-v3",
+  name: "subquery-example-pancakeswwap-v3",
   description:
-    "This project can be use as a starting point for developing your new Ethereum SubQuery project",
+    "This project can be use as a starting point for developing your new Ethereum SubQuery project, it indexes the standard PancakeSwap project on BSC",
   runner: {
     node: {
       name: "@subql/node-ethereum",
@@ -26,8 +26,8 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for Ethereum this is 1
-     * https://chainlist.org/chain/1
+     * chainId is the EVM Chain ID, for Binance Smart Chain this is 56
+     * https://chainlist.org/chain/56
      */
     chainId: "56",
     /**
@@ -42,16 +42,15 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 26956207,
+      startBlock: 26956207, // The block when this contract was deployed https://bscscan.com/tx/0x57b6445ade8e733f10303f1b9b89b275cda5a136ef14075f6fd0517e8f3b6c85
       options: {
-        // Must be a key of assets
+        // The Pancake Swap contract https://bscscan.com/address/0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865
         abi: "Factory",
         address: "0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865",
       },
       assets: new Map([
         ["Factory", { file: "./abis/factory.json" }],
         ["ERC20", { file: "./abis/ERC20.json" }],
-
         ["ERC20SymbolBytes", { file: "./abis/ERC20SymbolBytes.json" }],
         ["ERC20NameBytes", { file: "./abis/ERC20NameBytes.json" }],
         ["Pool", { file: "./abis/pool.json" }],
@@ -71,11 +70,9 @@ const project: EthereumProject = {
         ],
       },
     },
-    // ethereum/contract
     {
       kind: EthereumDatasourceKind.Runtime,
       startBlock: 26931961,
-
       options: {
         // Must be a key of assets
         abi: "NonfungiblePositionManager",
@@ -112,7 +109,6 @@ const project: EthereumProject = {
               ],
             },
           },
-
           {
             kind: EthereumHandlerKind.Event,
             handler: "handleCollect",
@@ -133,6 +129,8 @@ const project: EthereumProject = {
       },
     },
   ],
+  // Since this is a factory contract, we use templates and SubQuery's Dynamic Datasource support
+  // https://academy.subquery.network/build/dynamicdatasources.html
   templates: [
     {
       kind: EthereumDatasourceKind.Runtime,
@@ -195,7 +193,6 @@ const project: EthereumProject = {
       },
     },
   ],
-
   repository: "https://github.com/subquery/ethereum-subql-starter",
 };
 
