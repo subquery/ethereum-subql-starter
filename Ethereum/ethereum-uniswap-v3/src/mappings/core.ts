@@ -44,6 +44,8 @@ export async function handleInitialize(
     getEthPriceInUSD(),
   ]);
   assert(pool);
+  logger.warn(event.transactionHash);
+  logger.warn(event.topics[0]);
   assert(event.args);
   pool.sqrtPrice = event.args.sqrtPriceX96.toBigInt();
   pool.tick = BigNumber.from(event.args.tick).toBigInt();
