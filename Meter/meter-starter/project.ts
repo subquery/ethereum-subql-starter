@@ -44,7 +44,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 41279094, // This is the block that the contract was deployed on
+      startBlock: 46372359,
       options: {
         // Must be a key of assets
         abi: "erc20",
@@ -64,20 +64,7 @@ const project: EthereumProject = {
                * function: '0x095ea7b3'
                * function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
                */
-              function: "approve(address spender, uint256 rawAmount)",
-            },
-          },
-          {
-            kind: EthereumHandlerKind.Event,
-            handler: "handleLog",
-            filter: {
-              /**
-               * Follows standard log filters https://docs.ethers.io/v5/concepts/events/
-               * address: "0x60781C2586D68229fde47564546784ab3fACA982"
-               */
-              topics: [
-                "Transfer(address indexed from, address indexed to, uint256 amount)",
-              ],
+              function: "approve(address, uint256)",
             },
           },
         ],
