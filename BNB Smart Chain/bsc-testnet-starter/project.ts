@@ -42,7 +42,6 @@ const project: EthereumProject = {
       "https://data-seed-prebsc-2-s1.bnbchain.org:8545",
       "https://data-seed-prebsc-2-s2.bnbchain.org:8545",
     ],
-    dictionary: "https://dict-tyk.subquery.network/query/binance-testnet",
   },
   dataSources: [
     {

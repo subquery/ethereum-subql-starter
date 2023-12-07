@@ -36,7 +36,6 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://avalanche.api.onfinality.io/public/ext/bc/C/rpc"],
-    dictionary: "https://dict-tyk.subquery.network/query/avalanche",
   },
   dataSources: [
     {

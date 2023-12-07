@@ -37,8 +37,6 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://linea.blockpi.network/v1/rpc/public"],
-    // Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-    dictionary: 'https://dict-tyk.subquery.network/query/linea-mainnet'
   },
   dataSources: [
     {

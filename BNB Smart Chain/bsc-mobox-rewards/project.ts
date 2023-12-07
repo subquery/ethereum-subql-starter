@@ -37,7 +37,6 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://bsc-dataseed1.binance.org"],
-    dictionary: "https://dict-tyk.subquery.network/query/binance",
   },
   dataSources: [
     {

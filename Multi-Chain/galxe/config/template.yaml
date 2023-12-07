@@ -15,7 +15,6 @@ network:
   chainId: "{{id}}"
   endpoint:
     - Insert node endpoint
-  dictionary: Insert Subquery Dictionary endpoint
 dataSources:
 {{#SpaceStationV1}}
   - kind: ethereum/Runtime

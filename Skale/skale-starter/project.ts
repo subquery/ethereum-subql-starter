@@ -37,8 +37,6 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://mainnet.skalenodes.com/v1/elated-tan-skat"],
-    // Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-    // dictionary: "https://dict-tyk.subquery.network/query/skale-zkevm"
   },
   dataSources: [
     {

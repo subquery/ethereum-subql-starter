@@ -43,8 +43,6 @@ const project: EthereumProject = {
       "https://opt-mainnet.g.alchemy.com/v2/demo",
       "https://rpc.ankr.com/optimism",
     ],
-    // Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-    dictionary: "https://dict-tyk.subquery.network/query/optimism-mainnet",
   },
   dataSources: [
     {

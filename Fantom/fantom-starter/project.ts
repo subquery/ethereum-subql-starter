@@ -40,7 +40,6 @@ const project: EthereumProject = {
       "https://rpcapi.fantom.network",
       "https://fantom.publicnode.com",
     ],
-    dictionary: "https://dict-tyk.subquery.network/query/fantom",
   },
   dataSources: [
     {

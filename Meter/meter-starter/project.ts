@@ -37,9 +37,6 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://rpc-meter.jellypool.xyz/"],
-
-    // Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-    // dictionary: "https://gx.api.subquery.network/sq/subquery/meter-dictionary"
   },
   dataSources: [
     {

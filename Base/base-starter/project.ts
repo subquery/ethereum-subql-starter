@@ -37,7 +37,6 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://mainnet.base.org/", "https://rpc.notadegen.com/base"],
-    dictionary: "https://dict-tyk.subquery.network/query/base-mainnet",
   },
   dataSources: [
     {

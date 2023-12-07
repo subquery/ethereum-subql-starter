@@ -37,7 +37,6 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://nova.arbitrum.io/rpc"],
-    dictionary: 'https://dict-tyk.subquery.network/query/arbitrum-nova'
   },
   dataSources: [
     {

@@ -37,9 +37,6 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://andromeda.metis.io/?owner=1088"],
-
-    // Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-    // dictionary: "https://gx.api.subquery.network/sq/subquery/metis-dictionary"
   },
   dataSources: [
     {

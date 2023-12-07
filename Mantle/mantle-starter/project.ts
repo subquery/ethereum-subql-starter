@@ -41,8 +41,6 @@ const project: EthereumProject = {
       "https://mantle.public-rpc.com",
       "https://mantle.drpc.org",
     ],
-    // Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-    // dictionary: "https://gx.api.subquery.network/sq/subquery/mantle-dictionary"
   },
   dataSources: [
     {

@@ -37,7 +37,6 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://rpc.ankr.com/avalanche_fuji"],
-    dictionary: "https://dict-tyk.subquery.network/query/avalanche-testnet",
   },
   dataSources: [
     {

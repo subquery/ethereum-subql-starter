@@ -37,7 +37,6 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://rpc.testnet.immutable.com/"],
-    // dictionary: 'https://gx.api.subquery.network/sq/subquery/immutable-dictionary' // Not ready yet
   },
   dataSources: [
     {

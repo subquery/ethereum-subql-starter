@@ -37,7 +37,6 @@ const project: EthereumProject = {
      * When developing your project we suggest getting a private API key
      */
     endpoint: ["https://klaytn.blockpi.network/v1/rpc/public"],
-    // dictionary: "https://dict-tyk.subquery.network/query/klaytn"
   },
   dataSources: [
     {
