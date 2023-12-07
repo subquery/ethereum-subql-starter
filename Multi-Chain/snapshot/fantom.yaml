@@ -15,7 +15,6 @@ network:
   chainId: "250"
   endpoint:
     - wss://fantom.publicnode.com
-  dictionary: https://dict-tyk.subquery.network/query/fantom
 dataSources:
   - kind: ethereum/Runtime
     startBlock: 30509689
