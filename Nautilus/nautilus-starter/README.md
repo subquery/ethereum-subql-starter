@@ -2,7 +2,7 @@
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for [Ether](https://nautscan.com/mainnet/search/0xB2723928400AE5778f6A3C69D7Ca9e90FC430180) (`0xBDa330Ea8F3005C421C8088e638fBB64fA71b9e0`) on Nautilus Mainnet**
+**This SubQuery project indexes all transfers and approval events for [wrapped Ether](https://nautscan.com/mainnet/search/0xBDa330Ea8F3005C421C8088e638fBB64fA71b9e0) (`0xBDa330Ea8F3005C421C8088e638fBB64fA71b9e0`) on Nautilus Mainnet**
 
 ## Start
 
