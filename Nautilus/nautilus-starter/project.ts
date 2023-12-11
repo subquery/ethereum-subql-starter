@@ -43,7 +43,8 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 23976397,
+      // Block height at which the smart contract was deployed
+      startBlock: 4413273,
 
       options: {
         // Must be a key of assets
