@@ -10,7 +10,7 @@ const project: EthereumProject = {
   version: "0.0.1",
   name: "nautilus-subql-starter",
   description:
-    "This project can be use as a starting point for developing your new Ethereum SubQuery project",
+    "This project can be use as a starting point for developing your new Nautilus SubQuery project",
   runner: {
     node: {
       name: "@subql/node-ethereum",
