@@ -15,7 +15,6 @@ network:
   chainId: "1"
   endpoint:
     - https://eth.llamarpc.com
-  dictionary: https://dict-tyk.subquery.network/query/eth-mainnet
 dataSources:
   - kind: ethereum/Runtime
     name: SpaceStationV1

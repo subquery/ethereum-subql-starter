@@ -15,7 +15,6 @@ network:
   chainId: "10"
   endpoint:
     - https://optimism.llamarpc.com
-  dictionary: https://dict-tyk.subquery.network/query/optimism-mainnet
 dataSources:
   - kind: ethereum/Runtime
     startBlock: 19067342

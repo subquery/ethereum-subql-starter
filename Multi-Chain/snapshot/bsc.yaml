@@ -15,7 +15,6 @@ network:
   chainId: "56"
   endpoint:
     - https://binance.llamarpc.com
-  dictionary: https://dict-tyk.subquery.network/query/binance
 dataSources:
   - kind: ethereum/Runtime
     startBlock: 7407807

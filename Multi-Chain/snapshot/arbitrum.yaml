@@ -15,7 +15,6 @@ network:
   chainId: "42161"
   endpoint:
     - https://arbitrum.llamarpc.com
-  dictionary: https://dict-tyk.subquery.network/query/arbitrum
 dataSources:
   - kind: ethereum/Runtime
     startBlock: 22531440

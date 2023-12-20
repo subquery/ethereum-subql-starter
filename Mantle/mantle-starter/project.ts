@@ -35,14 +35,14 @@ const project: EthereumProject = {
      * We recommend providing more than one endpoint for improved reliability, performance, and uptime
      * Public nodes may be rate limited, which can affect indexing speed
      * When developing your project we suggest getting a private API key
+     * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
+     * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
     endpoint: [
       "https://rpc.mantle.xyz",
       "https://mantle.public-rpc.com",
       "https://mantle.drpc.org",
     ],
-    // Recommended to provide the HTTP endpoint of a full chain dictionary to speed up processing
-    // dictionary: "https://gx.api.subquery.network/sq/subquery/mantle-dictionary"
   },
   dataSources: [
     {

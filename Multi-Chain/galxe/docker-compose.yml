@@ -18,7 +18,7 @@ services:
       retries: 5
 
   subquery-node-ethereum:
-    image: onfinality/subql-node-ethereum:latest
+    image: subquerynetwork/subql-node-ethereum:latest
     depends_on:
       postgres:
         condition: service_healthy
@@ -48,7 +48,7 @@ services:
       retries: 10
 
   subquery-node-arbitrum:
-    image: onfinality/subql-node-ethereum:latest
+    image: subquerynetwork/subql-node-ethereum:latest
     depends_on:
       postgres:
         condition: service_healthy
@@ -78,7 +78,7 @@ services:
       retries: 10
 
   subquery-node-polygon:
-    image: onfinality/subql-node-ethereum:latest
+    image: subquerynetwork/subql-node-ethereum:latest
     depends_on:
       postgres:
         condition: service_healthy
@@ -108,7 +108,7 @@ services:
       retries: 10
 
   graphql-engine:
-    image: onfinality/subql-query:latest
+    image: subquerynetwork/subql-query:latest
     ports:
       - 3000:3000
     depends_on:
