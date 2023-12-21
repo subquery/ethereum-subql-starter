@@ -21,6 +21,10 @@ export async function handleTransaction(
   if (tx.to) {
     //is unique or has rule=esip6
 
+    if (!tx.input) {
+      return;
+    }
+
     const decodedData = hexToUTF8(tx.input);
     //console.log(decodedData);
     if (isValidDataUri(decodedData)) {
