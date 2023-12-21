@@ -1,23 +1,8 @@
-export function hexToUTF8(hexString: string) {
-  if (hexString.indexOf("0x") === 0) {
-    hexString = hexString.slice(2);
-  }
+import { toUtf8String } from '@ethersproject/strings';
+import { hexlify } from '@ethersproject/bytes';
 
-  const bytes = new Uint8Array(hexString.length / 2);
-
-  for (let index = 0; index < bytes.length; index++) {
-    const start = index * 2;
-    const hexByte = hexString.slice(start, start + 2);
-    const byte = Number.parseInt(hexByte, 16);
-    if (Number.isNaN(byte) || byte < 0)
-      throw new Error(
-        `Invalid byte sequence ("${hexByte}" in "${hexString}").`
-      );
-    bytes[index] = byte;
-  }
-
-  let result = new TextDecoder().decode(bytes);
-  return result.replace(/\0/g, "");
+export function hexToUTF8(hexString: string): string {
+  return toUtf8String(hexlify(hexString));
 }
 
 export function isValidDataUri(uri: string): boolean {
