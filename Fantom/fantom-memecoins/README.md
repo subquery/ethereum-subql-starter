@@ -46,8 +46,8 @@ For this project, you can try to query with the following GraphQL code to get a 
       nodes {
         id
         blockHeight
-        from
-        to
+        fromId
+        toId
         value
         contractAddress
       }
@@ -57,8 +57,8 @@ For this project, you can try to query with the following GraphQL code to get a 
     nodes {
       id
       blockHeight
-      owner
-      spender
+      ownerId
+      spenderId
       value
       contractAddress
     }
@@ -78,40 +78,40 @@ Your result should look similar to the following:
           {
             "id": "0x57b54d4bf53caca4c60772761f4949e4dc02d92f62a02b180d5b382d50b7787d",
             "blockHeight": "67295406",
-            "from": "0x31F63A33141fFee63D4B26755430a390ACdD8a4d",
-            "to": "0x0000000000000000000000000000000000000000",
+            "fromId": "0x31F63A33141fFee63D4B26755430a390ACdD8a4d",
+            "toId": "0x0000000000000000000000000000000000000000",
             "value": "176970961833699983570796",
             "contractAddress": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
           },
           {
             "id": "0x128198372b0080d144f01041bdeb97e39155981010337abc8dc18878727af227",
             "blockHeight": "67295494",
-            "from": "0x31F63A33141fFee63D4B26755430a390ACdD8a4d",
-            "to": "0x4EE115137ac73A3e5F99598564905465C101b11F",
+            "fromId": "0x31F63A33141fFee63D4B26755430a390ACdD8a4d",
+            "toId": "0x4EE115137ac73A3e5F99598564905465C101b11F",
             "value": "160977046912584985744989",
             "contractAddress": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
           },
           {
             "id": "0xaca3354ec2d60bc8816590e32c755a87269a07d1eef7c7a49f808d9d6aee9f18",
             "blockHeight": "67296279",
-            "from": "0x38C2853E569125Fc9Af310Ab145FCEfB2A07A322",
-            "to": "0x0000000000000000000000000000000000000000",
+            "fromId": "0x38C2853E569125Fc9Af310Ab145FCEfB2A07A322",
+            "toId": "0x0000000000000000000000000000000000000000",
             "value": "10000000000000000000000",
             "contractAddress": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
           },
           {
             "id": "0x5f549d1546f590146b87091c9bdfde18ff1f3d33b6ed852fc454af810a4c0e32",
             "blockHeight": "67296232",
-            "from": "0x5BAB9d61f84630A76fA9e2f67739f2da694B5402",
-            "to": "0x245cD6d33578de9aF75a3C0c636c726b1A8cbdAa",
+            "fromId": "0x5BAB9d61f84630A76fA9e2f67739f2da694B5402",
+            "toId": "0x245cD6d33578de9aF75a3C0c636c726b1A8cbdAa",
             "value": "6996500000000000000000",
             "contractAddress": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
           },
           {
             "id": "0x6158b4cc15013f08e89c91cef0d1610cd37d7d303126299900689790ecb8124e",
             "blockHeight": "67295446",
-            "from": "0x31F63A33141fFee63D4B26755430a390ACdD8a4d",
-            "to": "0x0000000000000000000000000000000000000000",
+            "fromId": "0x31F63A33141fFee63D4B26755430a390ACdD8a4d",
+            "toId": "0x0000000000000000000000000000000000000000",
             "value": "6844335953031983950296",
             "contractAddress": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
           }
@@ -123,16 +123,16 @@ Your result should look similar to the following:
         {
           "id": "0x7e08e7e27996561ba385b9ffc6a9a02d51ad17a22a9bbb9e79a6ad059f269720",
           "blockHeight": null,
-          "owner": "0xDEc89FC2ECfF1F2197204126EaAc55043155153b",
-          "spender": "0x1111111254EEB25477B68fb85Ed929f73A960582",
+          "ownerId": "0xDEc89FC2ECfF1F2197204126EaAc55043155153b",
+          "spenderId": "0x1111111254EEB25477B68fb85Ed929f73A960582",
           "value": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
           "contractAddress": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
         },
         {
           "id": "0xa00b913d56a1e91a6fdc52e05f56db54e518a1fbbd81e94ccc4b0d3521c72c53",
           "blockHeight": null,
-          "owner": "0xDEc89FC2ECfF1F2197204126EaAc55043155153b",
-          "spender": "0x1111111254EEB25477B68fb85Ed929f73A960582",
+          "ownerId": "0xDEc89FC2ECfF1F2197204126EaAc55043155153b",
+          "spenderId": "0x1111111254EEB25477B68fb85Ed929f73A960582",
           "value": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
           "contractAddress": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
         }
