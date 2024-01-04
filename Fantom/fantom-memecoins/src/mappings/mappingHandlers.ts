@@ -5,12 +5,9 @@ import {
 } from "../types/abi-interfaces/Erc20Abi";
 import assert from "assert";
 import { Erc20Abi__factory } from "../types/contracts";
+import { contractAddress } from "../const";
 
-const erc20 = Erc20Abi__factory.connect(
-  // This argument needs to match precisely with the one found in `dataSources`.`options`.`address` within `project.ts`.
-  "0xe47d957F83F8887063150AaF7187411351643392",
-  api
-);
+const erc20 = Erc20Abi__factory.connect(contractAddress, api);
 
 async function getOrCreateAddress(accountAddress: string): Promise<Address> {
   let address = await Address.get(accountAddress);

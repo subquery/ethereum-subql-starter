@@ -3,6 +3,7 @@ import {
   EthereumDatasourceKind,
   EthereumHandlerKind,
 } from "@subql/types-ethereum";
+import { contractAddress } from "./src/const";
 
 // Can expand the Datasource processor types via the generic param
 const project: EthereumProject = {
@@ -48,7 +49,7 @@ const project: EthereumProject = {
         // Must be a key of assets
         abi: "erc20",
         // This is the contract address for CHILL Token https://ftmscan.com/address/0xe47d957F83F8887063150AaF7187411351643392
-        address: "0xe47d957F83F8887063150AaF7187411351643392",
+        address: contractAddress,
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
       mapping: {
