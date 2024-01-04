@@ -1,0 +1,6 @@
+type Inscription @entity {
+  id: ID!
+  block: Int!
+  creator: String!
+  data: String!
+}
