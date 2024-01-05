@@ -5,10 +5,7 @@ import { EthereumTransaction } from "@subql/types-ethereum";
 export async function handleTransaction(
   tx: EthereumTransaction
 ): Promise<void> {
-  if (tx.to) {
-    if (!tx.input) {
-      return;
-    }
+  if (tx.to && tx.input) {
     let inscription: Inscription;
     const decodedData = hexToUTF8(tx.input);
     if (isValidDataUri(decodedData)) {
