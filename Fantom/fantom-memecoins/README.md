@@ -63,6 +63,12 @@ For this project, you can try to query with the following GraphQL code to get a 
       contractAddress
     }
   }
+  addresses(first: 5) {
+    nodes {
+      id
+      balance
+    }
+  }
 }
 ```
 
