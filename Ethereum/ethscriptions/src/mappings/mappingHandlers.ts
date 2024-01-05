@@ -17,6 +17,7 @@ export async function handleTransaction(
         data: decodedData,
         block: tx.blockNumber,
         creator: tx.from,
+        created: new Date(Number(tx.blockTimestamp) * 1000),
       });
       inscription.save();
     }

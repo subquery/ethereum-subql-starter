@@ -3,4 +3,5 @@ type Inscription @entity {
   block: Int!
   creator: String!
   data: String!
+  created: Date!
 }
