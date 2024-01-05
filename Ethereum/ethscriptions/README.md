@@ -41,7 +41,7 @@ For this project, you can try to query with the following GraphQL code to get a 
 ```graphql
 {
   query {
-    inscriptions {
+    inscriptions (first: 10 orderBy: BLOCK_DESC) {
       nodes {
         id
         block
