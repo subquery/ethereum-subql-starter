@@ -49,6 +49,9 @@ const project: EthereumProject = {
           {
             kind: EthereumHandlerKind.Call,
             handler: "handleTransaction",
+            filter: {
+              function: "0x64617461",
+            },
           },
         ],
       },
