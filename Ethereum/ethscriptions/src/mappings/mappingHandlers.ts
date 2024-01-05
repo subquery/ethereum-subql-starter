@@ -16,7 +16,7 @@ export async function handleTransaction(
         creator: tx.from,
         created: new Date(Number(tx.blockTimestamp) * 1000),
       });
-      inscription.save();
+      await inscription.save();
     }
   }
 }
