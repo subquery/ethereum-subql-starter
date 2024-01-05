@@ -27,25 +27,35 @@ export async function handleLog(log: TransferLog): Promise<void> {
   logger.info(`New transfer transaction log at block ${log.blockNumber}`);
   assert(log.args, "No log.args");
 
-  let from = await getOrCreateAddress(log.args.from);
-  let to = await getOrCreateAddress(log.args.to);
+  const [from, to, fromBalance, toBalance] = await Promise.all([
+    getOrCreateAddress(log.args.from),
+    getOrCreateAddress(log.args.to),
+    (await erc20.balanceOf(log.args.from)).toBigInt(),
+    (await erc20.balanceOf(log.args.to)).toBigInt(),
+  ]);
   let value = log.args.value.toBigInt();
 
-  const transfer = Transfer.create({
-    id: log.transactionHash + "-" + log.logIndex,
-    blockHeight: BigInt(log.blockNumber),
-    toId: to.id,
-    fromId: from.id,
-    value: value,
-    contractAddress: log.address,
-  });
-
-  from.balance = BigInt(from.balance) - value;
-  to.balance = BigInt(to.balance) + value;
-
-  await transfer.save();
-  await from.save();
-  await to.save();
+  await Promise.all([
+    (async () => {
+      const transfer = Transfer.create({
+        id: log.transactionHash + "-" + log.logIndex,
+        blockHeight: BigInt(log.blockNumber),
+        toId: to.id,
+        fromId: from.id,
+        value: value,
+        contractAddress: log.address,
+      });
+      await transfer.save();
+    })(),
+    (async () => {
+      from.balance = fromBalance;
+      await from.save();
+    })(),
+    (async () => {
+      to.balance = toBalance;
+      await to.save();
+    })(),
+  ]);
 }
 
 export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
