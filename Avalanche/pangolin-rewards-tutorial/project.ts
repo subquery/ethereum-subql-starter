@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "avalanche-subql-starter",
+  name: "avalanche-starter",
   description:
     "The goal of this quick start guide is to index all Pangolin token Approve logs",
   runner: {

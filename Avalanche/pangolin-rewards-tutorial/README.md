@@ -87,7 +87,7 @@ Open your browser and head to `http://localhost:3000`.
 
 Finally, you should see a GraphQL playground is showing in the explorer and the schemas that ready to query.
 
-For the `subql-starter` project, you can try to query with the following code to get a taste of how it works.
+For the `starter` project, you can try to query with the following code to get a taste of how it works.
 
 ```graphql
 # Write your query or mutation here

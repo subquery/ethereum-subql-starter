@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "x1-testnet-subql-starter",
+  name: "x1-testnet-starter",
   description:
     "This project can be use as a starting point for developing your new X1 Testnet SubQuery project",
   runner: {

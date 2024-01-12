@@ -1,5 +1,5 @@
 {
-  "name": "x1-testnet-subql-starter",
+  "name": "x1-testnet-starter",
   "version": "0.0.1",
   "description": "This project can be use as a starting point for developing your new X1 Testnet SubQuery project",
   "main": "dist/index.js",

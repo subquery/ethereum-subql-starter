@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "arbitrum-one-subql-starter",
+  name: "arbitrum-one-starter",
   description:
     "This SubQuery Arbitrum Example project indexes all Arbitrum WINR Staking Rewards.",
   runner: {

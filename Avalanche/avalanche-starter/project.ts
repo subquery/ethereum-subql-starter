@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "avalanche-subql-starter",
+  name: "avalanche-starter",
   description:
     "This project can be use as a starting point for developing your new Avalanche C-Chain SubQuery project",
   runner: {
