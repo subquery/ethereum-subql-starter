@@ -43,12 +43,10 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 11000000, // This is the block that the contract was deployed on
+      startBlock: 11600000, // This is the block that the contract was deployed on
       options: {
         // Must be a key of assets
         abi: "erc20",
-        // This is the contract address for Metis Token https://andromeda-explorer.metis.io/token/0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000/token-transfers
-        address: "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
       mapping: {
