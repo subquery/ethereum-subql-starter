@@ -8,9 +8,9 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "fantom-memecoins",
+  name: "base-starter",
   description:
-    "This project can serve as a foundation for developing a SubQuery project that monitors the events and balances within the specified smart contract",
+    "This project can be use as a starting point for developing your new Base SubQuery project",
   runner: {
     node: {
       name: "@subql/node-ethereum",
@@ -26,10 +26,10 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for Fantom Opera this is 250
-     * https://chainlist.org/chain/250
+     *  chainId is the EVM Chain ID, for Base Mainnet this is 8453
+     *  https://chainlist.org/chain/8453
      */
-    chainId: "250",
+    chainId: "8453",
     /**
      * These endpoint(s) should be public non-pruned archive node
      * We recommend providing more than one endpoint for improved reliability, performance, and uptime
@@ -38,12 +38,13 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://fantom-pokt.nodies.app"],
+    endpoint: ["https://mainnet.base.org/", "https://rpc.notadegen.com/base"],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 73694090,
+      startBlock: 1,
+
       options: {
         // Must be a key of assets
         abi: "erc20",
@@ -52,6 +53,18 @@ const project: EthereumProject = {
       mapping: {
         file: "./dist/index.js",
         handlers: [
+          {
+            kind: EthereumHandlerKind.Call,
+            handler: "handleTransaction",
+            filter: {
+              /**
+               * The function can either be the function fragment or signature
+               * function: '0x095ea7b3'
+               * function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
+               */
+              function: "approve(address spender, uint256 rawAmount)",
+            },
+          },
           {
             kind: EthereumHandlerKind.Event,
             handler: "handleLog",

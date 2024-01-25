@@ -1,0 +1,44 @@
+# // Auto-generated , DO NOT EDIT
+specVersion: 1.0.0
+version: 0.0.1
+name: base-starter
+description: >-
+  This project can be use as a starting point for developing your new Base
+  SubQuery project
+runner:
+  node:
+    name: '@subql/node-ethereum'
+    version: '>=3.0.0'
+  query:
+    name: '@subql/query'
+    version: '*'
+schema:
+  file: ./schema.graphql
+network:
+  chainId: '8453'
+  endpoint:
+    - 'https://mainnet.base.org/'
+    - 'https://rpc.notadegen.com/base'
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 1
+    options:
+      abi: erc20
+    assets:
+      erc20:
+        file: ./abis/erc20.abi.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/TransactionHandler
+          handler: handleTransaction
+          filter:
+            function: 'approve(address spender, uint256 rawAmount)'
+        - kind: ethereum/LogHandler
+          handler: handleLog
+          filter:
+            topics:
+              - >-
+                Transfer(address indexed from, address indexed to, uint256
+                amount)
+repository: 'https://github.com/subquery/ethereum-subql-starter'

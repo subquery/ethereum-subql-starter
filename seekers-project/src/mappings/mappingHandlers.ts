@@ -15,8 +15,8 @@ async function checkGetAddress(addressID: string): Promise<Address> {
 }
 
 export async function handleLog(log: TransferLog): Promise<void> {
-  logger.info(`New transfer transaction log at block ${log.blockNumber}`);
   if (log.args) {
+    logger.info(`New transfer transaction log at block ${log.blockNumber}`);
     const toAddress = await checkGetAddress(log.args.to);
     const fromAddress = await checkGetAddress(log.args.from);
 
@@ -34,8 +34,8 @@ export async function handleLog(log: TransferLog): Promise<void> {
 }
 
 export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
-  logger.info(`New Approval transaction at block ${tx.blockNumber}`);
   if (tx.args) {
+    logger.info(`New Approval transaction at block ${tx.blockNumber}`);
     const ownerAddress = await checkGetAddress(tx.from);
     const spenderAddress = await checkGetAddress(tx.args[0]);
 
