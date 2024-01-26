@@ -27,9 +27,10 @@ export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
 
   const approval = Approval.create({
     id: tx.hash,
+    blockHeight: BigInt(tx.blockNumber),
     owner: tx.from,
-    spender: await tx.args[0],
-    value: BigInt(await tx.args[1].toString()),
+    spender: tx.args[0],
+    value: BigInt(tx.args[1].toString()),
     contractAddress: tx.to,
   });
 
