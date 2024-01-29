@@ -1,5 +1,5 @@
 {
-  "name": "nautilus-subql-starter",
+  "name": "nautilus-starter",
   "version": "0.0.1",
   "description": "This project can be use as a starting point for developing your new Nautilus SubQuery project",
   "main": "dist/index.js",
