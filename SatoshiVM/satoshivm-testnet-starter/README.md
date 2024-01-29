@@ -2,7 +2,7 @@
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for [SAVM](https://testnet.svmscan.io/token/0x77726BFbE61B6ad7463466fD521A3A4B89B0EFd8) on Satoshivm Network**
+**This SubQuery project indexes all transfers and approval events for [SAVM](https://testnet.svmscan.io/token/0x77726BFbE61B6ad7463466fD521A3A4B89B0EFd8) on Satoshivm Testnet Network**
 
 ## Start
 
