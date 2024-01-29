@@ -1,9 +1,8 @@
-import { Approval, Transfer, Address } from "../types";
+import { EthereumTransaction } from "@subql/types-ethereum";
+import { Transaction, Transfer, Address } from "../types";
 import {
-  ApproveTransaction,
   TransferLog,
 } from "../types/abi-interfaces/Erc20Abi";
-import assert from "assert";
 
 async function checkGetAddress(addressID: string): Promise<Address> {
   let address = await Address.get(addressID.toLowerCase());
@@ -33,20 +32,21 @@ export async function handleLog(log: TransferLog): Promise<void> {
   }
 }
 
-export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
+export async function handleTransaction(tx: EthereumTransaction): Promise<void> {
   if (tx.args) {
-    logger.info(`New Approval transaction at block ${tx.blockNumber}`);
+    logger.info(`New transaction at block ${tx.blockNumber}`);
     const ownerAddress = await checkGetAddress(tx.from);
     const spenderAddress = await checkGetAddress(tx.args[0]);
 
-    const approval = Approval.create({
+    const transaction = Transaction.create({
       id: tx.hash,
+      blockHeight: BigInt(tx.blockNumber),
       ownerId: ownerAddress.id,
       spenderId: spenderAddress.id,
       value: BigInt(await tx.args[1].toString()),
       contractAddress: tx.to,
     });
 
-    await approval.save();
+    await transaction.save();
   }
 }

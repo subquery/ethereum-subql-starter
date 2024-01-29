@@ -48,6 +48,7 @@ const project: EthereumProject = {
       options: {
         // Must be a key of assets
         abi: "erc20",
+        address: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", // USDC
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
       mapping: {

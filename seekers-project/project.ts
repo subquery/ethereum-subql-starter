@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 11600000, // This is the block that the contract was deployed on
+      startBlock: 12758763, // This is the block that the contract was deployed on
       options: {
         // Must be a key of assets
         abi: "erc20",
@@ -56,7 +56,7 @@ const project: EthereumProject = {
             kind: EthereumHandlerKind.Call,
             handler: "handleTransaction",
             filter: {
-              function: '0x00000000' // This picks up native token transfers
+              function: '0x0' // This picks up native token transfers
             }
           },
           {

@@ -32,7 +32,7 @@ dataSources:
         - kind: ethereum/TransactionHandler
           handler: handleTransaction
           filter:
-            function: 'approve(address spender, uint256 rawAmount)'
+            function: '0x00000000'
         - kind: ethereum/LogHandler
           handler: handleLog
           filter:

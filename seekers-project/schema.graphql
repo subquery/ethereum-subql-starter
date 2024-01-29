@@ -11,7 +11,7 @@ type Transfer @entity {
   contractAddress: String!
 }
 
-type Approval @entity {
+type Transaction @entity {
   id: ID! # Transaction hash
   blockHeight: BigInt
   owner: Address!
