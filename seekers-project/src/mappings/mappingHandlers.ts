@@ -1,8 +1,6 @@
 import { EthereumTransaction } from "@subql/types-ethereum";
 import { Transaction, Transfer, Address } from "../types";
-import {
-  TransferLog,
-} from "../types/abi-interfaces/Erc20Abi";
+import { TransferLog } from "../types/abi-interfaces/Erc20Abi";
 
 async function checkGetAddress(addressID: string): Promise<Address> {
   let address = await Address.get(addressID.toLowerCase());
@@ -32,8 +30,10 @@ export async function handleLog(log: TransferLog): Promise<void> {
   }
 }
 
-export async function handleTransaction(tx: EthereumTransaction): Promise<void> {
-  if (tx.args) {
+export async function handleTransaction(
+  tx: EthereumTransaction
+): Promise<void> {
+  if (tx.args && tx.input === "0x") {
     logger.info(`New transaction at block ${tx.blockNumber}`);
     const ownerAddress = await checkGetAddress(tx.from);
     const spenderAddress = await checkGetAddress(tx.args[0]);

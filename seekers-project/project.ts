@@ -56,8 +56,8 @@ const project: EthereumProject = {
             kind: EthereumHandlerKind.Call,
             handler: "handleTransaction",
             filter: {
-              function: '0x0' // This picks up native token transfers
-            }
+              function: "0x", // This picks up native token transfers
+            },
           },
           {
             kind: EthereumHandlerKind.Event,
