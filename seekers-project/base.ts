@@ -54,18 +54,16 @@ const project: EthereumProject = {
       mapping: {
         file: "./dist/index.js",
         handlers: [
+          /*
+          No native token on Base
           {
             kind: EthereumHandlerKind.Call,
             handler: "handleTransaction",
             filter: {
-              /**
-               * The function can either be the function fragment or signature
-               * function: '0x095ea7b3'
-               * function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
-               */
-              function: "approve(address spender, uint256 rawAmount)",
+              function: "0x", // This picks up native token transfers
             },
           },
+          */
           {
             kind: EthereumHandlerKind.Event,
             handler: "handleLog",

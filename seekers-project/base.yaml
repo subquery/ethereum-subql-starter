@@ -31,10 +31,6 @@ dataSources:
     mapping:
       file: ./dist/index.js
       handlers:
-        - kind: ethereum/TransactionHandler
-          handler: handleTransaction
-          filter:
-            function: 'approve(address spender, uint256 rawAmount)'
         - kind: ethereum/LogHandler
           handler: handleLog
           filter:

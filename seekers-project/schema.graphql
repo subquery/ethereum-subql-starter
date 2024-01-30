@@ -11,13 +11,12 @@ type Transfer @entity {
   contractAddress: String!
 }
 
-type Transaction @entity {
+type NativeTokenTransaction @entity {
   id: ID! # Transaction hash
   blockHeight: BigInt
-  owner: Address!
-  spender: Address!
+  to: Address!
+  from: Address!
   value: BigInt!
-  contractAddress: String!
 }
 
 type Address @entity {

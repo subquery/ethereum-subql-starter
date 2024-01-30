@@ -32,7 +32,7 @@ dataSources:
         - kind: ethereum/TransactionHandler
           handler: handleTransaction
           filter:
-            function: '0x00000000'
+            function: 0x
         - kind: ethereum/LogHandler
           handler: handleLog
           filter:
