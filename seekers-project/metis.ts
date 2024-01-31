@@ -14,7 +14,7 @@ const project: EthereumProject = {
   runner: {
     node: {
       name: "@subql/node-ethereum",
-      version: ">=3.0.0",
+      version: ">=3.7.1-0",
     },
     query: {
       name: "@subql/query",

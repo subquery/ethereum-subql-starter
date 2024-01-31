@@ -33,7 +33,7 @@ export async function handleLog(log: TransferLog): Promise<void> {
 export async function handleTransaction(
   tx: EthereumTransaction
 ): Promise<void> {
-  if (tx.input === "0x") {
+  if (tx.input === "0x" && tx.to && tx.from) {
     logger.info(`New transaction at block ${tx.blockNumber}`);
     const toAddress = await checkGetAddress(tx.to);
     const fromAddress = await checkGetAddress(tx.from);
