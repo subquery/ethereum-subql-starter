@@ -8,9 +8,9 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "harmony-starter",
+  name: "bevm-canary-starter",
   description:
-    "This project can be use as a starting point for developing your new Harmony project",
+    "This project can be use as a starting point for developing your new BEVM Canary Network project",
   runner: {
     node: {
       name: "@subql/node-ethereum",
@@ -26,7 +26,7 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for Harmony this is 1501
+     * chainId is the EVM Chain ID, for BEVM this is 1501
      * https://chainlist.org/chain/1501
      */
     chainId: "1501",
