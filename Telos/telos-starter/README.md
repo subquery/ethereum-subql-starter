@@ -36,7 +36,7 @@ You can observe the three services start, and once all are running (it may take 
 
 ## Query your project
 
-For this project, you can try to query with the following GraphQL code to get a taste of how it works.
+Sample GraphQL query:
 
 ```graphql
 {
@@ -65,6 +65,34 @@ For this project, you can try to query with the following GraphQL code to get a 
   }
 }
 ```
+
+Expected output:
+
+```
+{
+  "data": {
+    "query": {
+      "transfers": {
+        "totalCount": 0,
+        "nodes": []
+      }
+    },
+    "approvals": {
+      "nodes": [
+        {
+          "id": "0xba319240d0feaa3833b902fa9be0223c2bcc7335e01a8371029d12e9e86ac964",
+          "blockHeight": "304362563",
+          "owner": "0x6f989dAff4F485aBA94583110d555E7Af36E531a",
+          "spender": "0x9c5ebCbE531aA81bD82013aBF97401f5C6111d76",
+          "value": "2000000",
+          "contractAddress": "0x975Ed13fa16857E83e7C493C7741D556eaaD4A3f"
+        }
+      ]
+    }
+  }
+}
+```
+
 
 You can explore the different possible queries and entities to help you with GraphQL using the documentation draw on the right.
 
