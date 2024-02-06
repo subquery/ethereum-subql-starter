@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 303183429, // This is the block that the contract was deployed on https://www.teloscan.io/tx/0xb233d7e604c093673cef157be0a4293b893cfff765ddc7a1c63a35da0909ca35
+      startBlock: 304362563 // Block of first approve txn. (303183429 is the block that the contract was deployed on https://www.teloscan.io/tx/0xb233d7e604c093673cef157be0a4293b893cfff765ddc7a1c63a35da0909ca35)
       options: {
         // Must be a key of assets
         abi: "erc20",
