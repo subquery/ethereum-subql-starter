@@ -1,5 +1,5 @@
 {
-  "name": "ethereum-snapshot",
+  "name": "multichain-safe",
   "version": "0.0.1",
   "description": "This project indexes Safe multisig signatures data from various chains",
   "main": "dist/index.js",

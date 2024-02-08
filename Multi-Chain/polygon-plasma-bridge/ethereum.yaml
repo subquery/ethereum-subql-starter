@@ -1,6 +1,6 @@
 specVersion: "1.0.0"
 
-name: "polygon-plasma-bridge"
+name: "multi-chain-polygon-plasma-bridge-eth"
 version: "0.0.1"
 runner:
   node:
