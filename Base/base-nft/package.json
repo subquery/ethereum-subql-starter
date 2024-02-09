@@ -1,7 +1,7 @@
 {
   "name": "subquery-example-base-nft",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Base Goerli SubQuery project",
+  "description": "This project can be use as a starting point for developing your new Base SubQuery project",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",

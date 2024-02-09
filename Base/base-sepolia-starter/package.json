@@ -1,7 +1,7 @@
 {
-  "name": "base-goerli-faucet",
+  "name": "base-sepolia-starter",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Base SubQuery project",
+  "description": "This project can be use as a starting point for developing your new Base Sepolia SubQuery project",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
