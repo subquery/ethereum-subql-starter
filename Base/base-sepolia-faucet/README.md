@@ -1,8 +1,8 @@
-# SubQuery - Example Project for Base Goerli
+# SubQuery - Example Project for Base Sepolia
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all the drips from the [USDC faucet contract](https://goerli.etherscan.io/address/0x298e0B0a38fF8B99bf1a3b697B0efB2195cfE47D) and calculates the total amount of USDC faucet dripped per day on Base's Goerli Network**
+**This SubQuery project indexes all the drips from the [USDC faucet contract](https://goerli.etherscan.io/address/0x298e0B0a38fF8B99bf1a3b697B0efB2195cfE47D) and calculates the total amount of USDC faucet dripped per day on Base's Sepolia Network**
 
 ## Start
 

@@ -8,9 +8,9 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "base-goerli-faucet",
+  name: "base-sepolia-starter",
   description:
-    "This project can be use as a starting point for developing your new Base SubQuery project, it indexes all drips from USDC faucet contract",
+    "This project can be use as a starting point for developing your new Base Sepolia SubQuery project",
   runner: {
     node: {
       name: "@subql/node-ethereum",
@@ -26,10 +26,10 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     *  chainId is the EVM Chain ID, for Base Goerli this is 84531
-     *  https://chainlist.org/chain/84531
+     *  chainId is the EVM Chain ID, for Base Sepolia this is 84532
+     *  https://chainlist.org/chain/84532
      */
-    chainId: "84531",
+    chainId: "84532",
     /**
      * These endpoint(s) should be public non-pruned archive node
      * We recommend providing more than one endpoint for improved reliability, performance, and uptime
@@ -38,33 +38,33 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://goerli.base.org"],
+    endpoint: ["https://sepolia.base.org"],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 1512049,
+      startBlock: 3152131,
 
       options: {
         // Must be a key of assets
-        abi: "faucet_abi",
-        // # this is the contract address for wrapped ether https://etherscan.io/address/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-        address: "0x298e0B0a38fF8B99bf1a3b697B0efB2195cfE47D",
+        abi: "erc20",
+        // This is the block that the contract was deployed on https://sepolia.basescan.org/tx/0xd835c0abef5b7988ba6230f92da809391716b8dc5e6cd4e430263b52d3bf69f3
+        address: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
       },
-      assets: new Map([["faucet_abi", { file: "./abis/faucet.abi.json" }]]),
+      assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
       mapping: {
         file: "./dist/index.js",
         handlers: [
           {
             kind: EthereumHandlerKind.Call,
-            handler: "handleDrip",
+            handler: "handleTransaction",
             filter: {
               /**
                * The function can either be the function fragment or signature
+               * function: '0x095ea7b3'
                * function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
-               * function: drip(address token, uint256 amount, address receiver)
                */
-              function: "0x6c81bd54",
+              function: "approve(address spender, uint256 rawAmount)",
             },
           },
           {
