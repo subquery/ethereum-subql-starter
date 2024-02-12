@@ -1,4 +1,5 @@
 // Import event types from the registry contract ABI
+import assert from "assert";
 import {
   FusesSetEvent,
   NameUnwrappedEvent,
@@ -51,6 +52,7 @@ function decodeName(buf: Buffer): Array<string> {
 export async function handleNameWrapped(
   event: NameWrappedEvent
 ): Promise<void> {
+  assert(event.args, `expected args for event ${event.transactionHash}-${event.logIndex}`);
   let decoded = decodeName(Buffer.from(event.args.name));
   let label = decoded[0];
   let name = decoded[1];
@@ -94,6 +96,7 @@ export async function handleNameWrapped(
 export async function handleNameUnwrapped(
   event: NameUnwrappedEvent
 ): Promise<void> {
+  assert(event.args, `expected args for event ${event.transactionHash}-${event.logIndex}`);
   let node = event.args.node;
   let blockNumber = event.blockNumber;
   let transactionID = event.transactionHash;
@@ -112,6 +115,7 @@ export async function handleNameUnwrapped(
 }
 
 export async function handleFusesSet(event: FusesSetEvent): Promise<void> {
+  assert(event.args, `expected args for event ${event.transactionHash}-${event.logIndex}`);
   let node = event.args.node;
   let fuses = event.args.fuses;
   let expiry = event.args.expiry;
@@ -172,6 +176,7 @@ async function makeWrappedTransfer(
 export async function handleTransferSingle(
   event: TransferSingleEvent
 ): Promise<void> {
+  assert(event.args, `expected args for event ${event.transactionHash}-${event.logIndex}`);
   await makeWrappedTransfer(
     event.blockNumber,
     event.transactionHash,
@@ -184,6 +189,7 @@ export async function handleTransferSingle(
 export async function handleTransferBatch(
   event: TransferBatchEvent
 ): Promise<void> {
+  assert(event.args, `expected args for event ${event.transactionHash}-${event.logIndex}`);
   let blockNumber = event.blockNumber;
   let transactionID = event.transactionHash;
   let ids = event.args.ids;

@@ -86,15 +86,60 @@ const project: EthereumProject = {
         ],
       },
     },
+    // ENSRegistryOld
+    {
+      kind: EthereumDatasourceKind.Runtime,
+      startBlock: 3702721,
+
+      options: {
+        // Must be a key of assets
+        abi: "EnsRegistry",
+        address: "0x94f523b8261B815b87EFfCf4d18E6aBeF18d6e4b",
+      },
+      assets: new Map([["EnsRegistry", { file: "./abis/Registry.json" }]]),
+      mapping: {
+        file: "./dist/index.js",
+        handlers: [
+          {
+            kind: EthereumHandlerKind.Event,
+            handler: "handleTransferOldRegistry",
+            filter: {
+              topics: ["Transfer(bytes32,address)"],
+            },
+          },
+          {
+            kind: EthereumHandlerKind.Event,
+            handler: "handleNewOwnerOldRegistry",
+            filter: {
+              topics: ["NewOwner(bytes32,bytes32,address)"],
+            },
+          },
+          {
+            kind: EthereumHandlerKind.Event,
+            handler: "handleNewResolverOldRegistry",
+            filter: {
+              topics: ["NewResolver(bytes32,address)"],
+            },
+          },
+          {
+            kind: EthereumHandlerKind.Event,
+            handler: "handleNewTTLOldRegistry",
+            filter: {
+              topics: ["NewTTL(bytes32,uint64)"],
+            },
+          },
+        ],
+      },
+    },
     // Resolver
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 3790251,
+      startBlock: 3702721,
 
       options: {
         // Must be a key of assets
         abi: "Resolver",
-        address: '0x8FADE66B79cC9f707aB26799354482EB93a5B7dD',
+        // address: '0x8FADE66B79cC9f707aB26799354482EB93a5B7dD',
       },
       assets: new Map([["Resolver", { file: "./abis/PublicResolver.json" }]]),
       mapping: {
@@ -208,6 +253,43 @@ const project: EthereumProject = {
             handler: "handleNameTransferred",
             filter: {
               topics: ["Transfer(address,address,uint256)"],
+            },
+          },
+        ],
+      },
+    },
+    // EthRegistrarControllerOld
+    {
+      kind: EthereumDatasourceKind.Runtime,
+      startBlock: 3790197,
+      options: {
+        // Must be a key of assets
+        abi: "EthRegistrarControllerOld",
+        address: "0x7e02892cfc2Bfd53a75275451d73cF620e793fc0",
+      },
+      assets: new Map([
+        [
+          "EthRegistrarControllerOld",
+          { file: "./abis/EthRegistrarControllerOld.json" },
+        ],
+      ]),
+      mapping: {
+        file: "./dist/index.js",
+        handlers: [
+          {
+            kind: EthereumHandlerKind.Event,
+            handler: "handleNameRegisteredByControllerOld",
+            filter: {
+              topics: [
+                "NameRegistered(string, bytes32, address,uint256,uint256)",
+              ],
+            },
+          },
+          {
+            kind: EthereumHandlerKind.Event,
+            handler: "handleNameRenewedByController",
+            filter: {
+              topics: ["NameRenewed(string,bytes32,uint256,uint256)"],
             },
           },
         ],
