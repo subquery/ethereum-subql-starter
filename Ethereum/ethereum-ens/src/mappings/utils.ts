@@ -7,7 +7,7 @@ export function createEventID(blockNumber: number, logIndex: number): string {
 
 declare type u32 = number;
 
-export const ETH_NODE = '0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae'
+export const ETH_NODE = '93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae'
 export const ROOT_NODE = "0x0000000000000000000000000000000000000000000000000000000000000000";
 export const EMPTY_ADDRESS = "0x0000000000000000000000000000000000000000";
 
