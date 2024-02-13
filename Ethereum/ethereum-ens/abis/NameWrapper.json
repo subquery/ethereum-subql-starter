@@ -80,7 +80,7 @@
   },
   {
     "inputs": [],
-    "name": "NameNotFound",
+    "name": "NameIsNotWrapped",
     "type": "error"
   },
   {
@@ -165,15 +165,28 @@
       },
       {
         "indexed": false,
-        "internalType": "uint32",
-        "name": "fuses",
-        "type": "uint32"
-      },
-      {
-        "indexed": false,
         "internalType": "uint64",
         "name": "expiry",
         "type": "uint64"
+      }
+    ],
+    "name": "ExpiryExtended",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "node",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "fuses",
+        "type": "uint32"
       }
     ],
     "name": "FusesSet",
@@ -441,6 +454,30 @@
   {
     "inputs": [
       {
+        "internalType": "bytes32",
+        "name": "node",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "name": "canModifyName",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -473,8 +510,37 @@
   {
     "inputs": [
       {
+        "internalType": "bytes32",
+        "name": "parentNode",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "labelhash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint64",
+        "name": "expiry",
+        "type": "uint64"
+      }
+    ],
+    "name": "extendExpiry",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
-        "name": "tokenId",
+        "name": "id",
         "type": "uint256"
       }
     ],
@@ -485,30 +551,6 @@
         "name": "owner",
         "type": "address"
       },
-      {
-        "internalType": "uint32",
-        "name": "fuses",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint64",
-        "name": "expiry",
-        "type": "uint64"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "node",
-        "type": "bytes32"
-      }
-    ],
-    "name": "getFuses",
-    "outputs": [
       {
         "internalType": "uint32",
         "name": "fuses",
@@ -553,14 +595,9 @@
         "internalType": "bytes32",
         "name": "node",
         "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "addr",
-        "type": "address"
       }
     ],
-    "name": "isTokenOwnerOrApproved",
+    "name": "isWrapped",
     "outputs": [
       {
         "internalType": "bool",
@@ -579,6 +616,19 @@
         "internalType": "contract IMetadataService",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "name",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -672,6 +722,29 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "recoverFunds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "string",
         "name": "label",
         "type": "string"
@@ -692,14 +765,9 @@
         "type": "address"
       },
       {
-        "internalType": "uint32",
-        "name": "fuses",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint64",
-        "name": "expiry",
-        "type": "uint64"
+        "internalType": "uint16",
+        "name": "ownerControlledFuses",
+        "type": "uint16"
       }
     ],
     "name": "registerAndWrapETH2LD",
@@ -737,11 +805,6 @@
         "internalType": "uint256",
         "name": "duration",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint64",
-        "name": "expiry",
-        "type": "uint64"
       }
     ],
     "name": "renew",
@@ -900,9 +963,9 @@
         "type": "bytes32"
       },
       {
-        "internalType": "uint32",
-        "name": "fuses",
-        "type": "uint32"
+        "internalType": "uint16",
+        "name": "ownerControlledFuses",
+        "type": "uint16"
       }
     ],
     "name": "setFuses",
@@ -920,7 +983,7 @@
     "inputs": [
       {
         "internalType": "contract IMetadataService",
-        "name": "_newMetadataService",
+        "name": "_metadataService",
         "type": "address"
       }
     ],
@@ -989,7 +1052,7 @@
       },
       {
         "internalType": "address",
-        "name": "newOwner",
+        "name": "owner",
         "type": "address"
       },
       {
@@ -1028,7 +1091,7 @@
       },
       {
         "internalType": "address",
-        "name": "newOwner",
+        "name": "owner",
         "type": "address"
       },
       {
@@ -1053,7 +1116,13 @@
       }
     ],
     "name": "setSubnodeRecord",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "node",
+        "type": "bytes32"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1134,7 +1203,7 @@
       },
       {
         "internalType": "address",
-        "name": "newController",
+        "name": "controller",
         "type": "address"
       }
     ],
@@ -1152,12 +1221,12 @@
       },
       {
         "internalType": "address",
-        "name": "newRegistrant",
+        "name": "registrant",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "newController",
+        "name": "controller",
         "type": "address"
       }
     ],
@@ -1285,14 +1354,9 @@
         "type": "address"
       },
       {
-        "internalType": "uint32",
-        "name": "fuses",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint64",
-        "name": "expiry",
-        "type": "uint64"
+        "internalType": "uint16",
+        "name": "ownerControlledFuses",
+        "type": "uint16"
       },
       {
         "internalType": "address",
@@ -1301,13 +1365,7 @@
       }
     ],
     "name": "wrapETH2LD",
-    "outputs": [
-      {
-        "internalType": "uint64",
-        "name": "",
-        "type": "uint64"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   }

@@ -29,7 +29,7 @@ const project: EthereumProject = {
      * chainId is the EVM Chain ID, for Ethereum this is 1
      * https://chainlist.org/chain/1
      */
-    chainId: "1",
+    chainId: "11155111",
     /**
      * These endpoint(s) should be public non-pruned archive node
      * We recommend providing more than one endpoint for improved reliability, performance, and uptime
@@ -38,13 +38,13 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://eth.api.onfinality.io/public"],
+    endpoint: ["https://ethereum-sepolia.publicnode.com"],
   },
   dataSources: [
     // ENSRegistry
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 9380380,
+      startBlock: 3702728,
 
       options: {
         // Must be a key of assets
@@ -89,12 +89,12 @@ const project: EthereumProject = {
     // ENSRegistryOld
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 3327417,
+      startBlock: 3702721,
 
       options: {
         // Must be a key of assets
         abi: "EnsRegistry",
-        address: "0x314159265dd8dbb310642f98f50c066173c1259b",
+        address: "0x94f523b8261B815b87EFfCf4d18E6aBeF18d6e4b",
       },
       assets: new Map([["EnsRegistry", { file: "./abis/Registry.json" }]]),
       mapping: {
@@ -134,12 +134,12 @@ const project: EthereumProject = {
     // Resolver
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 3327417,
+      startBlock: 3702721,
 
       options: {
         // Must be a key of assets
         abi: "Resolver",
-        address: '0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63',
+        // address: '0x8FADE66B79cC9f707aB26799354482EB93a5B7dD',
       },
       assets: new Map([["Resolver", { file: "./abis/PublicResolver.json" }]]),
       mapping: {
@@ -221,7 +221,7 @@ const project: EthereumProject = {
     // BaseRegistrar
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 9380410,
+      startBlock: 3702731,
 
       options: {
         // Must be a key of assets
@@ -261,11 +261,11 @@ const project: EthereumProject = {
     // EthRegistrarControllerOld
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 9380471,
+      startBlock: 3790197,
       options: {
         // Must be a key of assets
         abi: "EthRegistrarControllerOld",
-        address: "0x283Af0B28c62C092C9727F1Ee09c02CA627EB7F5",
+        address: "0x7e02892cfc2Bfd53a75275451d73cF620e793fc0",
       },
       assets: new Map([
         [
@@ -298,11 +298,11 @@ const project: EthereumProject = {
     // EthRegistrarController
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 3327417,
+      startBlock: 3790244,
       options: {
         // Must be a key of assets
         abi: "EthRegistrarController",
-        address: '0x253553366Da8546fC250F225fe3d25d0C782303b',
+        address: "0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72"
       },
       assets: new Map([
         [
@@ -335,11 +335,11 @@ const project: EthereumProject = {
     // NameWrapper
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 3327417,
+      startBlock: 3790153,
       options: {
         // Must be a key of assets
         abi: "NameWrapper",
-        address: '0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401',
+        address: "0x0635513f179D50A207757E05759CbD106d7dFcE8"
       },
       assets: new Map([["NameWrapper", { file: "./abis/NameWrapper.json" }]]),
       mapping: {

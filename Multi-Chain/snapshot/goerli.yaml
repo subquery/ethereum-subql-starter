@@ -1,6 +1,6 @@
 specVersion: 1.0.0
 version: 0.0.1
-name: ethereum-snapshot
+name: goreli-snapshot
 description: This project indexes the Snapshot Protocol delegation data from various chains
 runner:
   node:

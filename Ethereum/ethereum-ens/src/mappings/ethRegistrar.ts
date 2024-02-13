@@ -1,4 +1,5 @@
 import {
+  ETH_NODE,
   byteArrayFromHex,
   concat,
   createEventID,
@@ -7,7 +8,6 @@ import {
 
 // Import event types from the registry contract ABI
 import {
-  NameRegisteredEvent,
   NameRenewedEvent,
   TransferEvent,
 } from "../types/contracts/BaseRegistrar";
@@ -30,27 +30,23 @@ import {
 } from "../types/models";
 import { keccak256 } from "@ethersproject/keccak256";
 import assert from "assert";
-import {NameRegisteredLog} from "../types/abi-interfaces/EthRegistrarController";
+import {NameRegisteredLog} from "../types/abi-interfaces/BaseRegistrar";
 
-var rootNode = byteArrayFromHex(
-  "93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
-);
+var rootNode = byteArrayFromHex(ETH_NODE);
 
 export async function handleNameRegistered(
   event: NameRegisteredLog
 ): Promise<void> {
-  if(!event.args){
-    return
-  }
+  assert(event.args, `expected args for event ${event.transactionHash}-${event.logIndex}`);
   let account = new Account(event.args.owner);
   await account.save();
 
-  let label = uint256ToByteArray(event.args.label);
+  let label = uint256ToByteArray(event.args.id.toHexString());
   let domain = await Domain.get(
     keccak256(concat(rootNode.toString(), label.toString()))
   );
 
-  assert(domain, "can't find domain");
+  assert(domain, `can't find domain id="${keccak256(concat(rootNode.toString(), label.toString()))}"`);
 
   let registration = Registration.create({
     id: label.toString(),
@@ -156,10 +152,11 @@ async function setNamePreimage(
 export async function handleNameRenewed(
   event: NameRenewedEvent
 ): Promise<void> {
+  assert(event.args, `expected args for event ${event.transactionHash}-${event.logIndex}`);
   let label = uint256ToByteArray(event.args.id.toHexString());
   // let label = event.args.id.toHexString()
   let registration = await Registration.get(label.toString());
-  assert(registration, "Cant find registration");
+  assert(registration, `Cant find registration id="${label.toString()}"`);
   registration.expiryDate = event.args.expires.toBigInt();
   await registration.save();
 
@@ -177,6 +174,7 @@ export async function handleNameRenewed(
 export async function handleNameTransferred(
   event: TransferEvent
 ): Promise<void> {
+  assert(event.args, `expected args for event ${event.transactionHash}-${event.logIndex}`);
   let account = new Account(event.args.to);
   await account.save();
 

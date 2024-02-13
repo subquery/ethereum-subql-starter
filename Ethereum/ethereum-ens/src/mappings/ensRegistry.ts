@@ -3,9 +3,7 @@ import { keccak256 } from "@ethersproject/keccak256";
 
 // Import event types from the registry contract ABI
 import {
-  NewOwnerEvent,
   TransferEvent,
-  NewResolverEvent,
   NewTTLEvent,
 } from "../types/contracts/Registry";
 
@@ -89,10 +87,7 @@ async function _handleNewOwner(
   isMigrated: boolean,
   subnode?: string
 ): Promise<void> {
-  if(!event.args){
-    return
-  }
-
+  assert(event.args, `expected args for event ${event.transactionHash}-${event.logIndex}`);
 
   let account = new Account(event.args.owner);
   // await account.save()
@@ -140,10 +135,7 @@ async function _handleNewOwner(
     if (label === null || label == undefined) {
       label = "[" + event.args.label.slice(2) + "]";
     }
-    if (
-      event.args.node ==
-      "0x0000000000000000000000000000000000000000000000000000000000000000"
-    ) {
+    if (event.args.node == ROOT_NODE) {
       domain.name = label;
     } else {
       parent = parent!;
@@ -201,14 +193,12 @@ export async function handleTransfer(event: TransferEvent): Promise<void> {
 export async function handleNewResolver(
   event: NewResolverLog
 ): Promise<void> {
-  if(!event.args){
-    return
-  }
+  assert(event.args, `expected args for event ${event.transactionHash}-${event.logIndex}`);
   let id = event.args.resolver.concat("-").concat(event.args.node);
 
   let node = event.args.node;
   let domain = await getDomain(node);
-  assert(domain, "cant find domain");
+  assert(domain, `cant find domain id="${node}"`);
   domain.resolverId = id;
 
   let resolver = await Resolver.get(id);
@@ -265,9 +255,7 @@ export async function handleNewOwnerOldRegistry(
   event: NewOwnerLog
 ): Promise<void> {
   let subnode = makeSubnode(event);
-  const start1 = Date.now();
   let domain = await getDomain(subnode);
-  const end1 = Date.now();
   // logger.info(`handleNewOwnerOldRegistry getDomain ${end1-start1} ms`)
 
   if (domain == undefined || domain.isMigrated == false) {
