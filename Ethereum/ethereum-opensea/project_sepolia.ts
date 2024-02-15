@@ -29,7 +29,7 @@ const project: EthereumProject = {
      * chainId is the EVM Chain ID, for Ethereum this is 1
      * https://chainlist.org/chain/1
      */
-    chainId: "1",
+    chainId: "11155111",
     /**
      * These endpoint(s) should be public non-pruned archive node
      * We recommend providing more than one endpoint for improved reliability, performance, and uptime
@@ -38,12 +38,12 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://eth.api.onfinality.io/public"],
+    endpoint: ["https://eth-sepolia.public.blastapi.io"],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 14946474,
+      startBlock: 2570463,
 
       options: {
         // Must be a key of assets
