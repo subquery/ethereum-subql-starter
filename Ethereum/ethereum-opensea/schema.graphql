@@ -102,7 +102,7 @@ type Collection @entity {
   symbol: String
 
   " Total supply of the collection, mirrored from the smart contract. "
-  totalSupply: Float
+  totalSupply: BigInt
 
   " NFT Standard the collection uses. "
   nftStandard: NftStandard!

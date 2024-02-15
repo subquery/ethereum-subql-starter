@@ -41,7 +41,10 @@ export const MANTISSA_FACTOR = Number(10 ** 18);
 export const BIGDECIMAL_HUNDRED = 100;
 export const SECONDS_PER_DAY = 24 * 60 * 60;
 
-export const WETH_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+export const WETH_ADDRESS = chainId === '11155111'
+  ? '0x20f72Dcf9141e1b6014C835B6d0709E32d806F10'
+  : "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+export const MARKETPLACE_ADDRESS = '0x00000000006c3852cbef3e08e8df289169ede581';
 export const ERC721_INTERFACE_IDENTIFIER = "0x80ac58cd";
 export const ERC1155_INTERFACE_IDENTIFIER = "0xd9b67a26";
 
