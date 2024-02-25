@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 41279094, // This is the block that the contract was deployed on
+      startBlock: 1, // This is the block that the contract was deployed on
       options: {
         // Must be a key of assets
         abi: "erc20",
