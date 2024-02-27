@@ -5,8 +5,8 @@
 type Transfer @entity {
   id: ID! # Transaction hash
   blockHeight: BigInt
-  to: String!
-  from: String!
+  to: Address!
+  from: Address!
   value: BigInt!
   contractAddress: String!
 }
@@ -14,8 +14,13 @@ type Transfer @entity {
 type Approval @entity {
   id: ID! # Transaction hash
   blockHeight: BigInt
-  owner: String!
-  spender: String!
+  owner: Address!
+  spender: Address!
   value: BigInt!
   contractAddress: String!
+}
+
+type Address @entity {
+  id: ID!
+  balance: BigInt!
 }
