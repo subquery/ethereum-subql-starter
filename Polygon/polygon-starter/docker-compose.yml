@@ -18,7 +18,7 @@ services:
       retries: 5
 
   subquery-node:
-    image: subquerynetwork/subql-node-ethereum:v2.12.4
+    image: subquerynetwork/subql-node-ethereum:latest
     depends_on:
       "postgres":
         condition: service_healthy
@@ -45,23 +45,24 @@ services:
       interval: 3s
       timeout: 5s
       retries: 10
-#  graphql-engine:
-#    image: subquerynetwork/subql-query:latest
-#    ports:
-#      - 3000:3000
-#    depends_on:
-#      "postgres":
-#        condition: service_healthy
-#      "subquery-node":
-#        condition: service_healthy
-#    restart: always
-#    environment:
-#      DB_USER: postgres
-#      DB_PASS: postgres
-#      DB_DATABASE: postgres
-#      DB_HOST: postgres
-#      DB_PORT: 5432
-#    command:
-#      - --name=app
-#      - --playground
-#      - --indexer=http://subquery-node:3000
+
+  graphql-engine:
+    image: subquerynetwork/subql-query:latest
+    ports:
+      - 3000:3000
+    depends_on:
+      "postgres":
+        condition: service_healthy
+      "subquery-node":
+        condition: service_healthy
+    restart: always
+    environment:
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_DATABASE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+    command:
+      - --name=app
+      - --playground
+      - --indexer=http://subquery-node:3000
