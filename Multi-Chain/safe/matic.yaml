@@ -1,0 +1,53 @@
+specVersion: 1.0.0
+version: 0.0.1
+name: ethereum-safe
+description: This project indexes the Safe signature data from various chains
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: ">=3.0.0"
+  query:
+    name: "@subql/query"
+    version: "*"
+schema:
+  file: ./schema.graphql
+network:
+  chainId: "137"
+  endpoint:
+    - https://polygon.llamarpc.com
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 45222934
+    options:
+      abi: GnosisSafeProxyFactory
+      address: "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2"
+    assets:
+      GnosisSafeProxyFactory:
+        file: ./abis/GnosisSafeProxyFactory_v1.3.0.json
+      GnosisSafe:
+        file: ./abis/GnosisSafe.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleProxyCreation_1_3_0
+          filter:
+            topics:
+              - ProxyCreation(address,address)
+templates:
+  - kind: ethereum/Runtime
+    name: GnosisSafe
+    options:
+      abi: GnosisSafe
+    assets:
+      GnosisSafe:
+        file: ./abis/GnosisSafe.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleMaticSignMsg
+          filter:
+            topics:
+              - SignMsg(indexed bytes32)
+repository: https://github.com/subquery/ethereum-subql-starter

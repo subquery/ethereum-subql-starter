@@ -1,0 +1,18 @@
+# To improve query performance, we strongly suggest adding indexes to any field that you plan to filter or sort by
+# Add the `@index` or `@index(unique: true)` annotation after any non-key field
+# https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
+
+type Drip @entity {
+  id: ID! # Transaction hash
+  blockHeight: String
+  to: String!
+  value: BigInt!
+  tokenAddress: String!
+  date: Date!
+}
+
+#The following entity allows us to aggregate daily Drips for USDC faucet only. As of JulY 4th, this contract only drips USDC faucet anyway.
+type DailyUSDCDrips @entity {
+  id: ID! # this is the format YYYY-MM-DD
+  totalValue: BigInt!
+}

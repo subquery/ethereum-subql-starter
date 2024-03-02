@@ -1,0 +1,77 @@
+type SpaceStation @entity {
+  id: ID!
+  version: BigInt! # 1 is spacestationv1, 2 is spacestationv2
+  claim: [ClaimRecord!]! @derivedFrom(field: "spacestation")
+  forge: [ForgeRecord!]! @derivedFrom(field: "spacestation")
+  network: String!
+}
+
+type StarNFT @entity {
+  id: ID!
+  nfts: [NFT!]! @derivedFrom(field: "starNFT")
+  network: String!
+}
+
+type StarNFTFactory @entity {
+  id: ID!
+  # starNFTs: [StarNFT!]!
+  starNFTs: [String!]!
+  network: String!
+}
+
+type NFT @entity {
+  id: ID! # contract-id
+  number: BigInt!
+  starNFT: StarNFT!
+  owner: String!
+  campaign: Campaign!
+  network: String!
+}
+
+type Campaign @entity {
+  id: ID!
+  # cap: BigInt!
+  nfts: [NFT!]! @derivedFrom(field: "campaign")
+  network: String!
+}
+
+type ClaimRecord @entity {
+  id: ID!
+  nft: NFT!
+  spacestation: SpaceStation!
+  verifyID: BigInt!
+  cid: BigInt!
+  user: String!
+  # cap: BigInt!
+  tx: String!
+  block: BigInt!
+  timestamp: BigInt!
+  network: String!
+}
+
+type ForgeRecord @entity {
+  id: ID!
+  nft: NFT!
+  spacestation: SpaceStation!
+  verifyID: BigInt!
+  cid: BigInt!
+  user: String!
+  powah: BigInt!
+  # cap: BigInt!
+  # burnedNFTs: [NFT!]!
+  burnedNFTs: [String!]!
+  tx: String!
+  block: BigInt!
+  timestamp: BigInt!
+  network: String!
+}
+
+type NFTMintTransaction @entity {
+  id: ID! # transaction id
+  nftContract: String!
+  nftID: BigInt!
+  from: String!
+  to: String!
+  block: BigInt!
+  network: String!
+}

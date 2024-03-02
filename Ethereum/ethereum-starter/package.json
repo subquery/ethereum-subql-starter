@@ -1,5 +1,5 @@
 {
-  "name": "ethereum-subql-starter",
+  "name": "ethereum-starter",
   "version": "0.0.1",
   "description": "This project can be use as a starting point for developing your new Ethereum SubQuery project",
   "main": "dist/index.js",
@@ -32,6 +32,6 @@
     "@subql/testing": "latest",
     "@subql/node-ethereum": "latest",
     "ethers": "^5.7.2",
-    "typescript": "4.5.5"
+    "typescript": "latest"
   }
 }

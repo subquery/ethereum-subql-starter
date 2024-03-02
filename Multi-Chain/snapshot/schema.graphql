@@ -1,0 +1,8 @@
+type Delegation @entity {
+  id: ID!
+  delegator: String!
+  space: String!
+  delegate: String!
+  timestamp: BigInt!
+  network: String!
+}

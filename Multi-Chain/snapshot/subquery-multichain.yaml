@@ -1,0 +1,13 @@
+specVersion: 1.0.0
+query:
+  name: "@subql/query"
+  version: "*"
+projects:
+  - ethereum.yaml
+  - bsc.yaml
+  - arbitrum.yaml
+  - fantom.yaml
+  - gnosis.yaml
+  - goerli.yaml
+  - matic.yaml
+  - op.yaml

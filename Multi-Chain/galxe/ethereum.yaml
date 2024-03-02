@@ -1,0 +1,333 @@
+specVersion: 1.0.0
+version: 0.0.1
+name: Ethereum-galxy
+description: This project indexes the Galxy NFTs from various chains
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: ">=3.0.0"
+  query:
+    name: "@subql/query"
+    version: "*"
+schema:
+  file: ./schema.graphql
+network:
+  chainId: "1"
+  endpoint:
+    - https://eth.llamarpc.com
+dataSources:
+  - kind: ethereum/Runtime
+    name: SpaceStationV1
+    startBlock: 15767178
+    options:
+      abi: SpaceStationV1
+      address: "0xc92EDE6aC9865111356B8f51fBD7ee8D261D9637"
+    assets:
+      SpaceStationV1:
+        file: ./abis/SpaceStationV1.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimEthereum
+          filter:
+            topics:
+              - EventClaim(uint256,uint256,uint256,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatchEthereum
+          filter:
+            topics:
+              - EventClaimBatch(uint256,uint256[],uint256[],address)
+        - kind: ethereum/LogHandler
+          handler: handleEventForgeEthereum
+          filter:
+            topics:
+              - EventForge(uint256,uint256,uint256,address)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: SpaceStationV1_1
+    options:
+      abi: SpaceStationV1
+      address: "0x5bD25d2f4f26Bc82A34dE016D34612A28A0Cd492"
+    assets:
+      SpaceStationV1:
+        file: ./abis/SpaceStationV1.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimEthereum
+          filter:
+            topics:
+              - EventClaim(uint256,uint256,uint256,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatchEthereum
+          filter:
+            topics:
+              - EventClaimBatch(uint256,uint256[],uint256[],address)
+        - kind: ethereum/LogHandler
+          handler: handleEventForgeEthereum
+          filter:
+            topics:
+              - EventForge(uint256,uint256,uint256,address)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: SpaceStationV1_2
+    options:
+      abi: SpaceStationV1
+      address: "0x987fb80B5E8646A2DC4C276881484BD442d645F3"
+    assets:
+      SpaceStationV1:
+        file: ./abis/SpaceStationV1.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimEthereum
+          filter:
+            topics:
+              - EventClaim(uint256,uint256,uint256,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatchEthereum
+          filter:
+            topics:
+              - EventClaimBatch(uint256,uint256[],uint256[],address)
+        - kind: ethereum/LogHandler
+          handler: handleEventForgeEthereum
+          filter:
+            topics:
+              - EventForge(uint256,uint256,uint256,address)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: SpaceStationV1_3
+    options:
+      abi: SpaceStationV1
+      address: "0xaae9f9d4fb8748feba405cE25856DC57C91BbB92"
+    assets:
+      SpaceStationV1:
+        file: ./abis/SpaceStationV1.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimEthereum
+          filter:
+            topics:
+              - EventClaim(uint256,uint256,uint256,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatchEthereum
+          filter:
+            topics:
+              - EventClaimBatch(uint256,uint256[],uint256[],address)
+        - kind: ethereum/LogHandler
+          handler: handleEventForgeEthereum
+          filter:
+            topics:
+              - EventForge(uint256,uint256,uint256,address)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: SpaceStationV2
+    options:
+      abi: SpaceStationV2
+      address: "0x75cdA57917E9F73705dc8BCF8A6B2f99AdBdc5a5"
+    assets:
+      SpaceStationV2:
+        file: ./abis/SpaceStationV2.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimV2Ethereum
+          filter:
+            topics:
+              - EventClaim(uint256,uint256,uint256,address,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatchV2Ethereum
+          filter:
+            topics:
+              - EventClaimBatch(uint256,uint256[],uint256[],address,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatchCappedV2Ethereum
+          filter:
+            topics:
+              - EventClaimBatchCapped(uint256,uint256[],uint256[],address,address,uint256,uint256)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimCappedV2Ethereum
+          filter:
+            topics:
+              - EventClaimCapped(uint256,uint256,uint256,address,address,uint256,uint256)
+        - kind: ethereum/LogHandler
+          handler: handleEventForgeV2Ethereum
+          filter:
+            topics:
+              - EventForge(uint256,uint256,uint256,address,address)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: StarNFTFactory
+    options:
+      abi: StarNFTFactory
+      address: "0x8ed76e942f4ab16f6fb971d2070acc18ba1625d4"
+    assets:
+      StarNFTFactory:
+        file: ./abis/StarNFTFactory.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleStarNFTCreatedEthereum
+          filter:
+            topics:
+              - NFTCreated(address,address,address,address,uint256,string,string,bool)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: StarNFTFactory_1
+    options:
+      abi: StarNFTFactory
+      address: "0x5cb046747ff4ac1fce3c491d9896665b72eacd1b"
+    assets:
+      StarNFTFactory:
+        file: ./abis/StarNFTFactory.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleStarNFTCreatedEthereum
+          filter:
+            topics:
+              - NFTCreated(address,address,address,address,uint256,string,string,bool)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: StarNFTFactory_2
+    options:
+      abi: StarNFTFactory
+      address: "0x99bDe8367D7b99d2B1Ae6fcE12068b49aba47207"
+    assets:
+      StarNFTFactory:
+        file: ./abis/StarNFTFactory.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleStarNFTCreatedEthereum
+          filter:
+            topics:
+              - NFTCreated(address,address,address,address,uint256,string,string,bool)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: CoinlistNFT
+    options:
+      abi: StarNFT
+      address: "0x12F837F1a2C96909C0b85FafB3aF7eEbF9ecff0D"
+    assets:
+      StarNFT:
+        file: ./abis/StarNFT.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleTransferEthereum
+          filter:
+            topics:
+              - Transfer(address,address,uint256)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: CoinlistFriendNFT
+    options:
+      abi: StarNFT
+      address: "0x36f1Bfa4eEC9A89Ea897E9e8b44462471106C10D"
+    assets:
+      StarNFT:
+        file: ./abis/StarNFT.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleTransferEthereum
+          filter:
+            topics:
+              - Transfer(address,address,uint256)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: TradingNFT
+    options:
+      abi: StarNFT
+      address: "0xD63869E974c3Ce7E57095E18194D894B2fDF3F97"
+    assets:
+      StarNFT:
+        file: ./abis/StarNFT.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleTransferEthereum
+          filter:
+            topics:
+              - Transfer(address,address,uint256)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: ChiefToadNFT
+    options:
+      abi: StarNFT
+      address: "0xD42c465d28E96248C73f24442A7AFbBa7e169AAe"
+    assets:
+      StarNFT:
+        file: ./abis/StarNFT.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleTransferEthereum
+          filter:
+            topics:
+              - Transfer(address,address,uint256)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: BitIslandsNFT
+    options:
+      abi: StarNFT
+      address: "0xB75ecF7CD68ee8b0cF481D7e3C03a0b1C52AEe3A"
+    assets:
+      StarNFT:
+        file: ./abis/StarNFT.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleTransferEthereum
+          filter:
+            topics:
+              - Transfer(address,address,uint256)
+  - kind: ethereum/Runtime
+    startBlock: 15767178
+    name: CiaraDAO
+    options:
+      abi: StarNFT
+      address: "0x629c1738EFDf24958f7911339010B2a1eC0487dD"
+    assets:
+      StarNFT:
+        file: ./abis/StarNFT.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleTransferEthereum
+          filter:
+            topics:
+              - Transfer(address,address,uint256)
+templates:
+  - kind: ethereum/Runtime
+    name: StarNFT
+    options:
+      abi: StarNFT
+    assets:
+      StarNFT:
+        file: ./abis/StarNFT.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleTransferEthereum
+          filter:
+            topics:
+              - Transfer(address,address,uint256)
+repository: https://github.com/subquery/ethereum-subql-starter

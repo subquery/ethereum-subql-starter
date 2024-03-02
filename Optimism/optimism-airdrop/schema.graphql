@@ -1,0 +1,18 @@
+# To improve query performance, we strongly suggest adding indexes to any field that you plan to filter or sort by
+# Add the `@index` or `@index(unique: true)` annotation after any non-key field
+# https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
+
+type Claim @entity {
+  id: ID! # Index
+  transaction_hash: String!
+  account: String!
+  value: BigInt!
+  block_height: BigInt!
+  block_timestamp: BigInt!
+  daily_claim_summary: DailyClaimSummary!
+}
+
+type DailyClaimSummary @entity {
+  id: ID! # this is the ISO string of the day e.g. '2023-03-26'
+  total_claimed: BigInt!
+}

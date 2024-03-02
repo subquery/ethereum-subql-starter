@@ -1,0 +1,18 @@
+# To improve query performance, we strongly suggest adding indexes to any field that you plan to filter or sort by
+# Add the `@index` or `@index(unique: true)` annotation after any non-key field
+# https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
+
+type PoolEvent @entity {
+  id: ID! # Transaction_hash-log_index
+  user: String!
+  pool: Pool!
+  type: String! # WITHDRAW or DEPOSIT
+  value: BigInt!
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type Pool @entity {
+  id: ID! # Pool ID
+  totalSize: BigInt!
+}

@@ -1,5 +1,5 @@
 {
-  "name": "gnosis-subql-starter",
+  "name": "gnosis-starter",
   "version": "0.0.1",
   "description": "This project can be use as a starting point for developing your new Gnosis SubQuery project",
   "main": "dist/index.js",
@@ -33,9 +33,6 @@
     "@subql/testing": "latest",
     "@subql/node-ethereum": "latest",
     "ethers": "^5.7.2",
-    "typescript": "4.5.5"
-  },
-  "resolutions": {
-    "@polkadot/util": "11.1.3"
+    "typescript": "latest"
   }
 }

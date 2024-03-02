@@ -1,0 +1,133 @@
+specVersion: 1.0.0
+version: 0.0.1
+name: Arbitrum-galxy
+description: This project indexes the Galxy NFTs from various chains
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: ">=3.0.0"
+  query:
+    name: "@subql/query"
+    version: "*"
+schema:
+  file: ./schema.graphql
+network:
+  chainId: "42161"
+  endpoint:
+    - https://arbitrum.llamarpc.com
+dataSources:
+  - kind: ethereum/Runtime
+    name: SpaceStationV1
+    startBlock: 9919488
+    options:
+      abi: SpaceStationV1
+      address: "0x1ae981A0a3AE5F9cDc059d9478D2C37E8eB442eB"
+    assets:
+      SpaceStationV1:
+        file: ./abis/SpaceStationV1.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEventClaim
+          filter:
+            topics:
+              - EventClaim(uint256,uint256,uint256,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatch
+          filter:
+            topics:
+              - EventClaimBatch(uint256,uint256[],uint256[],address)
+        - kind: ethereum/LogHandler
+          handler: handleEventForge
+          filter:
+            topics:
+              - EventForge(uint256,uint256,uint256,address)
+  - kind: ethereum/Runtime
+    startBlock: 11015643
+    name: SpaceStationV2
+    options:
+      abi: SpaceStationV2
+      address: "0x9e6eF7F75ad88D4Edb4C9925C94B769C5b0d6281"
+    assets:
+      SpaceStationV2:
+        file: ./abis/SpaceStationV2.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimV2Arbitrum
+          filter:
+            topics:
+              - EventClaim(uint256,uint256,uint256,address,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatchV2Arbitrum
+          filter:
+            topics:
+              - EventClaimBatch(uint256,uint256[],uint256[],address,address)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimBatchCappedV2Arbitrum
+          filter:
+            topics:
+              - EventClaimBatchCapped(uint256,uint256[],uint256[],address,address,uint256,uint256)
+        - kind: ethereum/LogHandler
+          handler: handleEventClaimCappedV2Arbitrum
+          filter:
+            topics:
+              - EventClaimCapped(uint256,uint256,uint256,address,address,uint256,uint256)
+        - kind: ethereum/LogHandler
+          handler: handleEventForgeV2Arbitrum
+          filter:
+            topics:
+              - EventForge(uint256,uint256,uint256,address,address)
+  - kind: ethereum/Runtime
+    startBlock: 9918742
+    name: StarNFTFactory
+    options:
+      abi: StarNFTFactory
+      address: "0xA3249d782cd070b29a34A6bB092257e48215a489"
+    assets:
+      StarNFTFactory:
+        file: ./abis/StarNFTFactory.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleStarNFTCreatedArbitrum
+          filter:
+            topics:
+              - NFTCreated(address,address,address,address,uint256,string,string,bool)
+  - kind: ethereum/Runtime
+    startBlock: 17040716
+    name: StarNFTFactory_2
+    options:
+      abi: StarNFTFactory
+      address: "0x171E4fA249375834a6198849AcA17c7889CAab47"
+    assets:
+      StarNFTFactory:
+        file: ./abis/StarNFTFactory.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleStarNFTCreatedArbitrum
+          filter:
+            topics:
+              - NFTCreated(address,address,address,address,uint256,string,string,bool)
+templates:
+  - kind: ethereum/Runtime
+    name: StarNFT
+    options:
+      abi: StarNFT
+    assets:
+      StarNFT:
+        file: ./abis/StarNFT.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleTransferArbitrum
+          filter:
+            topics:
+              - Transfer(address,address,uint256)
+repository: https://github.com/subquery/ethereum-subql-starter

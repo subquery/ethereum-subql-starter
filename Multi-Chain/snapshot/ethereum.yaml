@@ -1,0 +1,40 @@
+specVersion: 1.0.0
+version: 0.0.1
+name: ethereum-snapshot
+description: This project indexes the Snapshot Protocol delegation data from various chains
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: ">=3.0.0"
+  query:
+    name: "@subql/query"
+    version: "*"
+schema:
+  file: ./schema.graphql
+network:
+  chainId: "1"
+  endpoint:
+    - https://eth.llamarpc.com
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 11225329
+    options:
+      abi: DelegateRegistry
+      address: "0x469788fE6E9E9681C6ebF3bF78e7Fd26Fc015446"
+    assets:
+      DelegateRegistry:
+        file: ./abis/DelegateRegistry.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEthereumSetDelegateEvent
+          filter:
+            topics:
+              - SetDelegate(address,bytes32,address)
+        - kind: ethereum/LogHandler
+          handler: handleEthereumClearDelegateEvent
+          filter:
+            topics:
+              - ClearDelegate(address,bytes32,address)
+repository: https://github.com/subquery/ethereum-subql-starter

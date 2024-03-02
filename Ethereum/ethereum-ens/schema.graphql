@@ -1,0 +1,257 @@
+type Domain @entity {
+  id: ID! # The namehash of the name
+  name: String # The human readable name, if known. Unknown portions replaced with hash in square brackets (eg, foo.[1234].eth)
+  labelName: String # The human readable label name (imported from CSV), if known
+  labelhash: Bytes # keccak256(labelName)
+  parent: Domain # The namehash (id) of the parent name
+  subdomains: [Domain] @derivedFrom(field: "parent") # Can count domains from length of array
+  subdomainCount: Int! # The number of subdomains
+  resolvedAddress: Account # Address logged from current resolver, if any
+  owner: Account!
+  resolver: Resolver
+  ttl: BigInt
+  isMigrated: Boolean!
+  createdAt: BigInt!
+  events: [DomainEvent] @derivedFrom(field: "domain")
+  #  registration: Registration @derivedFrom(field: "domain")
+  #  wrappedDomain: WrappedDomain @derivedFrom(field: "domain")
+}
+
+type DomainEvent @entity {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+}
+
+type Transfer @entity {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  owner: Account!
+}
+
+type NewOwner @entity {
+  id: ID!
+  parentDomain: Domain!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  owner: Account!
+}
+
+type NewResolver @entity {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  resolver: Resolver!
+}
+
+type NewTTL @entity {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  ttl: BigInt!
+}
+
+type WrappedTransfer @entity {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  owner: Account!
+}
+
+type NameWrapped @entity {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  name: String!
+  fuses: Int!
+  owner: Account!
+  expiry: BigInt!
+}
+
+type NameUnwrapped @entity {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  owner: Account!
+}
+
+type FusesSet @entity {
+  id: ID!
+  domain: Domain!
+  blockNumber: Int!
+  transactionID: Bytes!
+  fuses: Int!
+  expiry: BigInt!
+}
+
+type Registration @entity {
+  id: ID!
+  domain: Domain!
+  registrationDate: BigInt!
+  expiryDate: BigInt!
+  cost: BigInt
+  registrant: Account!
+  labelName: String
+  events: [RegistrationEvent] @derivedFrom(field: "registration")
+}
+
+type RegistrationEvent @entity {
+  id: ID!
+  registration: Registration!
+  blockNumber: Int!
+  transactionID: Bytes!
+}
+
+type NameRegistered @entity {
+  id: ID!
+  registration: Registration!
+  blockNumber: Int!
+  transactionID: Bytes!
+  registrant: Account!
+  expiryDate: BigInt!
+}
+
+type NameRenewed @entity {
+  id: ID!
+  registration: Registration!
+  blockNumber: Int!
+  transactionID: Bytes!
+  expiryDate: BigInt!
+}
+
+type NameTransferred @entity {
+  id: ID!
+  registration: Registration!
+  blockNumber: Int!
+  transactionID: Bytes!
+  newOwner: Account!
+}
+
+type WrappedDomain @entity {
+  id: ID!
+  domain: Domain!
+  expiryDate: BigInt!
+  fuses: Int!
+  owner: Account!
+  labelName: String
+}
+
+type Account @entity {
+  id: ID!
+  domains: [Domain] @derivedFrom(field: "owner")
+  wrappedDomains: [WrappedDomain] @derivedFrom(field: "owner")
+  registrations: [Registration] @derivedFrom(field: "registrant")
+}
+
+type Resolver @entity {
+  id: ID! # Concatenation of resolver address and namehash
+  domain: Domain
+  address: Bytes! # Address of resolver contract
+  addr: Account # Current value of addr record (per events)
+  contentHash: Bytes # Content hash, in binary format.
+  texts: [String] # Set of observed text record keys
+  coinTypes: [BigInt] # Set of observed SLIP-44 coin types
+  events: [ResolverEvent] @derivedFrom(field: "resolver")
+}
+
+type ResolverEvent @entity {
+  id: ID! # Concatenation of block number and log ID
+  resolver: Resolver! # Used to derive relationships to Resolvers
+  blockNumber: Int!
+  transactionID: Bytes!
+}
+
+type AddrChanged @entity {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  addr: Account!
+}
+
+type MulticoinAddrChanged @entity {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  coinType: BigInt!
+  addr: Bytes!
+}
+
+type NameChanged @entity {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  name: String!
+}
+
+type AbiChanged @entity {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  contentType: BigInt!
+}
+
+type PubkeyChanged @entity {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  x: Bytes!
+  y: Bytes!
+}
+
+type TextChanged @entity {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  key: String!
+  value: String
+}
+
+type ContenthashChanged @entity {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  hash: Bytes!
+}
+
+type InterfaceChanged @entity {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  interfaceID: Bytes!
+  implementer: Bytes!
+}
+
+type AuthorisationChanged @entity {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  owner: Bytes!
+  target: Bytes!
+  isAuthorized: Boolean!
+}
+
+type VersionChanged @entity {
+  id: ID!
+  resolver: Resolver!
+  blockNumber: Int!
+  transactionID: Bytes!
+  version: BigInt!
+}
