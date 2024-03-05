@@ -1,7 +1,7 @@
 {
-  "name": "astar-zkevm-testnet-starter",
+  "name": "astar-zkevm-starter",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Astar zkEVM Testnet SubQuery project",
+  "description": "This project can be use as a starting point for developing your new Astar zkEVM SubQuery project",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
