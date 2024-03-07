@@ -2,7 +2,7 @@
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for the [USDC token](https://goerli.basescan.org/address/0x2e9f75df8839ff192da27e977cd154fd1eae03cf) on Base's Goerli Network**
+**This SubQuery project indexes all transfers and approval events for the [Wrapped Ether token](https://sepolia.basescan.org/token/0xe377517b4d95555052346c789e5b2b1cf8e4189e) on Base's Sepolia Test Network**
 
 ## Start
 
