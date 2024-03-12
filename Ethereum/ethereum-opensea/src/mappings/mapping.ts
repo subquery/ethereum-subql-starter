@@ -28,6 +28,7 @@ import {
   SeaportItemType,
   SECONDS_PER_DAY,
   WETH_ADDRESS,
+  MARKETPLACE_ADDRESS,
 } from "./helper";
 import { NftMetadata__factory } from "../types/contracts";
 import assert from "assert";
@@ -129,20 +130,20 @@ export async function handleOrderFulfilled(
   const nNewTrade = saleResult.nfts.tokenIds.length;
   for (let i = 0; i < nNewTrade; i++) {
     const tradeID = isBundle
-      ? event.transaction.hash
+      ? event.transactionHash
           .toString()
           .concat("-")
           .concat(event.logIndex.toString())
           .concat("-")
           .concat(i.toString())
-      : event.transaction.hash
+      : event.transactionHash
           .toString()
           .concat("-")
           .concat(event.logIndex.toString());
 
     const trade = Trade.create({
       id: tradeID,
-      transactionHash: event.transaction.hash.toString(),
+      transactionHash: event.transactionHash.toString(),
       logIndex: Number(event.logIndex),
       timestamp: event.block.timestamp,
       blockNumber: BigInt(event.block.number),
@@ -158,7 +159,7 @@ export async function handleOrderFulfilled(
     // if it is a basic order then STANDARD_SALE
     // otherwise ANY_ITEM_FROM_SET.
     // TODO: ANY_ITEM_FROM_SET correct strategy? Cannot find docs on how to decide
-    trade.save();
+    await trade.save();
 
     // Save details of how trade was fulfilled
     const orderFulfillment = _OrderFulfillment.create({
@@ -166,7 +167,7 @@ export async function handleOrderFulfilled(
       tradeId: tradeID,
       orderFulfillmentMethod: orderFulfillmentMethod(event),
     });
-    orderFulfillment.save();
+    await orderFulfillment.save();
   }
 
   // //
@@ -181,7 +182,7 @@ export async function handleOrderFulfilled(
   let buyerCollectionAccount = await _Item.get(buyerCollectionAccountID);
   if (!buyerCollectionAccount) {
     buyerCollectionAccount = new _Item(buyerCollectionAccountID);
-    buyerCollectionAccount.save();
+    await buyerCollectionAccount.save();
     collection.buyerCount += 1;
   }
   const sellerCollectionAccountID = "COLLECTION_ACCOUNT-SELLER-"
@@ -190,10 +191,10 @@ export async function handleOrderFulfilled(
     .concat(seller);
   let sellerCollectionAccount = await _Item.get(sellerCollectionAccountID);
   if (!sellerCollectionAccount) {
-    sellerCollectionAccount = await _Item.create({
+    sellerCollectionAccount = _Item.create({
       id: sellerCollectionAccountID,
     });
-    sellerCollectionAccount.save();
+    await sellerCollectionAccount.save();
     collection.sellerCount += 1;
   }
   collection.cumulativeTradeVolumeETH =
@@ -208,14 +209,12 @@ export async function handleOrderFulfilled(
     collection.creatorRevenueETH + deltaCreatorRevenueETH;
   collection.totalRevenueETH =
     collection.marketplaceRevenueETH + collection.creatorRevenueETH;
-  collection.save();
+  await collection.save();
 
   // //
   // // update marketplace
   // //
-  const marketplace = await getOrCreateMarketplace(
-    "0x00000000006c3852cbef3e08e8df289169ede581"
-  );
+  const marketplace = await getOrCreateMarketplace(MARKETPLACE_ADDRESS);
   marketplace.tradeCount += 1;
   marketplace.cumulativeTradeVolumeETH =
     marketplace.cumulativeTradeVolumeETH + volumeETH;
@@ -229,17 +228,17 @@ export async function handleOrderFulfilled(
   let buyerAccount = await _Item.get(buyerAccountID);
   if (!buyerAccount) {
     buyerAccount = _Item.create({ id: buyerAccountID });
-    buyerAccount.save();
+    await buyerAccount.save();
     marketplace.cumulativeUniqueTraders += 1;
   }
   const sellerAccountID = "MARKETPLACE_ACCOUNT-".concat(seller);
   let sellerAccount = await _Item.get(sellerAccountID);
   if (!sellerAccount) {
     sellerAccount = new _Item(sellerAccountID);
-    sellerAccount.save();
+    await sellerAccount.save();
     marketplace.cumulativeUniqueTraders += 1;
   }
-  marketplace.save();
+  await marketplace.save();
 
   // prepare for updating dailyTradedItemCount
   let newDailyTradedItem = 0;
@@ -284,7 +283,7 @@ export async function handleOrderFulfilled(
   collectionSnapshot.dailyTradeVolumeETH =
     collectionSnapshot.dailyTradeVolumeETH + volumeETH;
   collectionSnapshot.dailyTradedItemCount += newDailyTradedItem;
-  collectionSnapshot.save();
+  await collectionSnapshot.save();
 
   // //
   // // take marketplace snapshot
@@ -307,14 +306,14 @@ export async function handleOrderFulfilled(
   let dailyBuyer = await _Item.get(dailyBuyerID);
   if (!dailyBuyer) {
     dailyBuyer = new _Item(dailyBuyerID);
-    dailyBuyer.save();
+    await dailyBuyer.save();
     marketplaceSnapshot.dailyActiveTraders += 1;
   }
   const dailySellerID = "DAILY_MARKETPLACE_ACCOUNT-".concat(seller);
   let dailySeller = await _Item.get(dailySellerID);
   if (!dailySeller) {
     dailySeller = _Item.create({ id: dailySellerID });
-    dailySeller.save();
+    await dailySeller.save();
     marketplaceSnapshot.dailyActiveTraders += 1;
   }
   const dailyTradedCollectionID = "DAILY_TRADED_COLLECTION-"
@@ -324,11 +323,11 @@ export async function handleOrderFulfilled(
   let dailyTradedCollection = await _Item.get(dailyTradedCollectionID);
   if (!dailyTradedCollection) {
     dailyTradedCollection = new _Item(dailyTradedCollectionID);
-    dailyTradedCollection.save();
+    await dailyTradedCollection.save();
     marketplaceSnapshot.dailyTradedCollectionCount += 1;
   }
   marketplaceSnapshot.dailyTradedItemCount += newDailyTradedItem;
-  marketplaceSnapshot.save();
+  await marketplaceSnapshot.save();
 }
 
 async function getOrCreateCollection(
@@ -336,10 +335,14 @@ async function getOrCreateCollection(
 ): Promise<Collection> {
   let collection = await Collection.get(collectionID);
   if (!collection) {
+    logger.info(`Getting nft info ${collectionID}`);
     const contract = NftMetadata__factory.connect(collectionID, api);
-    const nameResult = await contract.name();
-    const symbolResult = await contract.symbol();
-    const totalSupplyResult = await contract.totalSupply();
+
+    const [name, symbol, totalSupply] = await Promise.all([
+      contract.name().catch(e => undefined),
+      contract.symbol().catch(e => undefined),
+      contract.totalSupply().catch(e => undefined),
+    ]);
     collection = Collection.create({
       id: collectionID,
       nftStandard: await getNftStandard(collectionID),
@@ -351,17 +354,15 @@ async function getOrCreateCollection(
       tradeCount: 0,
       buyerCount: 0,
       sellerCount: 0,
-      name: nameResult,
-      symbol: symbolResult,
-      totalSupply: Number(totalSupplyResult),
+      name,
+      symbol,
+      totalSupply: totalSupply?.toBigInt() ?? BigInt(0),
     });
-    collection.save();
+    await collection.save();
 
-    const marketplace = await getOrCreateMarketplace(
-      "0x00000000006c3852cbef3e08e8df289169ede581"
-    );
+    const marketplace = await getOrCreateMarketplace(MARKETPLACE_ADDRESS);
     marketplace.collectionCount += 1;
-    marketplace.save();
+    await marketplace.save();
   }
   return collection;
 }
@@ -371,7 +372,7 @@ async function getOrCreateMarketplace(
 ): Promise<Marketplace> {
   let marketplace = await Marketplace.get(marketplaceID);
   if (!marketplace) {
-    marketplace = await Marketplace.create({
+    marketplace = Marketplace.create({
       id: marketplaceID,
       collectionCount: 0,
       tradeCount: 0,
@@ -387,7 +388,7 @@ async function getOrCreateMarketplace(
     // marketplace.schemaVersion = NetworkConfigs.getSchemaVersion();
     // marketplace.subgraphVersion = NetworkConfigs.getSubgraphVersion();
     // marketplace.methodologyVersion = NetworkConfigs.getMethodologyVersion();
-    marketplace.save();
+    await marketplace.save();
   }
   return marketplace;
 }
@@ -417,7 +418,7 @@ async function getOrCreateCollectionDailySnapshot(
       dailyMaxSalePrice: 0,
       totalRevenueETH: 0,
     });
-    snapshot.save();
+    await snapshot.save();
   }
   return snapshot;
 }
@@ -430,7 +431,7 @@ async function getOrCreateMarketplaceDailySnapshot(
   if (!snapshot) {
     snapshot = MarketplaceDailySnapshot.create({
       id: snapshotID,
-      marketplaceId: "0x00000000006c3852cbef3e08e8df289169ede581",
+      marketplaceId: MARKETPLACE_ADDRESS,
       blockNumber: BigInt(0),
       timestamp: BigInt(0),
       marketplaceRevenueETH: 0,
@@ -444,35 +445,36 @@ async function getOrCreateMarketplaceDailySnapshot(
       dailyActiveTraders: 0,
       dailyTradedCollectionCount: 0,
     });
-    snapshot.save();
+    await snapshot.save();
   }
   return snapshot;
 }
 
 async function getNftStandard(collectionID: string): Promise<NftStandard> {
+  logger.info(`Getting nft standard ${collectionID}`);
   const erc165 = ERC165__factory.connect(collectionID, api);
 
-  const isERC721Result = await erc165.supportsInterface(
-    ERC721_INTERFACE_IDENTIFIER
-  );
-  if (!isERC721Result) {
-    logger.warn("[getNftStandard] isERC721 reverted on {}", [collectionID]);
-  } else {
+  try {
+    const isERC721Result = await erc165.supportsInterface(
+      ERC721_INTERFACE_IDENTIFIER
+    );
     if (isERC721Result) {
       return NftStandard.ERC721;
     }
+  } catch (e) {
+    logger.warn(`[getNftStandard] isERC721 reverted on ${collectionID}`);
   }
 
-  const isERC1155Result = await ERC165__factory.connect(
-    ERC1155_INTERFACE_IDENTIFIER,
-    api
-  );
-  if (!isERC1155Result) {
-    logger.warn("[getNftStandard] isERC1155 reverted on {}", [collectionID]);
-  } else {
+  try {
+    const isERC1155Result = await erc165.supportsInterface(
+      ERC1155_INTERFACE_IDENTIFIER,
+    );
+
     if (isERC1155Result) {
       return NftStandard.ERC1155;
     }
+  } catch (e) {
+    logger.warn(`[getNftStandard] isERC1155 reverted on ${collectionID}`);
   }
 
   return NftStandard.UNKNOWN;
@@ -494,7 +496,7 @@ function tryGetSale(
   offer: Array<SpentItemStructOutput>,
   consideration: Array<ReceivedItemStructOutput>
 ): Sale | null {
-  const txn = event.transaction.hash.toString();
+  const txn = event.transactionHash.toString();
   const txnLogIdx = event.transactionIndex.toString();
 
   // if non weth erc20, ignore
@@ -524,11 +526,11 @@ function tryGetSale(
   // though haven't figured out how to treat them correctly to match etherscan result :(
 
   if (offer.length == 0) {
-    logger.warn("[{}-{}] offer empty", [txn, txnLogIdx]);
+    logger.warn(`[${txn}-${txnLogIdx}] offer empty`);
     return null;
   }
   if (consideration.length == 0) {
-    logger.warn("[{}-{}] consideration empty", [txn, txnLogIdx]);
+    logger.warn(`[${txn}-${txnLogIdx}] consideration empty`);
     return null;
   }
 
@@ -538,13 +540,9 @@ function tryGetSale(
     const considerationNFTsResult = tryGetNFTsFromConsideration(consideration);
     if (!considerationNFTsResult) {
       logger.warn(
-        "[{}] nft not found or multiple nfts found in consideration: {}",
-        [
-          txn,
-          _DEBUG_join(
+        `[${txn}] nft not found or multiple nfts found in consideration: ${_DEBUG_join(
             consideration.map<string>((c) => _DEBUG_considerationToString(c))
-          ),
-        ]
+          )}`
       );
       return null;
     }
@@ -561,21 +559,16 @@ function tryGetSale(
     const considerationMoneyResult =
       tryGetMoneyFromConsideration(consideration);
     if (!considerationMoneyResult) {
-      logger.warn("[{}] money not found in consideration: {}", [
-        txn,
-        _DEBUG_considerationToString(consideration[0]),
-        _DEBUG_join(
-          consideration.map<string>((c) => _DEBUG_considerationToString(c))
-        ),
-      ]);
+      logger.warn(`[${txn}] money not found in consideration: ${
+        _DEBUG_considerationToString(consideration[0])
+      } ${
+        _DEBUG_join(consideration.map<string>((c) => _DEBUG_considerationToString(c)))
+      }`);
       return null;
     }
     const offerNFTsResult = tryGetNFTsFromOffer(offer);
     if (!offerNFTsResult) {
-      logger.warn("[{}] nft not found or multiple nfts found in offer: {}", [
-        txn,
-        _DEBUG_join(offer.map<string>((o) => _DEBUG_offerToString(o))),
-      ]);
+      logger.warn(`[${txn}] nft not found or multiple nfts found in offer: ${_DEBUG_join(offer.map<string>((o) => _DEBUG_offerToString(o)))}`);
       return null;
     }
     return new Sale(
@@ -621,10 +614,7 @@ function tryGetNFTsFromOffer(offer: Array<SpentItemStructOutput>): NFTs | null {
   for (let i = 0; i < offer.length; i++) {
     const o = offer[i];
     if (o.token != collection) {
-      logger.warn(
-        "[tryGetNFTsFromOffer] we're not handling collection > 1 case",
-        []
-      );
+      logger.warn("[tryGetNFTsFromOffer] we're not handling collection > 1 case");
       return null;
     }
     tokenIds.push(o.identifier);
@@ -652,10 +642,7 @@ function tryGetNFTsFromConsideration(
   for (let i = 0; i < nftItems.length; i++) {
     const item = nftItems[i];
     if (item.token != collection) {
-      logger.warn(
-        "[tryGetNFTsFromConsideration] we're not handling collection > 1 case",
-        []
-      );
+      logger.warn("[tryGetNFTsFromConsideration] we're not handling collection > 1 case");
       return null;
     }
     tokenIds.push(item.identifier);
@@ -682,12 +669,9 @@ function getFees(
   );
   let protocolRevenue = 0;
   if (protocolFeeItems.length == 0) {
-    logger.warn("[{}] known issue: protocol fee not found, consideration {}", [
-      txn,
-      _DEBUG_join(
+    logger.warn(`[${txn}] known issue: protocol fee not found, consideration ${_DEBUG_join(
         consideration.map<string>((c) => _DEBUG_considerationToString(c))
-      ),
-    ]);
+      )}`);
   } else {
     protocolRevenue = Number(protocolFeeItems[0].amount);
   }
