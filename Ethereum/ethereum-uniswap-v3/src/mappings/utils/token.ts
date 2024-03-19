@@ -80,11 +80,10 @@ export async function fetchTokenTotalSupply(
 export async function fetchTokenDecimals(
   tokenAddress: string
 ): Promise<BigNumber | null> {
-  // try types uint8 for decimals
-  let decimalValue = null;
   try {
     const contract = ERC20__factory.connect(tokenAddress, api);
-    decimalValue = await contract.decimals();
+    const decimalValue = await contract.decimals();
+    return BigNumber.from(decimalValue);
   } catch (e) {
     // try with the static definition
     const staticTokenDefinition =
@@ -94,6 +93,6 @@ export async function fetchTokenDecimals(
     } else {
       logger.warn(`Could not get token ${tokenAddress} decimals`);
     }
+    return null;
   }
-  return BigNumber.from(decimalValue);
 }
