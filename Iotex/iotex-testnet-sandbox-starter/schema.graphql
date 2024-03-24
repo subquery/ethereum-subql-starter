@@ -1,0 +1,54 @@
+"""
+Blockchain
+"""
+type Blockchain @entity {
+    id: ID!
+    totalNode: BigInt!
+    totalProject: BigInt!
+    totalReceiver: BigInt!
+}
+
+"""
+Project
+"""
+type Project @entity {
+    id: ID!
+    owner: String!
+    hash: String!
+    uri: String!
+    paused: Boolean!
+    nodes: [ProjectNode!]! @derivedFrom(field: "project")
+    receiver: String!
+    createdAt: BigInt!
+    updatedAt: BigInt!
+}
+
+"""
+Node
+"""
+type IotexNode @entity {
+    id: ID!
+    owner: String!
+    operator: String!
+    createdAt: BigInt!
+    updatedAt: BigInt!
+    projects: [ProjectNode!]! @derivedFrom(field: "node")
+}
+
+type ProjectNode @entity {
+    id: ID!
+    project: Project!
+    node: IotexNode!
+    binded: Boolean!
+}
+
+type RouterData @entity {
+    id: ID!
+    operator: String!
+    success: Boolean!
+    reason: String
+    project: Project
+    receiver: String
+    input: String!
+    createdAt: BigInt!
+}
