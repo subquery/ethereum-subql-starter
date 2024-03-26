@@ -1,5 +1,5 @@
 {
-  "name": "polygon-plasma-bridge",
+  "name": "multi-chain-polygon-plasma-bridge",
   "version": "0.0.1",
   "description": "This sample project indexes transactions on the Plasma Bridge, transferring assets from Polygon to Ethereum",
   "main": "dist/index.js",
