@@ -1,16 +1,7 @@
-import assert from "assert";
 import { Token, Account, Event, Transfer } from "../types";
 import { EventTokenEvent, TransferEvent } from "../types/contracts/PoapAbi";
-import { EthereumLog } from "@subql/types-ethereum";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
-
-function createEventID(event: TransferEvent): string {
-  return event.blockNumber
-    .toString()
-    .concat("-")
-    .concat(event.logIndex.toString());
-}
 
 export async function handleEventToken(ev: EventTokenEvent): Promise<void> {
   // This handler always run after the transfer handler
@@ -75,7 +66,7 @@ export async function handleTransfer(ev: TransferEvent): Promise<void> {
   token.transferCount += BigInt(1);
 
   let transfer = Transfer.create({
-    id: createEventID(ev),
+    id: ev.blockNumber.toString().concat("-").concat(ev.logIndex.toString()),
     tokenId: token.id,
     fromId: from.id,
     toId: to.id,
@@ -84,7 +75,7 @@ export async function handleTransfer(ev: TransferEvent): Promise<void> {
     blockheight: BigInt(ev.blockNumber),
   });
 
-  // Save from and to
+  // Save all entities in bulk
   await Promise.all([token.save(), from.save(), to.save(), transfer.save()]);
 
   let event: Event | undefined = undefined;
