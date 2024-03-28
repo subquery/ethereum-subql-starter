@@ -1,11 +1,13 @@
+import assert from "assert";
 import { Token, Account, Event, Transfer } from "../types";
-import { EventTokenEvent, TransferEvent } from "../types/contracts/PoapAbi";
+import { EventTokenLog, TransferLog } from "../types/abi-interfaces/PoapAbi";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-export async function handleEventToken(ev: EventTokenEvent): Promise<void> {
+export async function handleEventToken(ev: EventTokenLog): Promise<void> {
   // This handler always run after the transfer handler
   logger.info(`New event token at block ${ev.blockNumber}`);
+  assert(ev.args, "No log.args");
   let event = await Event.get(ev.args.eventId.toString().toLowerCase());
   if (event == null) {
     event = Event.create({
@@ -13,7 +15,7 @@ export async function handleEventToken(ev: EventTokenEvent): Promise<void> {
       tokenCount: BigInt(1),
       tokenMints: BigInt(1),
       transferCount: BigInt(1),
-      created: BigInt((await ev.getBlock()).timestamp),
+      created: BigInt(ev.block.timestamp),
     });
   }
 
@@ -27,8 +29,9 @@ export async function handleEventToken(ev: EventTokenEvent): Promise<void> {
   }
 }
 
-export async function handleTransfer(ev: TransferEvent): Promise<void> {
+export async function handleTransfer(ev: TransferLog): Promise<void> {
   logger.info(`New transfer at block ${ev.blockNumber}`);
+  assert(ev.args, "No log.args");
   let token = await Token.get(ev.args.tokenId.toString());
   let from = await Account.get(ev.args.from);
   let to = await Account.get(ev.args.to);
@@ -58,7 +61,7 @@ export async function handleTransfer(ev: TransferEvent): Promise<void> {
     token = Token.create({
       id: ev.args.tokenId.toString(),
       transferCount: BigInt(0),
-      created: BigInt((await ev.getBlock()).timestamp),
+      created: BigInt(ev.block.timestamp),
       ownerId: to.id,
     });
   }
@@ -71,7 +74,7 @@ export async function handleTransfer(ev: TransferEvent): Promise<void> {
     fromId: from.id,
     toId: to.id,
     transaction: ev.transactionHash,
-    timestamp: BigInt((await ev.getBlock()).timestamp),
+    timestamp: BigInt(ev.block.timestamp),
     blockheight: BigInt(ev.blockNumber),
   });
 
