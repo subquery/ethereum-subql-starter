@@ -1,0 +1,38 @@
+# To improve query performance, we strongly suggest adding indexes to any field that you plan to filter or sort by
+# Add the `@index` or `@index(unique: true)` annotation after any non-key field
+# https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
+
+type Token @entity {
+  id: ID!
+  owner: Account!
+  event: Event
+  transfers: [Transfer!]! @derivedFrom(field: "token")
+  transferCount: BigInt!
+  created: BigInt!
+  mintOrder: BigInt
+}
+
+type Account @entity {
+  id: ID!
+  tokens: [Token!]! @derivedFrom(field: "owner")
+  tokensOwned: BigInt!
+}
+
+type Event @entity {
+  id: ID!
+  tokens: [Token!]! @derivedFrom(field: "event")
+  tokenCount: BigInt!
+  created: BigInt!
+  transferCount: BigInt!
+  tokenMints: BigInt!
+}
+
+type Transfer @entity {
+  id: ID!
+  token: Token!
+  from: Account!
+  to: Account!
+  transaction: String!
+  timestamp: BigInt!
+  blockheight: BigInt!
+}
