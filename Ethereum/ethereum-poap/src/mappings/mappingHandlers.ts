@@ -9,7 +9,7 @@ export async function handleEventToken(ev: EventTokenLog): Promise<void> {
   logger.info(`New event token at block ${ev.blockNumber}`);
   assert(ev.args, "No log.args");
   let event = await Event.get(ev.args.eventId.toString().toLowerCase());
-  if (event == null) {
+  if (event == undefined) {
     event = Event.create({
       id: ev.args.eventId.toString().toLowerCase(),
       tokenCount: BigInt(1),
@@ -36,7 +36,7 @@ export async function handleTransfer(ev: TransferLog): Promise<void> {
   let from = await Account.get(ev.args.from);
   let to = await Account.get(ev.args.to);
 
-  if (from == null) {
+  if (from == undefined) {
     from = Account.create({
       id: ev.args.from,
       tokensOwned: BigInt(1), // The from account at least has to own one token
@@ -49,7 +49,7 @@ export async function handleTransfer(ev: TransferLog): Promise<void> {
     from.tokensOwned -= BigInt(0);
   }
 
-  if (to == null) {
+  if (to == undefined) {
     to = Account.create({
       id: ev.args.to,
       tokensOwned: BigInt(0), // The from account at least has to own one token
@@ -57,7 +57,7 @@ export async function handleTransfer(ev: TransferLog): Promise<void> {
   }
   to.tokensOwned += BigInt(1);
 
-  if (token == null) {
+  if (token == undefined) {
     token = Token.create({
       id: ev.args.tokenId.toString(),
       transferCount: BigInt(0),
