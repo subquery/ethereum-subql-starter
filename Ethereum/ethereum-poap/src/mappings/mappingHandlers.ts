@@ -23,7 +23,8 @@ export async function handleEventToken(ev: EventTokenLog): Promise<void> {
   if (token) {
     token.eventId = event.id;
     token.mintOrder = event.tokenMints;
-    await Promise.all([event.save(), token.save()]);
+    await event.save();
+    await token.save();
   } else {
     await event.save();
   }
@@ -78,8 +79,11 @@ export async function handleTransfer(ev: TransferLog): Promise<void> {
     blockheight: BigInt(ev.blockNumber),
   });
 
-  // Save all entities in bulk
-  await Promise.all([token.save(), from.save(), to.save(), transfer.save()]);
+  // NOT use promise.all, in order to ensure generate POI in right order
+  await token.save();
+  await from.save();
+  await to.save();
+  await transfer.save();
 
   let event: Event | undefined = undefined;
   if (token.eventId) {
