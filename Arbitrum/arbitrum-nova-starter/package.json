@@ -23,7 +23,7 @@
   "dependencies": {
     "@subql/common": "latest",
     "@subql/types-ethereum": "latest",
-"assert": "^2.0.0"
+    "assert": "^2.0.0"
   },
   "devDependencies": {
     "@subql/cli": "latest",
