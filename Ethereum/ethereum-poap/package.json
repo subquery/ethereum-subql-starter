@@ -1,5 +1,5 @@
 {
-  "name": "gnosis-poap",
+  "name": "ethereum-poap",
   "version": "0.0.1",
   "description": "This example project indexes all POAPs mints and transactions on the Gnosis mainnet",
   "main": "dist/index.js",
