@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "gnosis-poap",
+  name: "ethereum-poap",
   description:
     "This project is a SubQuery Version of the Ethereum Poap Subgraph https://github.com/poap-xyz/poap-subgraph",
   runner: {
