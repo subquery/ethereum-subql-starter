@@ -1,0 +1,87 @@
+on:
+  issues:
+    types: [opened]
+jobs:
+  issue_commented:
+    name: Chain Support
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Run when issue is opened with specific label
+        if: ${{  contains(github.event.issue.labels.*.name, 'CHAIN_SUPPORT')  }}
+        run: |
+          echo "Condition met"
+      - name: Check out repository
+        uses: actions/checkout@v4.1.1
+      - name: Parse Issue
+        uses: stefanbuck/github-issue-praser@v3
+        id: issue-parser
+        with:
+          template-path: .github/ISSUE_TEMPLATE/chain-support.yml
+      - name: Save Parsed Issue as JSON
+        run: echo '${{ steps.issue-parser.outputs.jsonString }}' > input.json
+      - name: Update input.json
+        run: |
+          INPUT_JSON=$(cat input.json)
+          NAME=$(echo "$INPUT_JSON" | jq '.name')
+          FORMATTED_NAME=$(echo "$NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+          UPDATED_JSON=$(echo "$INPUT_JSON" | jq '. + { "lowercased_name": '"$FORMATTED_NAME"' }')
+          echo "$UPDATED_JSON" > input.json
+      - name: Cat input.json
+        run: |
+          cat input.json
+      - name: Create Issue Branch
+        env:
+          number: ${{ github.event.issue.number }}
+          title: ${{ github.event.issue.title }}
+        run: |
+          formattedName=$(echo "${{ steps.issue-parser.outputs.issueparser_name }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+          formattedEnvironment=$(echo "${{ steps.issue-parser.outputs.issueparser_environment }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+          branchname=$number-$formattedName-$formattedEnvironment
+          git switch -c "$branchname"
+          git config --global user.name 'github-actions'
+          git config --global user.email \
+              '41898282+github-actions[bot]@users.noreply.github.com'
+          git push -u origin "$branchname"
+          echo "branchname=$branchname" >> $GITHUB_ENV
+      - name: Make Changes to PR
+        run: |
+          formattedName=$(echo "${{ steps.issue-parser.outputs.issueparser_name }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+          formattedEnvironment=$(echo "${{ steps.issue-parser.outputs.issueparser_environment }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+          folderName="${{ steps.issue-parser.outputs.issueparser_name }}"
+          subFolderName="$formattedName-$formattedEnvironment-starter"
+          echo $formattedName
+          echo $formattedEnvironment
+          echo $folderName
+          echo $subFolderName
+          cp -r .github/template .
+          cd template
+          mv template "$subFolderName"
+          cd ..
+          mv template "$folderName"
+          cd .github && yarn && cd ..
+          .github/node_modules/mustache/bin/mustache input.json .github/template/template/project.ts > "$folderName"/$subFolderName/project.ts
+          .github/node_modules/mustache/bin/mustache input.json .github/template/template/README.md > "$folderName"/$subFolderName/README.md
+          .github/node_modules/mustache/bin/mustache input.json .github/template/template/package.json > "$folderName"/$subFolderName/package.json
+          rm input.json
+          git add .
+      - name: Create PR
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        env:
+          number: ${{ github.event.issue.number }}
+          NAME: ${{ steps.issue-parser.outputs.issueparser_name }}
+        with:
+          commit-message: Featuring ${{ steps.issue-parser.outputs.issueparser_name }}
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: ${{ env.branchname }}
+          base: main
+          delete-branch: true
+          title: "Featuring ${{ steps.issue-parser.outputs.issueparser_name }}"
+          body: |
+            Closes #${{ github.event.issue.number }}
+          draft: false
