@@ -8,9 +8,9 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "x1-testnet-starter",
+  name: "xlayer-testnet-starter",
   description:
-    "This project can be use as a starting point for developing your new X1 Testnet SubQuery project",
+    "This project can be use as a starting point for developing your new X Layer Testnet SubQuery project",
   runner: {
     node: {
       name: "@subql/node-ethereum",
@@ -26,7 +26,7 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for X1 Testnet this is 195
+     * chainId is the EVM Chain ID, for X Layer this is 195
      * https://chainlist.org/chain/195
      */
     chainId: "195",
@@ -38,19 +38,19 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://testrpc.x1.tech"],
+    endpoint: ["https://testrpc.xlayer.tech/"],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
       startBlock: 5462000,
-      // Usually you would set this to the block that the contract was deployed on https://www.oklink.com/x1-test/address/0xbec7859bc3d0603bec454f7194173e36bf2aa5c8
+      // Usually you would set this to the block that the contract was deployed on
       // However on this RPC, they prune all logs older than the most recent 10000 blocks
       // When running, either use an archival node that has no pruning, or update this value to be within the last 10000 blocks
       options: {
         // Must be a key of assets
         abi: "erc20",
-        // this is the contract address for wrapped ether https://www.oklink.com/x1-test/token/0xbec7859bc3d0603bec454f7194173e36bf2aa5c8
+        // this is the contract address for wrapped ether https://www.okx.com/explorer/xlayer-test/address/0xbec7859bc3d0603bec454f7194173e36bf2aa5c8
         address: "0xbec7859bc3d0603bec454f7194173e36bf2aa5c8",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
