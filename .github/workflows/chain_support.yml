@@ -32,13 +32,21 @@ jobs:
       - name: Cat input.json
         run: |
           cat input.json
+      - name: Setup Env
+        run: |
+          formattedName=$(echo "${{ steps.issue-parser.outputs.issueparser_name }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+          formattedEnvironment=$(echo "${{ steps.issue-parser.outputs.issueparser_environment }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+          folderName="${{ steps.issue-parser.outputs.issueparser_name }}"
+          subFolderName="$formattedName-$formattedEnvironment-starter"
+          echo "formattedName=$formattedName" >> $GITHUB_ENV
+          echo "formattedEnvironment=$formattedEnvironment" >> $GITHUB_ENV
+          echo "folderName=$folderName" >> $GITHUB_ENV
+          echo "subFolderName=$subFolderName" >> $GITHUB_ENV
       - name: Create Issue Branch
         env:
           number: ${{ github.event.issue.number }}
           title: ${{ github.event.issue.title }}
         run: |
-          formattedName=$(echo "${{ steps.issue-parser.outputs.issueparser_name }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-          formattedEnvironment=$(echo "${{ steps.issue-parser.outputs.issueparser_environment }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
           branchname=$number-$formattedName-$formattedEnvironment
           git switch -c "$branchname"
           git config --global user.name 'github-actions'
@@ -48,10 +56,6 @@ jobs:
           echo "branchname=$branchname" >> $GITHUB_ENV
       - name: Make Changes to PR
         run: |
-          formattedName=$(echo "${{ steps.issue-parser.outputs.issueparser_name }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-          formattedEnvironment=$(echo "${{ steps.issue-parser.outputs.issueparser_environment }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-          folderName="${{ steps.issue-parser.outputs.issueparser_name }}"
-          subFolderName="$formattedName-$formattedEnvironment-starter"
           echo $formattedName
           echo $formattedEnvironment
           echo $folderName
@@ -67,6 +71,17 @@ jobs:
           .github/node_modules/mustache/bin/mustache input.json .github/template/template/package.json > "$folderName"/$subFolderName/package.json
           rm input.json
           git add .
+      - name: Validate project
+        run: |
+          cd "$folderName/$subFolderName"
+          yarn && yarn codegen && yarn build
+      - name: Update PR workflow
+        run: |
+          file_path = ".github/scripts/ci.package.json"
+          existing=$(jq '.workspaces | index("'"$folderName"'")' "$file_path")
+          if [ "$existing" == "null" ]; then
+            jq '.workspaces += ["'"$folderName"'"]' "$file_path" > "$file_path.tmp" && mv "$file_path.tmp" "$file_path"
+          fi
       - name: Create PR
         id: cpr
         uses: peter-evans/create-pull-request@v6
