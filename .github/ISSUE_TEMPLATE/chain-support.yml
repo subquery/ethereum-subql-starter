@@ -1,53 +1,60 @@
 name: New chain support request
-description: Adding a new chain
-title: "Featuring ..."
+description: This form is for us to add indexing support to a new EVM based network. Please fill out the following form.
+title: "Adding chain support for ..."
 labels: ["CHAIN_SUPPORT"]
 body:
+  - type: markdown
+    attributes:
+    value: "## Network Details"
   - type: input
     id: name
     attributes:
       label: Name
-      description: Name of the network (i.e. Ethereum)
+      description: Name of the network (i.e. `Ethereum`, `Base`)
     validations:
       required: true
   - type: input
     id: environment
     attributes:
       label: Environment
-      description: Environment of Network (i.e. Mainnet)
+      description: Environment of Network (i.e. `Mainnet`, `Testnet`)
     validations:
       required: true
   - type: input
     id: chainId
     attributes:
       label: Chain Id
-      description: The ID of EVM chain
+      description: The ID of EVM chain (for Ethereum this is `1`, for Base this is `8453`)
     validations:
       required: true
   - type: input
     id: endpoint
     attributes:
       label: Endpoint
-      description: Node Endpoint
+      description: A valid, publicly accessible RPC endpoint. We recommend multiple endpoints are provided in a comma seperated list.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+    value: "## Example ERC20 Token to test with
+  - type: input
+    id: ERC20Name
+    attributes:
+      label: Example ERC20 token name
+      description: This token is used to test indexing against (for example you might want to provide use wrapped ETH or USDT)
+    validations:
+      required: true
+  - type: input
+    id: contractAddress
+    attributes:
+      label: Example ERC20 contract address
+      description: The contract address on your chain of this token
     validations:
       required: true
   - type: input
     id: startBlock
     attributes:
       label: Start Block
-      description: Block to start the indexing from
-    validations:
-      required: true
-  - type: input
-    id: ERC20Name
-    attributes:
-      label: ERC20 Token name
-    validations:
-      required: true
-  - type: input
-    id: contractAddress
-    attributes:
-      label: ERC20 contract address
-      description: Smart contract address of ERC20 token
+      description: Block to start the indexing from (we recommend the block where the example token was deployed on)
     validations:
       required: true
