@@ -1,0 +1,53 @@
+name: New chain support request
+description: Adding a new chain
+title: "Featuring ..."
+labels: ["CHAIN_SUPPORT"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      description: Name of the network (i.e. Ethereum)
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Environment of Network (i.e. Mainnet)
+    validations:
+      required: true
+  - type: input
+    id: chainId
+    attributes:
+      label: Chain Id
+      description: The ID of EVM chain
+    validations:
+      required: true
+  - type: input
+    id: endpoint
+    attributes:
+      label: Endpoint
+      description: Node Endpoint
+    validations:
+      required: true
+  - type: input
+    id: startBlock
+    attributes:
+      label: Start Block
+      description: Block to start the indexing from
+    validations:
+      required: true
+  - type: input
+    id: ERC20Name
+    attributes:
+      label: ERC20 Token name
+    validations:
+      required: true
+  - type: input
+    id: contractAddress
+    attributes:
+      label: ERC20 contract address
+      description: Smart contract address of ERC20 token
+    validations:
+      required: true
