@@ -5,7 +5,7 @@ labels: ["CHAIN_SUPPORT"]
 body:
   - type: markdown
     attributes:
-    value: "## Network Details"
+      value: "## Network Details"
   - type: input
     id: name
     attributes:
@@ -36,7 +36,7 @@ body:
       required: true
   - type: markdown
     attributes:
-    value: "## Example ERC20 Token to test with"
+      value: "## Example ERC20 Token to test with"
   - type: input
     id: ERC20Name
     attributes:
