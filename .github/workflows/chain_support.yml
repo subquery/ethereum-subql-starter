@@ -77,7 +77,7 @@ jobs:
           yarn && yarn codegen && yarn build
       - name: Update PR workflow
         run: |
-          file_path = ".github/scripts/ci.package.json"
+          file_path=".github/scripts/ci.package.json"
           existing=$(jq '.workspaces | index("'"$folderName"'")' "$file_path")
           if [ "$existing" == "null" ]; then
             jq '.workspaces += ["'"$folderName"'"]' "$file_path" > "$file_path.tmp" && mv "$file_path.tmp" "$file_path"
