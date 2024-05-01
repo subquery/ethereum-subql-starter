@@ -34,7 +34,8 @@
     "Scroll/*",
     "Skale/*",
     "X1/*",
-    "Zksync/*"
+    "Zksync/*",
+    "Beam"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
