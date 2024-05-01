@@ -34,6 +34,13 @@ body:
       description: A valid, publicly accessible RPC endpoint. We recommend multiple endpoints are provided in a comma seperated list.
     validations:
       required: true
+  - type: textarea
+    id: contact
+    attributes:
+      label: How can we get in contact with your team if we have questions?
+      placeholder: Contact me via Telegram, my handle is ...
+    validations:
+      required: false
   - type: markdown
     attributes:
       value: "## Example ERC20 Token to test with"
