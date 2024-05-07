@@ -43,11 +43,11 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 10763422, 
+      startBlock: 10763422,
       options: {
         // Must be a key of assets
         abi: "erc20",
-        // This is the contract address for SolarCoin https://explorer.aurora.dev/address/0x4988a896b1227218e4A686fdE5EabdcAbd91571f
+        // This is the contract address for SolarCoin
         address: "0x26E4991a72728b1a9B1044345e5bF9293E0A1434",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
@@ -55,7 +55,7 @@ const project: EthereumProject = {
         file: "./dist/index.js",
         handlers: [
           {
-            kind: EthereumHandlerKind.Call, // We use ethereum handlers since Aurora is EVM-compatible
+            kind: EthereumHandlerKind.Call, // We use ethereum handlers since Energy Web is EVM-compatible
             handler: "handleTransaction",
             filter: {
               /**
