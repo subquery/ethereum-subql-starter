@@ -45,9 +45,8 @@ const project: EthereumProject = {
       kind: EthereumDatasourceKind.Runtime,
       startBlock: {{ startBlock }}, 
       options: {
-        // Must be a key of assets
         abi: "erc20",
-        // This is the contract address for {{  ERC20Name  }} https://explorer.aurora.dev/address/0x4988a896b1227218e4A686fdE5EabdcAbd91571f
+        // This is the contract address for {{  ERC20Name  }}
         address: "{{  contractAddress }}",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
@@ -55,7 +54,7 @@ const project: EthereumProject = {
         file: "./dist/index.js",
         handlers: [
           {
-            kind: EthereumHandlerKind.Call, // We use ethereum handlers since Aurora is EVM-compatible
+            kind: EthereumHandlerKind.Call, // We use ethereum handlers since {{prettyName}} is EVM-compatible
             handler: "handleTransaction",
             filter: {
               /**
