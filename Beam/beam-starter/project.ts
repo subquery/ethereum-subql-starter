@@ -43,11 +43,11 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 15238, 
+      startBlock: 15238,
       options: {
         // Must be a key of assets
         abi: "erc20",
-        // This is the contract address for USDC https://explorer.aurora.dev/address/0x4988a896b1227218e4A686fdE5EabdcAbd91571f
+        // This is the contract address for USDC
         address: "0x76BF5E7d2Bcb06b1444C0a2742780051D8D0E304",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
@@ -55,7 +55,7 @@ const project: EthereumProject = {
         file: "./dist/index.js",
         handlers: [
           {
-            kind: EthereumHandlerKind.Call, // We use ethereum handlers since Aurora is EVM-compatible
+            kind: EthereumHandlerKind.Call, // We use ethereum handlers since Beam is EVM-compatible
             handler: "handleTransaction",
             filter: {
               /**
