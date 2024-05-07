@@ -34,7 +34,8 @@
     "Scroll/*",
     "Skale/*",
     "X1/*",
-    "Zksync/*"
+    "Zksync/*",
+    "Energy Web"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
