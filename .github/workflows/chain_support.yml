@@ -25,16 +25,18 @@ jobs:
       - name: Update input.json
         run: |
           INPUT_JSON=$(cat input.json)
-          NAME=$(echo "$INPUT_JSON" | jq '.name')
+          NAME=$(echo "$INPUT_JSON" | jq -r '.name')
           FORMATTED_NAME=$(echo "$NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-          ENVIRONMENT=$(echo "$INPUT_JSON" | jq '.environment')
+          ENVIRONMENT=$(echo "$INPUT_JSON" | jq -r '.environment')
           LOWERCASE_ENVIRONMENT=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]')
+
           if [ "$LOWERCASE_ENVIRONMENT" = "mainnet" ]; then
               PRETTYNAME="$NAME"
           else
               PRETTYNAME="$NAME $ENVIRONMENT"
           fi
-          UPDATED_JSON=$(echo "$INPUT_JSON" | jq '. + { "lowercased_name": '"$FORMATTED_NAME"', "prettyName":  '"$PRETTYNAME"'}')
+
+          UPDATED_JSON=$(echo "$INPUT_JSON" | jq --arg formattedName "$FORMATTED_NAME" --arg prettyName "$PRETTYNAME" '. + { "lowercased_name": $formattedName, "prettyName": $prettyName }')
           echo "$UPDATED_JSON" > input.json
       - name: Cat input.json
         run: |
