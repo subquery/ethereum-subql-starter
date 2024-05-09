@@ -36,7 +36,8 @@
     "X1/*",
     "Zksync/*",
     "Beam/*",
-    "Energy\\ Web/*"
+    "Energy\\ Web/*",
+    "Botanix"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
