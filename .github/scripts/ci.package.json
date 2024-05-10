@@ -38,7 +38,8 @@
     "Beam/*",
     "Energy\\ Web/*",
     "bSquared",
-    "Botanix"
+    "Botanix",
+    "Unicorn Ultra Solaris"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
