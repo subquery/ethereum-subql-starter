@@ -2,7 +2,7 @@
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for the {{ERC20Name}} ({{contractAddress}}) on {{prettyName}}**
+**This SubQuery project indexes all transfers and approval events for the {{ERC20Name}} (`{{contractAddress}}`) on {{prettyName}}**
 
 ## Start
 
