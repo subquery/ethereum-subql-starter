@@ -36,27 +36,26 @@ jobs:
               PRETTYNAME="$NAME $ENVIRONMENT"
           fi
 
-          UPDATED_JSON=$(echo "$INPUT_JSON" | jq --arg formattedName "$FORMATTED_NAME" --arg prettyName "$PRETTYNAME" '. + { "lowercased_name": $formattedName, "prettyName": $prettyName }')
+          LOWERCASE_PRETTY_NAME=$(echo "$PRETTYNAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+
+          UPDATED_JSON=$(echo "$INPUT_JSON" | jq --arg formattedName "$FORMATTED_NAME" --arg prettyName "$PRETTYNAME" --arg lowercasePrettyName "$LOWERCASE_PRETTY_NAME" '. + { "lowercased_name": $formattedName, "prettyName": $prettyName, "lowercasePrettyName": $lowercasePrettyName  }')
           echo "$UPDATED_JSON" > input.json
       - name: Cat input.json
         run: |
           cat input.json
       - name: Setup Env
         run: |
-          formattedName=$(echo "${{ steps.issue-parser.outputs.issueparser_name }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-          formattedEnvironment=$(echo "${{ steps.issue-parser.outputs.issueparser_environment }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+          INPUT_JSON=$(cat input.json)
           folderName="${{ steps.issue-parser.outputs.issueparser_name }}"
-          subFolderName="$formattedName-$formattedEnvironment-starter"
-          echo "formattedName=$formattedName" >> $GITHUB_ENV
-          echo "formattedEnvironment=$formattedEnvironment" >> $GITHUB_ENV
           echo "folderName=$folderName" >> $GITHUB_ENV
+          subFolderName=$(echo "$INPUT_JSON" | jq -r '.lowercasePrettyName')
           echo "subFolderName=$subFolderName" >> $GITHUB_ENV
       - name: Create Issue Branch
         env:
           number: ${{ github.event.issue.number }}
           title: ${{ github.event.issue.title }}
         run: |
-          branchname=$number-$formattedName-$formattedEnvironment
+          branchname=$number-$subFolderName
           git switch -c "$branchname"
           git config --global user.name 'github-actions'
           git config --global user.email \
@@ -65,8 +64,6 @@ jobs:
           echo "branchname=$branchname" >> $GITHUB_ENV
       - name: Make Changes to PR
         run: |
-          echo $formattedName
-          echo $formattedEnvironment
           echo $folderName
           echo $subFolderName
           cp -r .github/template .
