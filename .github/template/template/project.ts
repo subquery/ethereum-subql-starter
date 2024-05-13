@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "{{ lowercased_name }}-starter",
+  name: "{{ lowercasePrettyName }}-starter",
   description:
     "This project can be use as a starting point for developing your new {{ name }} SubQuery project",
   runner: {
