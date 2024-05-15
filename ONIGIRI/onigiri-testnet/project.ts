@@ -26,7 +26,7 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for ONIGIRI this is 5039
+     * chainId is the EVM Chain ID, for ONIGIRI Testnet this is 5039
      * https://chainlist.org/chain/5039
      */
     chainId: "5039",
