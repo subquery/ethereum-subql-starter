@@ -39,7 +39,8 @@
     "Energy\\ Web/*",
     "bSquared",
     "Botanix",
-    "Unicorn Ultra Solaris"
+    "Unicorn Ultra Solaris",
+    "ONIGIRI"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
