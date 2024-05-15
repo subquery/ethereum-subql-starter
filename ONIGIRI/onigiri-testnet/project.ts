@@ -46,7 +46,7 @@ const project: EthereumProject = {
       startBlock: 4875, 
       options: {
         abi: "erc20",
-        // This is the contract address for Name: &quot;SQSample&quot;, Symbol: &quot;SQS&quot;
+        // This is the contract address for Name: SQSample (SQS)
         address: "0x2e42b97149c17D543C5163d82bFD2bc23a258B27",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
