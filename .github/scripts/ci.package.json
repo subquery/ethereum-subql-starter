@@ -40,7 +40,8 @@
     "bSquared",
     "Botanix",
     "Unicorn Ultra Solaris",
-    "ONIGIRI"
+    "ONIGIRI",
+    "DOS Chain"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
