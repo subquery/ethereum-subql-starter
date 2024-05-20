@@ -22,7 +22,7 @@ network:
   # This endpoint must be a public non-pruned archive node
   # Public nodes may be rate limited, which can affect indexing speed
   # When developing your project we suggest getting a private API key
-  endpoint: "https://polygon.api.onfinality.io/public"
+  endpoint: "https://polygon.rpc.subquery.network/public"
 
 dataSources:
   - kind: ethereum/Runtime # We use ethereum runtime since Polygon is a layer-2 that is compatible
