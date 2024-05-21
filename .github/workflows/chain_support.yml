@@ -48,7 +48,8 @@ jobs:
           INPUT_JSON=$(cat input.json)
           folderName="${{ steps.issue-parser.outputs.issueparser_name }}"
           echo "folderName=$folderName" >> $GITHUB_ENV
-          subFolderName=$(echo "$INPUT_JSON" | jq -r '.lowercasePrettyName')
+          lowercasePrettyName=$(echo "$INPUT_JSON" | jq -r '.lowercasePrettyName')
+          subFolderName="${lowercasePrettyName}-starter"
           echo "subFolderName=$subFolderName" >> $GITHUB_ENV
       - name: Create Issue Branch
         env:
