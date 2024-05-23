@@ -41,7 +41,8 @@
     "Botanix",
     "Unicorn Ultra Solaris",
     "ONIGIRI",
-    "DOS Chain"
+    "DOS Chain",
+    "neox"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
