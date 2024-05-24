@@ -42,7 +42,7 @@
     "Unicorn Ultra Solaris",
     "ONIGIRI",
     "DOS Chain",
-    "neox"
+    "Neo X"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
