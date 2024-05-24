@@ -2,7 +2,7 @@
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for the GM (`0xF41db445D7eaF45536985cE185ce131FA4b42E68`) on neox testnet**
+**This SubQuery project indexes all transfers and approval events for the GM (`0xF41db445D7eaF45536985cE185ce131FA4b42E68`) on Neo X Testnet**
 
 ## Start
 
