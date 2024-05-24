@@ -26,7 +26,7 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for neox this is 12227331
+     * chainId is the EVM Chain ID, for Neo X this is 12227331
      * https://chainlist.org/chain/12227331
      */
     chainId: "12227331",
