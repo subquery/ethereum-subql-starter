@@ -10,7 +10,7 @@ const project: EthereumProject = {
   version: "0.0.1",
   name: "neox-testnet-starter",
   description:
-    "This project can be use as a starting point for developing your new neox SubQuery project",
+    "This project can be use as a starting point for developing your new Neo X Testnet SubQuery project",
   runner: {
     node: {
       name: "@subql/node-ethereum",
