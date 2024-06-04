@@ -43,7 +43,8 @@
     "ONIGIRI",
     "DOS Chain",
     "Neo X",
-    "Cronos"
+    "Cronos",
+    "Mode"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
