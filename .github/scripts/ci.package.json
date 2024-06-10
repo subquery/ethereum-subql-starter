@@ -45,7 +45,9 @@
     "Neo X",
     "Cronos",
     "Mode",
-    "Citrea"
+    "Citrea",
+    "BOB",
+    "Bitlayer",
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
