@@ -45,7 +45,8 @@
     "Neo X",
     "Cronos",
     "Mode",
-    "Bitlayer"
+    "BOB",
+    "Bitlayer",
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
