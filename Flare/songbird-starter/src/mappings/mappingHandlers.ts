@@ -1,4 +1,4 @@
-import { FlareTransaction, FlareLog, FlareBlock } from "@subql/types-flare";
+import { EthereumTransaction, EthereumLog, EthereumBlock } from "@subql/types-ethereum";
 import { BigNumber } from "@ethersproject/bignumber";
 import { HashSubmittedEvent, SubmitHash } from "../types";
 import assert from "assert";
@@ -17,13 +17,13 @@ type SubmitHashCallArgs = [BigNumber, string] & {
 };
 
 /*
-export async function handleBlock(block: FlareBlock): Promise<void> {
+export async function handleBlock(block: EthereumBlock): Promise<void> {
   // do something with each and every block
 }
 */
 
 export async function handleLog(
-  log: FlareLog<HashSubmittedEventArgs>
+  log: EthereumLog<HashSubmittedEventArgs>
 ): Promise<void> {
   assert(log.args, "No log.args" )
 
@@ -40,7 +40,7 @@ export async function handleLog(
 }
 
 export async function handleTransaction(
-  transaction: FlareTransaction<SubmitHashCallArgs>
+  transaction: EthereumTransaction<SubmitHashCallArgs>
 ): Promise<void> {
 
   assert(transaction.args, "No transaction.args" )

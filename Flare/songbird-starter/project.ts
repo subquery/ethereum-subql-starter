@@ -2,7 +2,7 @@ import {
     EthereumProject,
     EthereumDatasourceKind,
     EthereumHandlerKind,
-} from "@subql/types-flare";
+} from "@subql/types-ethereum";
 
 // Can expand the Datasource processor types via the generic param
 const project: EthereumProject = {
@@ -12,7 +12,7 @@ const project: EthereumProject = {
     description: "This project can be use as a starting point for developing your new Flare Songbird SubQuery project",
     runner: {
         node: {
-            name: "@subql/node-flare",
+            name: "@subql/node-ethereum",
             version: ">=3.0.0",
         },
         query: {

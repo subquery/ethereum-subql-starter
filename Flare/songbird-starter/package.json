@@ -11,8 +11,8 @@
     "prepack": "rm -rf dist && npm run build",
     "test": "jest"
   },
-  "homepage": "https://github.com/subquery/flare-starter",
-  "repository": "github:subquery/flare-starter",
+  "homepage": "https://github.com/subquery/ethereum-subql-starter",
+  "repository": "github:subquery/ethereum-subql-starter",
   "files": [
     "dist",
     "schema.graphql",
@@ -22,7 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@subql/common": "latest",
-    "@subql/types-flare": "latest",
+    "@subql/types-ethereum": "latest",
     "@subql/validator": "latest",
     "assert": "^2.0.0"
   },
