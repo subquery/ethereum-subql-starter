@@ -48,6 +48,7 @@
     "Citrea",
     "BOB",
     "Bitlayer",
+    "Viction"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
