@@ -17,7 +17,7 @@ services:
       timeout: 5s
       retries: 5
 
-  subquery-node:
+  subquery-node-base:
     image: subquerynetwork/subql-node-ethereum:latest
     depends_on:
       "postgres":
@@ -32,15 +32,43 @@ services:
     volumes:
       - ./:/app
     command:
-      - ${SUB_COMMAND:-} # set SUB_COMMAND env variable to "test" to run tests
-      - -f=/app
-      - --db-schema=app
-      - --workers=4
-      - --batch-size=30
-      - --unfinalized-blocks=true
-
+      - -f=app/base.yaml
+      - --multi-chain
+      - --db-schema=multi-transfers
+      - --disable-historical
+      - --batch-size=10
     healthcheck:
       test: ["CMD", "curl", "-f", "http://subquery-node:3000/ready"]
+      interval: 3s
+      timeout: 5s
+      retries: 10
+
+  subquery-node-ethereum:
+    image: subquerynetwork/subql-node-ethereum:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+    environment:
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_DATABASE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+    volumes:
+      - ./:/app
+    command:
+      - --multi-chain
+      - --db-schema=multi-transfers
+      - --disable-historical
+      - -f=app/ethereum.yaml
+      - --batch-size=10
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://subquery-node-ethereum:3000/ready
       interval: 3s
       timeout: 5s
       retries: 10
@@ -52,9 +80,7 @@ services:
     depends_on:
       "postgres":
         condition: service_healthy
-      "subquery-node":
-        condition: service_healthy
-    restart: always
+    restart: unless-stopped
     environment:
       DB_USER: postgres
       DB_PASS: postgres
@@ -62,6 +88,5 @@ services:
       DB_HOST: postgres
       DB_PORT: 5432
     command:
-      - --name=app
+      - --name=multi-transfers
       - --playground
-      - --indexer=http://subquery-node:3000

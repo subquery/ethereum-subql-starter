@@ -1,0 +1,38 @@
+# // Auto-generated , DO NOT EDIT
+specVersion: 1.0.0
+version: 0.0.1
+name: ethereum-starter
+description: This project indexes SQT holders on Ethereum
+runner:
+  node:
+    name: '@subql/node-ethereum'
+    version: '>=3.0.0'
+  query:
+    name: '@subql/query'
+    version: '*'
+schema:
+  file: ./schema.graphql
+network:
+  chainId: '1'
+  endpoint:
+    - https://ethereum.rpc.subquery.network/public
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 19217803
+    options:
+      abi: erc20
+      address: '0x09395a2A58DB45db0da254c7EAa5AC469D8bDc85'
+    assets:
+      erc20:
+        file: ./abis/erc20.abi.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleEtherumTransfer
+          filter:
+            topics:
+              - >-
+                Transfer(address indexed from, address indexed to, uint256
+                amount)
+repository: https://github.com/subquery/ethereum-subql-starter

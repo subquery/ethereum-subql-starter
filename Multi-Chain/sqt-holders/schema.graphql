@@ -7,11 +7,14 @@ type Account @entity {
   created_date: Date!
   created_block: BigInt!
   current_balance: BigInt!
+  current_eth_balance: BigInt!
+  current_base_balance: BigInt!
   last_balance_update: BigInt!
 }
 
 type Transfer @entity {
   id: ID! # Transaction hash
+  network: String! # BASE || ETHEREUM 
   account_from: Account
   account_to: Account
   block_height: BigInt!

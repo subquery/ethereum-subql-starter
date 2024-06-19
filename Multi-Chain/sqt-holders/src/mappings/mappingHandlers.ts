@@ -1,7 +1,7 @@
 import { Account, Transfer } from "../types";
 import { TransferLog } from "../types/abi-interfaces/Erc20Abi";
 import assert from "assert";
-import { Erc20Abi__factory } from "../types/contracts";
+import { EthereumBlock } from "@subql/types-ethereum";
 
 const checkGetAccount = async (
   address: string,
@@ -17,24 +17,78 @@ const checkGetAccount = async (
       created_date: new Date(Number(date) * 1000),
       current_balance: BigInt(0),
       last_balance_update: BigInt(blockheight),
+      current_base_balance: BigInt(0),
+      current_eth_balance: BigInt(0),
     });
     await account.save();
   }
   return account;
 };
 
-export async function handleTransfer(log: TransferLog): Promise<void> {
+const calculateCurrentBalance = async (
+  account: Account,
+  changeValue: bigint,
+  network: "BASE" | "ETHEREUM",
+  blockheight: bigint
+): Promise<Account> => {
+  const fromTransactions = await Transfer.getByAccount_fromId(account.id);
+  const toTransactions = await Transfer.getByAccount_toId(account.id);
+
+  account.current_base_balance =
+    BigInt(
+      toTransactions!
+        .filter((t) => t.network === "BASE")
+        .map((t) => Number(t.value))
+        .reduce((acc, val) => acc + val, 0) -
+        fromTransactions!
+          .filter((t) => t.network === "BASE")
+          .map((t) => Number(t.value))
+          .reduce((acc, val) => acc + val, 0)
+    ) +
+      network ===
+    "BASE"
+      ? changeValue
+      : BigInt(0);
+
+  account.current_eth_balance =
+    BigInt(
+      toTransactions!
+        .filter((t) => t.network === "ETHEREUM")
+        .map((t) => Number(t.value))
+        .reduce((acc, val) => acc + val, 0) -
+        fromTransactions!
+          .filter((t) => t.network === "ETHEREUM")
+          .map((t) => Number(t.value))
+          .reduce((acc, val) => acc + val, 0)
+    ) +
+      network ===
+    "ETHEREUM"
+      ? changeValue
+      : BigInt(0);
+
+  account.current_balance =
+    account.current_base_balance + account.current_eth_balance;
+
+  account.last_balance_update = blockheight;
+
+  return account;
+};
+
+const handleTransfer = async (
+  log: TransferLog,
+  network: "BASE" | "ETHEREUM"
+): Promise<void> => {
   logger.info(
     `New transfer transaction log at block ${log.blockNumber} with ${log.transactionHash}`
   );
   assert(log.args, "No log.args");
 
-  const fromAccount = await checkGetAccount(
+  let fromAccount = await checkGetAccount(
     log.args.from,
     log.blockNumber,
     log.block.timestamp
   );
-  const toAccount = await checkGetAccount(
+  let toAccount = await checkGetAccount(
     log.args.to,
     log.blockNumber,
     log.block.timestamp
@@ -42,27 +96,41 @@ export async function handleTransfer(log: TransferLog): Promise<void> {
 
   const transaction = Transfer.create({
     id: log.transactionHash,
+    network,
     account_fromId: fromAccount.id,
     account_toId: toAccount.id,
     block_height: BigInt(log.blockNumber),
     date: new Date(Number(log.block.timestamp) * 1000),
     raw_value: log.args.value.toBigInt(),
-    value: log.args.value.toBigInt() / BigInt("100000000000000000"),
+    value: log.args.value.toBigInt() / BigInt("1000000000000000000"),
   });
 
-  const erc20 = Erc20Abi__factory.connect(process.env.SQT_CONTRACT!, api);
+  await transaction.save();
 
-  // Update the account balances
-  fromAccount.current_balance = (
-    await erc20.balanceOf(fromAccount.id)
-  ).toBigInt();
-  fromAccount.last_balance_update = BigInt(log.blockNumber);
-  toAccount.current_balance = (await erc20.balanceOf(toAccount.id)).toBigInt();
-  toAccount.last_balance_update = BigInt(log.blockNumber);
+  fromAccount = await calculateCurrentBalance(
+    fromAccount,
+    transaction.value * BigInt(-1),
+    network,
+    transaction.block_height
+  );
+  toAccount = await calculateCurrentBalance(
+    fromAccount,
+    transaction.value,
+    network,
+    transaction.block_height
+  );
 
-  await Promise.all([
-    transaction.save(),
-    await fromAccount.save(),
-    await toAccount.save(),
-  ]);
+  await Promise.all([fromAccount.save(), toAccount.save()]);
+};
+
+export async function updateBalances(block: EthereumBlock): Promise<void> {
+  // Later
+}
+
+export async function handleBaseTransfer(log: TransferLog): Promise<void> {
+  return handleTransfer(log, "BASE");
+}
+
+export async function handleEtherumTransfer(log: TransferLog): Promise<void> {
+  return handleTransfer(log, "ETHEREUM");
 }
