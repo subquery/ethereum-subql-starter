@@ -47,7 +47,7 @@
     "Mode",
     "Citrea",
     "BOB",
-    "Bitlayer",
+    "Bitlayer"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
