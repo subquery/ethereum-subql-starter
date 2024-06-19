@@ -13,12 +13,12 @@ const checkGetAccount = async (
     // create one
     account = Account.create({
       id: address.toLowerCase(),
-      created_block: BigInt(blockheight),
-      created_date: new Date(Number(date) * 1000),
-      current_balance: BigInt(0),
-      last_balance_update: BigInt(blockheight),
-      current_base_balance: BigInt(0),
-      current_eth_balance: BigInt(0),
+      createdBlock: BigInt(blockheight),
+      createdDate: new Date(Number(date) * 1000),
+      currentBalance: 0,
+      lastBalanceUpdate: BigInt(blockheight),
+      currentBaseBalance: 0,
+      currentEthBalance: 0,
     });
     await account.save();
   }
@@ -27,14 +27,14 @@ const checkGetAccount = async (
 
 const calculateCurrentBalance = async (
   account: Account,
-  changeValue: bigint,
+  changeValue: number,
   network: "BASE" | "ETHEREUM",
   blockheight: bigint
 ): Promise<Account> => {
-  const fromTransactions = await Transfer.getByAccount_fromId(account.id);
-  const toTransactions = await Transfer.getByAccount_toId(account.id);
+  const fromTransactions = await Transfer.getByAccountFromId(account.id);
+  const toTransactions = await Transfer.getByAccountToId(account.id);
 
-  account.current_base_balance =
+  account.currentBaseBalance =
     BigInt(
       toTransactions!
         .filter((t) => t.network === "BASE")
@@ -48,9 +48,9 @@ const calculateCurrentBalance = async (
       network ===
     "BASE"
       ? changeValue
-      : BigInt(0);
+      : 0;
 
-  account.current_eth_balance =
+  account.currentEthBalance =
     BigInt(
       toTransactions!
         .filter((t) => t.network === "ETHEREUM")
@@ -64,12 +64,12 @@ const calculateCurrentBalance = async (
       network ===
     "ETHEREUM"
       ? changeValue
-      : BigInt(0);
+      : 0;
 
-  account.current_balance =
-    account.current_base_balance + account.current_eth_balance;
+  account.currentBalance =
+    account.currentBaseBalance + account.currentEthBalance;
 
-  account.last_balance_update = blockheight;
+  account.lastBalanceUpdate = blockheight;
 
   return account;
 };
@@ -97,27 +97,27 @@ const handleTransfer = async (
   const transaction = Transfer.create({
     id: log.transactionHash,
     network,
-    account_fromId: fromAccount.id,
-    account_toId: toAccount.id,
-    block_height: BigInt(log.blockNumber),
+    accountFromId: fromAccount.id,
+    accountToId: toAccount.id,
+    blockHeight: BigInt(log.blockNumber),
     date: new Date(Number(log.block.timestamp) * 1000),
-    raw_value: log.args.value.toBigInt(),
-    value: log.args.value.toBigInt() / BigInt("1000000000000000000"),
+    rawValue: log.args.value.toBigInt(),
+    value: Number(log.args.value.toBigInt() / BigInt("1000000000000000000")),
   });
 
   await transaction.save();
 
   fromAccount = await calculateCurrentBalance(
     fromAccount,
-    transaction.value * BigInt(-1),
+    transaction.value * -1,
     network,
-    transaction.block_height
+    transaction.blockHeight
   );
   toAccount = await calculateCurrentBalance(
     fromAccount,
     transaction.value,
     network,
-    transaction.block_height
+    transaction.blockHeight
   );
 
   await Promise.all([fromAccount.save(), toAccount.save()]);

@@ -4,21 +4,21 @@
 
 type Account @entity {
   id: ID! # lower case wallet address
-  created_date: Date!
-  created_block: BigInt!
-  current_balance: BigInt!
-  current_eth_balance: BigInt!
-  current_base_balance: BigInt!
-  last_balance_update: BigInt!
+  createdDate: Date!
+  createdBlock: BigInt!
+  currentBalance: Float!
+  currentEthBalance: Float!
+  currentBaseBalance: Float!
+  lastBalanceUpdate: BigInt!
 }
 
 type Transfer @entity {
   id: ID! # Transaction hash
   network: String! # BASE || ETHEREUM 
-  account_from: Account
-  account_to: Account
-  block_height: BigInt!
+  accountFrom: Account
+  accountTo: Account
+  blockHeight: BigInt!
   date: Date!
-  raw_value: BigInt!
-  value: BigInt!
+  rawValue: BigInt!
+  value: Float!
 }
