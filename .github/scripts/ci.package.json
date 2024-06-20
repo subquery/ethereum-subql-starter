@@ -48,8 +48,9 @@
     "Citrea",
     "BOB",
     "Bitlayer",
-    "Viction",
     "XDC Network",
+    "LayerEdge"
+    "Viction",
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
