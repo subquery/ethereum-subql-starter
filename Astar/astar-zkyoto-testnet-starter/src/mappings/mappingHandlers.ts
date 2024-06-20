@@ -3,7 +3,7 @@ import assert from "assert";
 import { EthereumTransaction } from "@subql/types-ethereum";
 
 export async function handleTransaction(
-  tx: EthereumTransaction
+  tx: EthereumTransaction,
 ): Promise<void> {
   const approval = Transaction.create({
     id: tx.hash,

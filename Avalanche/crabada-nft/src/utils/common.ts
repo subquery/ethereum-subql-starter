@@ -6,7 +6,7 @@ export function getTransferId(
   networkId: string,
   transactionHash: string,
   logIndex: string,
-  batchIndex: number
+  batchIndex: number,
 ): string {
   return `${transactionHash}-${logIndex}-${batchIndex}-${networkId}`;
 }

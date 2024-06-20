@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 5905, 
+      startBlock: 5905,
       options: {
         abi: "erc20",
         // This is the contract address for Heroes and Empires (HE)

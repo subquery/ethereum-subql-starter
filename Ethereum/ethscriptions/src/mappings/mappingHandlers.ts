@@ -3,7 +3,7 @@ import { isValidDataUri, hexToUTF8 } from "./utils";
 import { EthereumTransaction } from "@subql/types-ethereum";
 
 export async function handleTransaction(
-  tx: EthereumTransaction
+  tx: EthereumTransaction,
 ): Promise<void> {
   if (tx.to && tx.input) {
     let inscription: Inscription;

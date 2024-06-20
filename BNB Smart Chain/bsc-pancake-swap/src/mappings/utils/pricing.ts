@@ -15,12 +15,12 @@ const USDC_WETH_03_POOL = "0x36696169c63e42cd08ce11f5deebbcebae652050";
 // usually tokens that many tokens are paired with s
 export const WHITELIST_TOKENS: string[] =
   "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c,0x55d398326f99059ff775485246999027b3197955,0xe9e7cea3dedca5984780bafc599bd69add087d56,0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d,0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c,0x2170ed0880ac9a755fd29b2688956bd959f933f8,0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82".split(
-    ","
+    ",",
   );
 
 const STABLE_COINS: string[] =
   "0x55d398326f99059ff775485246999027b3197955,0xe9e7cea3dedca5984780bafc599bd69add087d56,0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d".split(
-    ","
+    ",",
   );
 
 const MINIMUM_ETH_LOCKED = BigNumber.from("60");
@@ -29,13 +29,13 @@ const Q192 = 2 ** 192;
 export function sqrtPriceX96ToTokenPrices(
   sqrtPriceX96: bigint,
   token0: Token,
-  token1: Token
+  token1: Token,
 ): number[] {
   const num = sqrtPriceX96 * sqrtPriceX96;
   const denom = BigInt(Q192);
   const divide = num / denom;
   const decimals = BigInt(
-    Math.abs(Number(token1.decimals) - Number(token0.decimals))
+    Math.abs(Number(token1.decimals) - Number(token0.decimals)),
   );
   const price1 = Number(formatUnits(divide, decimals));
 
@@ -94,7 +94,7 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
           // get the derived ETH in pool
           assert(token1);
           const ethLocked = BigNumber.from(pool.totalValueLockedToken1).mul(
-            token1.derivedETH
+            token1.derivedETH,
           );
           if (
             ethLocked.gt(largestLiquidityETH) &&
@@ -103,7 +103,7 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
             largestLiquidityETH = ethLocked;
             // token1 per our token * Eth per token1
             priceSoFar = BigNumber.from(pool.token1Price).mul(
-              token1.derivedETH
+              token1.derivedETH,
             );
           }
         }
@@ -112,7 +112,7 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
           assert(token0);
           // get the derived ETH in pool
           const ethLocked = BigNumber.from(pool.totalValueLockedToken0).mul(
-            token0.derivedETH
+            token0.derivedETH,
           );
           if (
             ethLocked.gt(largestLiquidityETH) &&
@@ -121,7 +121,7 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
             largestLiquidityETH = ethLocked;
             // token0 per our token * ETH per token0
             priceSoFar = BigNumber.from(pool.token0Price).mul(
-              token0.derivedETH
+              token0.derivedETH,
             );
           }
         }
@@ -141,7 +141,7 @@ export async function getTrackedAmountUSD(
   tokenAmount0: BigNumber,
   token0: Token,
   tokenAmount1: BigNumber,
-  token1: Token
+  token1: Token,
 ): Promise<BigNumber> {
   const bundle = await Bundle.get("1");
   assert(bundle);

@@ -49,7 +49,7 @@ function decodeName(buf: Buffer): Array<string> {
 }
 
 export async function handleNameWrapped(
-  event: NameWrappedEvent
+  event: NameWrappedEvent,
 ): Promise<void> {
   let decoded = decodeName(Buffer.from(event.args.name));
   let label = decoded[0];
@@ -92,7 +92,7 @@ export async function handleNameWrapped(
 }
 
 export async function handleNameUnwrapped(
-  event: NameUnwrappedEvent
+  event: NameUnwrappedEvent,
 ): Promise<void> {
   let node = event.args.node;
   let blockNumber = event.blockNumber;
@@ -140,7 +140,7 @@ async function makeWrappedTransfer(
   transactionID: string,
   eventID: string,
   node: BigNumber,
-  to: string
+  to: string,
 ): Promise<void> {
   const _to = await createOrLoadAccount(to);
   const namehash = "0x" + node.toHexString().slice(2).padStart(64, "0");
@@ -170,19 +170,19 @@ async function makeWrappedTransfer(
 }
 
 export async function handleTransferSingle(
-  event: TransferSingleEvent
+  event: TransferSingleEvent,
 ): Promise<void> {
   await makeWrappedTransfer(
     event.blockNumber,
     event.transactionHash,
     createEventID(event.blockNumber, event.logIndex).concat("-0"),
     event.args.id,
-    event.args.to
+    event.args.to,
   );
 }
 
 export async function handleTransferBatch(
-  event: TransferBatchEvent
+  event: TransferBatchEvent,
 ): Promise<void> {
   let blockNumber = event.blockNumber;
   let transactionID = event.transactionHash;
@@ -197,7 +197,7 @@ export async function handleTransferBatch(
         .concat("-")
         .concat(i.toString()),
       ids[i],
-      to
+      to,
     );
   }
 }

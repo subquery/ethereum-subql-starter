@@ -4,7 +4,7 @@ import { TransferLog } from "../types/abi-interfaces/StarNFT";
 
 export async function handleTransfer(
   event: TransferLog,
-  network: string
+  network: string,
 ): Promise<void> {
   logger.info("Handling TransferLog");
   logger.info(event.transactionHash);
@@ -19,7 +19,7 @@ export async function handleTransfer(
   logger.info(`nft_id = ${nft_id}`);
 
   logger.info(
-    `NFT ${nft_contract} ${nft_id.toString()} transfer from ${from} to ${to}`
+    `NFT ${nft_contract} ${nft_id.toString()} transfer from ${from} to ${to}`,
   );
 
   if (from == ADDRESS_ZERO) {
@@ -51,14 +51,14 @@ export async function handleTransfer(
 }
 
 export async function handleTransferEthereum(
-  event: TransferLog
+  event: TransferLog,
 ): Promise<void> {
   logger.info("Handling handleTransferEthereum");
   await handleTransfer(event, "ethereum");
 }
 
 export async function handleTransferArbitrum(
-  event: TransferLog
+  event: TransferLog,
 ): Promise<void> {
   logger.info("Handling handleTransferArbitrum");
   await handleTransfer(event, "arbitrum");

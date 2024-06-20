@@ -30,7 +30,7 @@ import {
 import { createEventID } from "./utils";
 
 export async function handleAddrChanged(
-  event: AddrChangedEvent
+  event: AddrChangedEvent,
 ): Promise<void> {
   let account = new Account(event.args.a);
   await account.save();
@@ -60,7 +60,7 @@ export async function handleAddrChanged(
 }
 
 export async function handleMulticoinAddrChanged(
-  event: AddressChangedEvent
+  event: AddressChangedEvent,
 ): Promise<void> {
   let resolver = await getOrCreateResolver(event.args.node, event.address);
   let coinType = event.args.coinType;
@@ -88,7 +88,7 @@ export async function handleMulticoinAddrChanged(
 }
 
 export async function handleNameChanged(
-  event: NameChangedEvent
+  event: NameChangedEvent,
 ): Promise<void> {
   if (event.args.name.indexOf("\u0000") != -1) return;
 
@@ -118,7 +118,7 @@ export async function handleABIChanged(event: ABIChangedEvent): Promise<void> {
 }
 
 export async function handlePubkeyChanged(
-  event: PubkeyChangedEvent
+  event: PubkeyChangedEvent,
 ): Promise<void> {
   let resolverEvent = PubkeyChanged.create({
     id: createEventID(event.blockNumber, event.logIndex),
@@ -132,7 +132,7 @@ export async function handlePubkeyChanged(
 }
 
 export async function handleTextChanged(
-  event: TextChangedEvent
+  event: TextChangedEvent,
 ): Promise<void> {
   let resolver = await getOrCreateResolver(event.args.node, event.address);
   const key = event.args[2];
@@ -160,7 +160,7 @@ export async function handleTextChanged(
 }
 
 export async function handleTextChangedWithValue(
-  event: TextChangedWithValueEvent
+  event: TextChangedWithValueEvent,
 ): Promise<void> {
   let resolver = await getOrCreateResolver(event.args.node, event.address);
   let key = event.args.key;
@@ -188,7 +188,7 @@ export async function handleTextChangedWithValue(
 }
 
 export async function handleContentHashChanged(
-  event: ContenthashChangedEvent
+  event: ContenthashChangedEvent,
 ): Promise<void> {
   let resolver = await getOrCreateResolver(event.args.node, event.address);
   resolver.contentHash = event.args.hash;
@@ -217,7 +217,7 @@ export function handleInterfaceChanged(event: InterfaceChangedEvent): void {
 }
 
 export async function handleAuthorisationChanged(
-  event: AuthorisationChangedEvent
+  event: AuthorisationChangedEvent,
 ): Promise<void> {
   let resolverEvent = AuthorisationChanged.create({
     id: createEventID(event.blockNumber, event.logIndex),
@@ -232,7 +232,7 @@ export async function handleAuthorisationChanged(
 }
 
 export async function handleVersionChanged(
-  event: VersionChangedEvent
+  event: VersionChangedEvent,
 ): Promise<void> {
   let resolverEvent = VersionChanged.create({
     id: createEventID(event.blockNumber, event.logIndex),
@@ -261,7 +261,7 @@ export async function handleVersionChanged(
 
 async function getOrCreateResolver(
   node: string,
-  address: string
+  address: string,
 ): Promise<Resolver> {
   let id = createResolverID(node, address);
   let resolver = await Resolver.get(id);

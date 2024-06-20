@@ -12,7 +12,7 @@ export function createTick(
   tickId: string,
   tickIdx: number,
   poolId: string,
-  event: EthereumLog<MintEvent["args"]>
+  event: EthereumLog<MintEvent["args"]>,
 ): Tick {
   // 1.0001^tick is token1/token0.
   // return bigNumber.js bignumber and convert to number

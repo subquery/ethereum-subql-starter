@@ -5,7 +5,7 @@ import assert from "assert";
 
 export async function handleStarNFTCreated(
   event: NFTCreatedLog,
-  network: string
+  network: string,
 ): Promise<void> {
   assert(event.args, "No event args found");
   logger.info("--> New StarNFT Created: {}", [event.args.starAddr]);
@@ -30,21 +30,21 @@ export async function handleStarNFTCreated(
 }
 
 export async function handleStarNFTCreatedEthereum(
-  event: NFTCreatedLog
+  event: NFTCreatedLog,
 ): Promise<void> {
   logger.info("Handling handleStarNFTCreatedEthereum");
   await handleStarNFTCreated(event, "ethereum");
 }
 
 export async function handleStarNFTCreatedArbitrum(
-  event: NFTCreatedLog
+  event: NFTCreatedLog,
 ): Promise<void> {
   logger.info("Handling handleStarNFTCreatedArbitrum");
   await handleStarNFTCreated(event, "arbitrum");
 }
 
 export async function handleStarNFTCreatedPolygon(
-  event: NFTCreatedLog
+  event: NFTCreatedLog,
 ): Promise<void> {
   logger.info("Handling handleStarNFTCreatedPolygon");
   await handleStarNFTCreated(event, "polygon");

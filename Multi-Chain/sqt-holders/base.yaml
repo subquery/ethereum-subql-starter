@@ -5,15 +5,15 @@ name: base-starter
 description: This project indexes SQT holders on Base
 runner:
   node:
-    name: '@subql/node-ethereum'
-    version: '>=3.0.0'
+    name: "@subql/node-ethereum"
+    version: ">=3.0.0"
   query:
-    name: '@subql/query'
-    version: '*'
+    name: "@subql/query"
+    version: "*"
 schema:
   file: ./schema.graphql
 network:
-  chainId: '8453'
+  chainId: "8453"
   endpoint:
     - https://base.rpc.subquery.network/public
     - https://mainnet.base.org/
@@ -22,7 +22,7 @@ dataSources:
     startBlock: 10513020
     options:
       abi: erc20
-      address: '0x858c50C3AF1913b0E849aFDB74617388a1a5340d'
+      address: "0x858c50C3AF1913b0E849aFDB74617388a1a5340d"
     assets:
       erc20:
         file: ./abis/erc20.abi.json

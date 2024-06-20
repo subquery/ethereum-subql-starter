@@ -6,7 +6,7 @@ import { EthereumBlock } from "@subql/types-ethereum";
 const checkGetAccount = async (
   address: string,
   blockheight: number,
-  date: bigint
+  date: bigint,
 ): Promise<Account> => {
   let account = await Account.get(address.toLowerCase());
   if (!account) {
@@ -28,7 +28,7 @@ const checkGetAccount = async (
 const calculateCurrentBalance = async (
   account: Account,
   network: "BASE" | "ETHEREUM",
-  blockheight: bigint
+  blockheight: bigint,
 ): Promise<Account> => {
   const fromTransactions =
     (await Transfer.getByAccountFromId(account.id)) || [];
@@ -37,7 +37,7 @@ const calculateCurrentBalance = async (
   logger.info(
     `There are ${(
       fromTransactions.length + toTransactions.length
-    ).toString()} transactions relating to ${account.id}`
+    ).toString()} transactions relating to ${account.id}`,
   );
 
   account.currentEthBalance =
@@ -66,22 +66,22 @@ const calculateCurrentBalance = async (
 
 const handleTransfer = async (
   log: TransferLog,
-  network: "BASE" | "ETHEREUM"
+  network: "BASE" | "ETHEREUM",
 ): Promise<void> => {
   logger.info(
-    `New transfer transaction log at block ${log.blockNumber} with ${log.transactionHash}`
+    `New transfer transaction log at block ${log.blockNumber} with ${log.transactionHash}`,
   );
   assert(log.args, "No log.args");
 
   let fromAccount = await checkGetAccount(
     log.args.from,
     log.blockNumber,
-    log.block.timestamp
+    log.block.timestamp,
   );
   let toAccount = await checkGetAccount(
     log.args.to,
     log.blockNumber,
-    log.block.timestamp
+    log.block.timestamp,
   );
 
   const transaction = Transfer.create({
@@ -100,12 +100,12 @@ const handleTransfer = async (
   fromAccount = await calculateCurrentBalance(
     fromAccount,
     network,
-    transaction.blockHeight
+    transaction.blockHeight,
   );
   toAccount = await calculateCurrentBalance(
     toAccount,
     network,
-    transaction.blockHeight
+    transaction.blockHeight,
   );
 
   await Promise.all([fromAccount.save(), toAccount.save()]);

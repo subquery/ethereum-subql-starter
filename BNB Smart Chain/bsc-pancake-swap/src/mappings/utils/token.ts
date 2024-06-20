@@ -13,7 +13,7 @@ export async function fetchTokenSymbol(tokenAddress: string): Promise<string> {
   const contract = ERC20__factory.connect(tokenAddress, api);
   const contractSymbolBytes = ERC20SymbolBytes__factory.connect(
     tokenAddress,
-    api
+    api,
   );
   // try types string and bytes32 for symbol
   let symbolValue = "unknown";
@@ -65,7 +65,7 @@ export async function fetchTokenName(tokenAddress: string): Promise<string> {
 }
 
 export async function fetchTokenTotalSupply(
-  tokenAddress: string
+  tokenAddress: string,
 ): Promise<BigNumber> {
   const contract = ERC20__factory.connect(tokenAddress, api);
   let totalSupplyValue = null;
@@ -78,7 +78,7 @@ export async function fetchTokenTotalSupply(
 }
 
 export async function fetchTokenDecimals(
-  tokenAddress: string
+  tokenAddress: string,
 ): Promise<BigNumber | null> {
   // try types uint8 for decimals
   let decimalValue = null;

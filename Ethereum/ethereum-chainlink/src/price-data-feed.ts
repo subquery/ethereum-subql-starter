@@ -8,7 +8,7 @@ import { AccessControlledOffchainAggregator__factory } from "./types/contracts";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export async function handleAnswerUpdated(
-  event: EthereumLog<AnswerUpdatedEvent["args"]>
+  event: EthereumLog<AnswerUpdatedEvent["args"]>,
 ): Promise<void> {
   assert(event.args);
   const datasource = FeedRegistry__factory.connect(event.address, api);
@@ -18,7 +18,7 @@ export async function handleAnswerUpdated(
     if (dataFeed.name == null && dataFeed.id !== ZERO_ADDRESS) {
       let contract = AccessControlledOffchainAggregator__factory.connect(
         event.address,
-        api
+        api,
       );
       let description = await contract.description();
       if (description) {

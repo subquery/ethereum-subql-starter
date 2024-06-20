@@ -10,7 +10,10 @@
     "outDir": "dist",
     "rootDir": "src",
     "target": "es2017",
-    "strict": true
+    "strict": true,
   },
-  "include": ["src/**/*", "node_modules/@subql/types-ethereum/dist/global.d.ts"]
+  "include": [
+    "src/**/*",
+    "node_modules/@subql/types-ethereum/dist/global.d.ts",
+  ],
 }

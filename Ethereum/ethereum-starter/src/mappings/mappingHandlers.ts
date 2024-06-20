@@ -9,7 +9,6 @@ export async function handleLog(log: TransferLog): Promise<void> {
   logger.info(`New transfer transaction log at block ${log.blockNumber}`);
   assert(log.args, "No log.args");
 
-
   const transaction = Transfer.create({
     id: log.transactionHash,
     blockHeight: BigInt(log.blockNumber),

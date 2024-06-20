@@ -25,7 +25,7 @@ import assert from "assert";
  */
 // TODO : event type ?
 export async function updateUniswapDayData(
-  event: EthereumLog
+  event: EthereumLog,
 ): Promise<UniswapDayData> {
   const timestamp = parseInt(event.block.timestamp.toString());
   const dayID = timestamp / 86400; // rounded
@@ -53,7 +53,7 @@ export async function updateUniswapDayData(
 }
 
 export async function updatePoolDayData(
-  event: EthereumLog
+  event: EthereumLog,
 ): Promise<PoolDayData> {
   const timestamp = BigNumber.from(event.block.timestamp);
   const dayID = timestamp.div(86400);
@@ -105,7 +105,7 @@ export async function updatePoolDayData(
 }
 
 export async function updatePoolHourData(
-  event: EthereumLog
+  event: EthereumLog,
 ): Promise<PoolHourData> {
   const timestamp = BigNumber.from(event.block.timestamp);
   const hourIndex = timestamp.div(3600); // get unique hour within unix history
@@ -170,7 +170,7 @@ export async function updatePoolHourData(
 
 export async function updateTokenDayData(
   token: Token,
-  event: EthereumLog
+  event: EthereumLog,
 ): Promise<TokenDayData> {
   const timestamp = BigNumber.from(event.block.timestamp);
   const dayID = timestamp.div(86400);
@@ -218,7 +218,7 @@ export async function updateTokenDayData(
 
 export async function updateTokenHourData(
   token: Token,
-  event: EthereumLog
+  event: EthereumLog,
 ): Promise<TokenHourData> {
   const timestamp = BigNumber.from(event.block.timestamp);
   const hourIndex = timestamp.div(3600); // get unique hour within unix history
@@ -267,7 +267,7 @@ export async function updateTokenHourData(
 
 export async function updateTickDayData(
   tick: Tick,
-  event: EthereumLog
+  event: EthereumLog,
 ): Promise<TickDayData> {
   const timestamp = BigNumber.from(event.block.timestamp);
   const dayID = timestamp.div(86400);

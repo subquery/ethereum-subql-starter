@@ -1,4 +1,8 @@
-import { EthereumTransaction, EthereumLog, EthereumBlock } from "@subql/types-ethereum";
+import {
+  EthereumTransaction,
+  EthereumLog,
+  EthereumBlock,
+} from "@subql/types-ethereum";
 import { BigNumber } from "@ethersproject/bignumber";
 import { HashSubmittedEvent, SubmitHash } from "../types";
 import assert from "assert";
@@ -23,9 +27,9 @@ export async function handleBlock(block: EthereumBlock): Promise<void> {
 */
 
 export async function handleLog(
-  log: EthereumLog<HashSubmittedEventArgs>
+  log: EthereumLog<HashSubmittedEventArgs>,
 ): Promise<void> {
-  assert(log.args, "No log.args" )
+  assert(log.args, "No log.args");
   const transaction = HashSubmittedEvent.create({
     id: log.transactionHash,
     submitter: log.args.submitter,
@@ -39,10 +43,9 @@ export async function handleLog(
 }
 
 export async function handleTransaction(
-  transaction: EthereumTransaction<SubmitHashCallArgs>
+  transaction: EthereumTransaction<SubmitHashCallArgs>,
 ): Promise<void> {
-
-  assert(transaction.args, "No transaction.args" )
+  assert(transaction.args, "No transaction.args");
 
   const approval = SubmitHash.create({
     id: transaction.hash,

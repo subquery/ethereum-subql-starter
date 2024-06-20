@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 1, 
+      startBlock: 1,
       options: {
         abi: "erc20",
         // This is the contract address for Wrapped Ether (WETH)
