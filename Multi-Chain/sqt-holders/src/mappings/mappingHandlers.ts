@@ -27,44 +27,34 @@ const checkGetAccount = async (
 
 const calculateCurrentBalance = async (
   account: Account,
-  changeValue: number,
   network: "BASE" | "ETHEREUM",
   blockheight: bigint
 ): Promise<Account> => {
-  const fromTransactions = await Transfer.getByAccountFromId(account.id);
-  const toTransactions = await Transfer.getByAccountToId(account.id);
+  const fromTransactions =
+    (await Transfer.getByAccountFromId(account.id)) || [];
+  const toTransactions = (await Transfer.getByAccountToId(account.id)) || [];
 
-  account.currentBaseBalance =
-    BigInt(
-      toTransactions!
-        .filter((t) => t.network === "BASE")
-        .map((t) => Number(t.value))
-        .reduce((acc, val) => acc + val, 0) -
-        fromTransactions!
-          .filter((t) => t.network === "BASE")
-          .map((t) => Number(t.value))
-          .reduce((acc, val) => acc + val, 0)
-    ) +
-      network ===
-    "BASE"
-      ? changeValue
-      : 0;
+  logger.info(
+    `There are ${(
+      fromTransactions.length + toTransactions.length
+    ).toString()} transactions relating to ${account.id}`
+  );
 
   account.currentEthBalance =
-    BigInt(
-      toTransactions!
-        .filter((t) => t.network === "ETHEREUM")
-        .map((t) => Number(t.value))
-        .reduce((acc, val) => acc + val, 0) -
-        fromTransactions!
-          .filter((t) => t.network === "ETHEREUM")
-          .map((t) => Number(t.value))
-          .reduce((acc, val) => acc + val, 0)
-    ) +
-      network ===
-    "ETHEREUM"
-      ? changeValue
-      : 0;
+    toTransactions
+      .filter((t) => t.network === "ETHEREUM")
+      .reduce((acc, val) => acc + val.value, 0) -
+    fromTransactions
+      .filter((t) => t.network === "ETHEREUM")
+      .reduce((acc, val) => acc + val.value, 0);
+
+  account.currentBaseBalance =
+    toTransactions
+      .filter((t) => t.network === "BASE")
+      .reduce((acc, val) => acc + val.value, 0) -
+    fromTransactions
+      .filter((t) => t.network === "BASE")
+      .reduce((acc, val) => acc + val.value, 0);
 
   account.currentBalance =
     account.currentBaseBalance + account.currentEthBalance;
@@ -109,13 +99,11 @@ const handleTransfer = async (
 
   fromAccount = await calculateCurrentBalance(
     fromAccount,
-    transaction.value * -1,
     network,
     transaction.blockHeight
   );
   toAccount = await calculateCurrentBalance(
-    fromAccount,
-    transaction.value,
+    toAccount,
     network,
     transaction.blockHeight
   );
