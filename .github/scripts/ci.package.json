@@ -49,8 +49,9 @@
     "BOB",
     "Bitlayer",
     "XDC Network",
-    "LayerEdge"
+    "LayerEdge",
     "Viction",
+    "Asset\\ Chain/*"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
