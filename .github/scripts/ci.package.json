@@ -50,6 +50,7 @@
     "Bitlayer",
     "XDC Network",
     "LayerEdge"
+    "Viction",
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
