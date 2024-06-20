@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "xdc-network-starter",
+  name: "xdc-starter",
   description:
     "This project can be use as a starting point for developing your new XDC Network SubQuery project",
   runner: {
@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://erpc.xinfin.network , https://rpc.xdc.org , https://earpc.xinfin.network"],
+    endpoint: [
+      "https://erpc.xinfin.network , https://rpc.xdc.org , https://earpc.xinfin.network",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 51624292, 
+      startBlock: 51624292,
       options: {
         abi: "erc20",
         // This is the contract address for EURS
