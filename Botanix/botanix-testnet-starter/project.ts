@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 4092, 
+      startBlock: 4092,
       options: {
         abi: "erc20",
         // This is the contract address for Wrapped BTC

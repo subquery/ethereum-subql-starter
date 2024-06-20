@@ -47,7 +47,7 @@ export function bigDecimalExp18(): Number {
 export async function createSpaceStation(
   address: string,
   version: bigint,
-  network: string
+  network: string,
 ): Promise<SpaceStation> {
   let sss = await SpaceStation.get(address);
   if (!sss) {
@@ -63,7 +63,7 @@ export async function createSpaceStation(
 
 export async function createStarNFT(
   address: string,
-  network: string
+  network: string,
 ): Promise<StarNFT> {
   let snf = await StarNFT.get(address);
   if (!snf) {
@@ -75,7 +75,7 @@ export async function createStarNFT(
 
 export async function createCampaign(
   cid: string,
-  network: string
+  network: string,
 ): Promise<Campaign> {
   let campaign = await Campaign.get(cid);
   if (!campaign) {

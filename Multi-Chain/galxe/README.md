@@ -94,7 +94,7 @@ You can explore the different possible queries and entities to help you with Gra
 
    ```typescript
    export async function handleEventClaimBatchPolygon(
-     event: EventClaimBatchLog
+     event: EventClaimBatchLog,
    ): Promise<void> {
      logger.info("Handling handleEventClaimBatchPolygon");
      await handleEventClaimBatch(event, "polygon");

@@ -7,7 +7,7 @@ import assert from "assert";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export async function handleFeedConfirmed(
-  event: EthereumLog<FeedConfirmedEvent["args"]>
+  event: EthereumLog<FeedConfirmedEvent["args"]>,
 ): Promise<void> {
   assert(event.args);
   // Feed Confirmed event is emitted when a feed is added, updated, or removed

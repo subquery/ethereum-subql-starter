@@ -34,11 +34,14 @@ import {
 } from "../types/contracts/Pool";
 import { Pool__factory } from "../types/contracts/factories/Pool__factory";
 import assert from "assert";
-import {InitializeLog, MintLog, SwapLog, SwapTransaction} from "../types/abi-interfaces/Pool";
+import {
+  InitializeLog,
+  MintLog,
+  SwapLog,
+  SwapTransaction,
+} from "../types/abi-interfaces/Pool";
 
-export async function handleInitialize(
-  event: InitializeLog
-): Promise<void> {
+export async function handleInitialize(event: InitializeLog): Promise<void> {
   const [pool, ethPrice] = await Promise.all([
     Pool.get(event.address),
     getEthPriceInUSD(),
@@ -76,16 +79,13 @@ export async function handleInitialize(
   // update ETH price now that prices could have changed
 }
 
-export async function handleMint(
-  event: MintLog
-): Promise<void> {
-
+export async function handleMint(event: MintLog): Promise<void> {
   const poolAddress = event.address;
   const pool = await Pool.get(poolAddress);
 
   if (pool === undefined || pool === null) {
     logger.warn(
-      `Could not get pool address ${poolAddress} for mint at transaction ${event.transactionHash}, log id ${event.logIndex}`
+      `Could not get pool address ${poolAddress} for mint at transaction ${event.transactionHash}, log id ${event.logIndex}`,
     );
     return;
   }
@@ -228,7 +228,7 @@ export async function handleMint(
 }
 
 export async function handleBurn(
-  event: EthereumLog<BurnEvent["args"]>
+  event: EthereumLog<BurnEvent["args"]>,
 ): Promise<void> {
   const poolAddress = event.address;
   const pool = await Pool.get(poolAddress);
@@ -354,9 +354,7 @@ export async function handleBurn(
   ]);
 }
 
-export async function handleSwap(
-  event: SwapLog
-): Promise<void> {
+export async function handleSwap(event: SwapLog): Promise<void> {
   const poolContract = Pool__factory.connect(event.address, api);
   const [
     bundle,
@@ -376,7 +374,6 @@ export async function handleSwap(
     poolContract.feeGrowthGlobal1X128(),
   ]);
   assert(pool);
-
 
   // hot fix for bad pricing
   if (pool.id == "0x9663f2ca0454accad3e094448ea6f77443880454") {
@@ -421,7 +418,7 @@ export async function handleSwap(
   ).div(BigNumber.from("2"));
   const amountTotalETHTracked = safeDiv(
     amountTotalUSDTracked,
-    BigNumber.from(bundle.ethPriceUSD)
+    BigNumber.from(bundle.ethPriceUSD),
   );
   const amountTotalUSDUntracked = amount0USD
     .add(amount1USD)
@@ -648,7 +645,7 @@ export async function handleSwap(
     // collect
   } else if (newTick.gt(oldTick)) {
     const firstInitialized = BigNumber.from(oldTick).add(
-      BigNumber.from(tickSpacing).add(modulo)
+      BigNumber.from(tickSpacing).add(modulo),
     );
     for (let i = firstInitialized; i.lte(newTick); i = i.add(tickSpacing)) {
       await loadTickUpdateFeeVarsAndSave(i.toString(), event);
@@ -662,7 +659,7 @@ export async function handleSwap(
 }
 
 export async function handleFlash(
-  event: EthereumLog<FlashEvent["args"]>
+  event: EthereumLog<FlashEvent["args"]>,
 ): Promise<void> {
   // update fee growth
   const pool = await Pool.get(event.address);
@@ -680,7 +677,7 @@ export async function handleFlash(
 
 async function updateTickFeeVarsAndSave(
   tick: Tick,
-  event: EthereumLog
+  event: EthereumLog,
 ): Promise<void> {
   const poolAddress = event.address;
   // not all ticks are initialized so obtaining null is expected behavior
@@ -695,7 +692,7 @@ async function updateTickFeeVarsAndSave(
 
 async function loadTickUpdateFeeVarsAndSave(
   tickId: string,
-  event: EthereumLog
+  event: EthereumLog,
 ): Promise<void> {
   const poolAddress = event.address;
   const tick = await Tick.get(`${poolAddress}#${tickId.toString()}`);

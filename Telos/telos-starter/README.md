@@ -93,7 +93,6 @@ Expected output:
 }
 ```
 
-
 You can explore the different possible queries and entities to help you with GraphQL using the documentation draw on the right.
 
 ## Publish your project

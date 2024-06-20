@@ -38,7 +38,11 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://base.rpc.subquery.network/public", "https://mainnet.base.org/", "https://rpc.notadegen.com/base"],
+    endpoint: [
+      "https://base.rpc.subquery.network/public",
+      "https://mainnet.base.org/",
+      "https://rpc.notadegen.com/base",
+    ],
   },
   dataSources: [
     {

@@ -20,7 +20,7 @@ import {
   NewTTL,
 } from "../types";
 import assert from "assert";
-import {NewOwnerLog, NewResolverLog} from "../types/abi-interfaces/Registry";
+import { NewOwnerLog, NewResolverLog } from "../types/abi-interfaces/Registry";
 
 function createDomain(node: string, timestamp: number = 0): Domain {
   let domain = Domain.create({
@@ -35,7 +35,7 @@ function createDomain(node: string, timestamp: number = 0): Domain {
 
 async function getDomain(
   node: string,
-  timestamp: number = 0
+  timestamp: number = 0,
 ): Promise<Domain | undefined> {
   let domain = await Domain.get(node);
   const emptyAddressAccount = await Account.get(EMPTY_ADDRESS);
@@ -51,8 +51,10 @@ async function getDomain(
 }
 
 function makeSubnode(event: NewOwnerLog): string {
-  if(!event.args){
-    throw new Error(`NewOwnerLog ${event.blockNumber} - ${event.logIndex} args not exist`)
+  if (!event.args) {
+    throw new Error(
+      `NewOwnerLog ${event.blockNumber} - ${event.logIndex} args not exist`,
+    );
   }
   return keccak256(concat(event.args.node, event.args.label));
 }
@@ -87,12 +89,11 @@ async function saveDomain(domain: Domain): Promise<void> {
 async function _handleNewOwner(
   event: NewOwnerLog,
   isMigrated: boolean,
-  subnode?: string
+  subnode?: string,
 ): Promise<void> {
-  if(!event.args){
-    return
+  if (!event.args) {
+    return;
   }
-
 
   let account = new Account(event.args.owner);
   // await account.save()
@@ -198,11 +199,9 @@ export async function handleTransfer(event: TransferEvent): Promise<void> {
 }
 
 // Handler for NewResolver events
-export async function handleNewResolver(
-  event: NewResolverLog
-): Promise<void> {
-  if(!event.args){
-    return
+export async function handleNewResolver(event: NewResolverLog): Promise<void> {
+  if (!event.args) {
+    return;
   }
   let id = event.args.resolver.concat("-").concat(event.args.node);
 
@@ -262,7 +261,7 @@ export async function handleNewOwner(event: NewOwnerLog): Promise<void> {
 }
 
 export async function handleNewOwnerOldRegistry(
-  event: NewOwnerLog
+  event: NewOwnerLog,
 ): Promise<void> {
   let subnode = makeSubnode(event);
   const start1 = Date.now();
@@ -276,10 +275,10 @@ export async function handleNewOwnerOldRegistry(
 }
 
 export async function handleNewResolverOldRegistry(
-  event: NewResolverLog
+  event: NewResolverLog,
 ): Promise<void> {
-  if(!event.args){
-    return
+  if (!event.args) {
+    return;
   }
   let node = event.args.node;
   let domain = await getDomain(node, Number(event.block.timestamp.toString()));
@@ -288,7 +287,7 @@ export async function handleNewResolverOldRegistry(
   }
 }
 export async function handleNewTTLOldRegistry(
-  event: NewTTLEvent
+  event: NewTTLEvent,
 ): Promise<void> {
   let domain = await getDomain(event.args.node);
   if (domain?.isMigrated == false) {
@@ -297,7 +296,7 @@ export async function handleNewTTLOldRegistry(
 }
 
 export async function handleTransferOldRegistry(
-  event: TransferEvent
+  event: TransferEvent,
 ): Promise<void> {
   let domain = await getDomain(event.args.node);
   if (domain?.isMigrated == false) {

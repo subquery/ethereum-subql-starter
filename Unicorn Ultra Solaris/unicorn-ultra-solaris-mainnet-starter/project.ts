@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 7249302, 
+      startBlock: 7249302,
       options: {
         abi: "erc20",
         // This is the contract address for U2DPNToken

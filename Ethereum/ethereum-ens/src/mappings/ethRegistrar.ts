@@ -30,24 +30,24 @@ import {
 } from "../types/models";
 import { keccak256 } from "@ethersproject/keccak256";
 import assert from "assert";
-import {NameRegisteredLog} from "../types/abi-interfaces/EthRegistrarController";
+import { NameRegisteredLog } from "../types/abi-interfaces/EthRegistrarController";
 
 var rootNode = byteArrayFromHex(
-  "93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
+  "93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
 );
 
 export async function handleNameRegistered(
-  event: NameRegisteredLog
+  event: NameRegisteredLog,
 ): Promise<void> {
-  if(!event.args){
-    return
+  if (!event.args) {
+    return;
   }
   let account = new Account(event.args.owner);
   await account.save();
 
   let label = uint256ToByteArray(event.args.label);
   let domain = await Domain.get(
-    keccak256(concat(rootNode.toString(), label.toString()))
+    keccak256(concat(rootNode.toString(), label.toString())),
   );
 
   assert(domain, "can't find domain");
@@ -83,32 +83,32 @@ export async function handleNameRegistered(
 }
 
 export async function handleNameRegisteredByControllerOld(
-  event: ControllerNameRegisteredEventOld
+  event: ControllerNameRegisteredEventOld,
 ): Promise<void> {
   await setNamePreimage(
     event.args.name,
     event.args.label,
-    event.args.cost.toBigInt()
+    event.args.cost.toBigInt(),
   );
 }
 
 export async function handleNameRegisteredByController(
-  event: ControllerNameRegisteredEvent
+  event: ControllerNameRegisteredEvent,
 ): Promise<void> {
   await setNamePreimage(
     event.args.name,
     event.args.label,
-    event.args.baseCost.add(event.args.premium).toBigInt()
+    event.args.baseCost.add(event.args.premium).toBigInt(),
   );
 }
 
 export async function handleNameRenewedByController(
-  event: ControllerNameRenewedEvent
+  event: ControllerNameRenewedEvent,
 ): Promise<void> {
   await setNamePreimage(
     event.args.name,
     event.args.label,
-    event.args.cost.toBigInt()
+    event.args.cost.toBigInt(),
   );
 }
 
@@ -121,7 +121,7 @@ function checkValidLabel(name: string): boolean {
     } else if (c === 46) {
       logger.warn(
         "Invalid label '{}' contained separator char '.'. Skipping.",
-        [name]
+        [name],
       );
       return false;
     }
@@ -133,7 +133,7 @@ function checkValidLabel(name: string): boolean {
 async function setNamePreimage(
   name: string,
   label: string,
-  cost: bigint
+  cost: bigint,
 ): Promise<void> {
   if (!checkValidLabel(name)) {
     return;
@@ -154,7 +154,7 @@ async function setNamePreimage(
 }
 
 export async function handleNameRenewed(
-  event: NameRenewedEvent
+  event: NameRenewedEvent,
 ): Promise<void> {
   let label = uint256ToByteArray(event.args.id.toHexString());
   // let label = event.args.id.toHexString()
@@ -175,7 +175,7 @@ export async function handleNameRenewed(
 }
 
 export async function handleNameTransferred(
-  event: TransferEvent
+  event: TransferEvent,
 ): Promise<void> {
   let account = new Account(event.args.to);
   await account.save();

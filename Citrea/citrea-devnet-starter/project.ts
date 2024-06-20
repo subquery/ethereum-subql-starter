@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 183693, 
+      startBlock: 183693,
       options: {
         abi: "erc20",
         // This is the contract address for ESADOSHI

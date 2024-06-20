@@ -39,7 +39,7 @@ export function isNullEthValue(value: string): boolean {
 
 export function convertTokenToDecimal(
   tokenAmount: BigNumber,
-  exchangeDecimals: bigint
+  exchangeDecimals: bigint,
 ): BigNumber {
   if (Number(exchangeDecimals) == 0) {
     return tokenAmount;
@@ -47,9 +47,7 @@ export function convertTokenToDecimal(
   return tokenAmount.div(exponentToBigDecimal(exchangeDecimals));
 }
 
-export async function loadTransaction(
-  log: EthereumLog
-): Promise<Transaction> {
+export async function loadTransaction(log: EthereumLog): Promise<Transaction> {
   let transaction = await Transaction.get(log.transactionHash);
   if (transaction === undefined) {
     transaction = Transaction.create({

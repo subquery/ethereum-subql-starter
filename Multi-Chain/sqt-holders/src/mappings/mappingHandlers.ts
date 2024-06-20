@@ -6,7 +6,7 @@ import { EthereumBlock } from "@subql/types-ethereum";
 const checkGetAccount = async (
   address: string,
   blockheight: number,
-  date: bigint
+  date: bigint,
 ): Promise<Account> => {
   let account = await Account.get(address.toLowerCase());
   if (!account) {
@@ -27,44 +27,34 @@ const checkGetAccount = async (
 
 const calculateCurrentBalance = async (
   account: Account,
-  changeValue: number,
   network: "BASE" | "ETHEREUM",
-  blockheight: bigint
+  blockheight: bigint,
 ): Promise<Account> => {
-  const fromTransactions = await Transfer.getByAccountFromId(account.id);
-  const toTransactions = await Transfer.getByAccountToId(account.id);
+  const fromTransactions =
+    (await Transfer.getByAccountFromId(account.id)) || [];
+  const toTransactions = (await Transfer.getByAccountToId(account.id)) || [];
 
-  account.currentBaseBalance =
-    BigInt(
-      toTransactions!
-        .filter((t) => t.network === "BASE")
-        .map((t) => Number(t.value))
-        .reduce((acc, val) => acc + val, 0) -
-        fromTransactions!
-          .filter((t) => t.network === "BASE")
-          .map((t) => Number(t.value))
-          .reduce((acc, val) => acc + val, 0)
-    ) +
-      network ===
-    "BASE"
-      ? changeValue
-      : 0;
+  logger.info(
+    `There are ${(
+      fromTransactions.length + toTransactions.length
+    ).toString()} transactions relating to ${account.id}`,
+  );
 
   account.currentEthBalance =
-    BigInt(
-      toTransactions!
-        .filter((t) => t.network === "ETHEREUM")
-        .map((t) => Number(t.value))
-        .reduce((acc, val) => acc + val, 0) -
-        fromTransactions!
-          .filter((t) => t.network === "ETHEREUM")
-          .map((t) => Number(t.value))
-          .reduce((acc, val) => acc + val, 0)
-    ) +
-      network ===
-    "ETHEREUM"
-      ? changeValue
-      : 0;
+    toTransactions
+      .filter((t) => t.network === "ETHEREUM")
+      .reduce((acc, val) => acc + val.value, 0) -
+    fromTransactions
+      .filter((t) => t.network === "ETHEREUM")
+      .reduce((acc, val) => acc + val.value, 0);
+
+  account.currentBaseBalance =
+    toTransactions
+      .filter((t) => t.network === "BASE")
+      .reduce((acc, val) => acc + val.value, 0) -
+    fromTransactions
+      .filter((t) => t.network === "BASE")
+      .reduce((acc, val) => acc + val.value, 0);
 
   account.currentBalance =
     account.currentBaseBalance + account.currentEthBalance;
@@ -76,22 +66,22 @@ const calculateCurrentBalance = async (
 
 const handleTransfer = async (
   log: TransferLog,
-  network: "BASE" | "ETHEREUM"
+  network: "BASE" | "ETHEREUM",
 ): Promise<void> => {
   logger.info(
-    `New transfer transaction log at block ${log.blockNumber} with ${log.transactionHash}`
+    `New transfer transaction log at block ${log.blockNumber} with ${log.transactionHash}`,
   );
   assert(log.args, "No log.args");
 
   let fromAccount = await checkGetAccount(
     log.args.from,
     log.blockNumber,
-    log.block.timestamp
+    log.block.timestamp,
   );
   let toAccount = await checkGetAccount(
     log.args.to,
     log.blockNumber,
-    log.block.timestamp
+    log.block.timestamp,
   );
 
   const transaction = Transfer.create({
@@ -109,15 +99,13 @@ const handleTransfer = async (
 
   fromAccount = await calculateCurrentBalance(
     fromAccount,
-    transaction.value * -1,
     network,
-    transaction.blockHeight
+    transaction.blockHeight,
   );
   toAccount = await calculateCurrentBalance(
-    fromAccount,
-    transaction.value,
+    toAccount,
     network,
-    transaction.blockHeight
+    transaction.blockHeight,
   );
 
   await Promise.all([fromAccount.save(), toAccount.save()]);

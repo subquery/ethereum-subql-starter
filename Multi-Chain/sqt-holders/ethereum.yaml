@@ -5,15 +5,15 @@ name: ethereum-starter
 description: This project indexes SQT holders on Ethereum
 runner:
   node:
-    name: '@subql/node-ethereum'
-    version: '>=3.0.0'
+    name: "@subql/node-ethereum"
+    version: ">=3.0.0"
   query:
-    name: '@subql/query'
-    version: '*'
+    name: "@subql/query"
+    version: "*"
 schema:
   file: ./schema.graphql
 network:
-  chainId: '1'
+  chainId: "1"
   endpoint:
     - https://ethereum.rpc.subquery.network/public
 dataSources:
@@ -21,7 +21,7 @@ dataSources:
     startBlock: 19217803
     options:
       abi: erc20
-      address: '0x09395a2A58DB45db0da254c7EAa5AC469D8bDc85'
+      address: "0x09395a2A58DB45db0da254c7EAa5AC469D8bDc85"
     assets:
       erc20:
         file: ./abis/erc20.abi.json

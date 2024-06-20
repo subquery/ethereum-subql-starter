@@ -23,21 +23,21 @@ import assert = require("assert");
 
 async function getPosition(
   event: EthereumLog,
-  tokenId: BigNumber
+  tokenId: BigNumber,
 ): Promise<Position | null> {
   let position = await Position.get(tokenId.toString());
 
   if (position === undefined) {
     const contract = NonfungiblePositionManager__factory.connect(
       event.address,
-      api
+      api,
     );
     let positionResult;
     try {
       positionResult = await contract.positions(tokenId);
     } catch (e) {
       logger.warn(
-        `Contract ${event.address}, could not get position with tokenId ${tokenId}`
+        `Contract ${event.address}, could not get position with tokenId ${tokenId}`,
       );
       return null;
     }
@@ -46,7 +46,7 @@ async function getPosition(
       factoryContract.getPool(
         positionResult[2],
         positionResult[3],
-        positionResult[4]
+        positionResult[4],
       ),
       loadTransaction(event),
     ]);
@@ -82,11 +82,11 @@ async function getPosition(
 async function updateFeeVars(
   position: Position,
   event: EthereumLog,
-  tokenId: BigNumber
+  tokenId: BigNumber,
 ): Promise<Position> {
   const positionManagerContract = NonfungiblePositionManager__factory.connect(
     event.address,
-    api
+    api,
   );
   const positionResult = await positionManagerContract.positions(tokenId);
   position.feeGrowthInside0LastX128 = positionResult[8].toBigInt();
@@ -96,7 +96,7 @@ async function updateFeeVars(
 
 async function savePositionSnapshot(
   position: Position,
-  event: EthereumLog
+  event: EthereumLog,
 ): Promise<void> {
   const positionSnapshot = PositionSnapshot.create({
     id: `${position.id}#${event.blockNumber.toString()}`,
@@ -120,7 +120,7 @@ async function savePositionSnapshot(
 }
 
 export async function handleIncreaseLiquidity(
-  event: EthereumLog<IncreaseLiquidityEvent["args"]>
+  event: EthereumLog<IncreaseLiquidityEvent["args"]>,
 ): Promise<void> {
   // temp fix
   if (BigNumber.from(event.blockNumber).eq(14317993)) {
@@ -170,7 +170,7 @@ export async function handleIncreaseLiquidity(
 }
 
 export async function handleDecreaseLiquidity(
-  event: EthereumLog<DecreaseLiquidityEvent["args"]>
+  event: EthereumLog<DecreaseLiquidityEvent["args"]>,
 ): Promise<void> {
   // temp fix
   if (event.blockNumber == 14317993) {
@@ -210,7 +210,7 @@ export async function handleDecreaseLiquidity(
 }
 
 export async function handleCollect(
-  event: EthereumLog<CollectEvent["args"]>
+  event: EthereumLog<CollectEvent["args"]>,
 ): Promise<void> {
   assert(event.args);
   let position = await getPosition(event, event.args.tokenId);
@@ -238,7 +238,7 @@ export async function handleCollect(
 }
 
 export async function handleTransfer(
-  event: EthereumLog<TransferEvent["args"]>
+  event: EthereumLog<TransferEvent["args"]>,
 ): Promise<void> {
   assert(event.args);
   const position = await getPosition(event, event.args.tokenId);

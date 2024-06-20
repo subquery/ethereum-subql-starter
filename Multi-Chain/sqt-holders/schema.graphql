@@ -14,7 +14,7 @@ type Account @entity {
 
 type Transfer @entity {
   id: ID! # Transaction hash
-  network: String! # BASE || ETHEREUM 
+  network: String! # BASE || ETHEREUM
   accountFrom: Account
   accountTo: Account
   blockHeight: BigInt!

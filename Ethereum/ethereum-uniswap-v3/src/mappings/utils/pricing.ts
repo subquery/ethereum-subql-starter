@@ -52,13 +52,13 @@ const Q192 = 2 ** 192;
 export function sqrtPriceX96ToTokenPrices(
   sqrtPriceX96: bigint,
   token0: Token,
-  token1: Token
+  token1: Token,
 ): number[] {
   const num = sqrtPriceX96 * sqrtPriceX96;
   const denom = BigInt(Q192);
   const divide = num / denom;
   const decimals = BigInt(
-    Math.abs(Number(token1.decimals) - Number(token0.decimals))
+    Math.abs(Number(token1.decimals) - Number(token0.decimals)),
   );
   const price1 = Number(formatUnits(divide, decimals));
 
@@ -117,7 +117,7 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
           // get the derived ETH in pool
           assert(token1);
           const ethLocked = BigNumber.from(pool.totalValueLockedToken1).mul(
-            token1.derivedETH
+            token1.derivedETH,
           );
           if (
             ethLocked.gt(largestLiquidityETH) &&
@@ -126,7 +126,7 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
             largestLiquidityETH = ethLocked;
             // token1 per our token * Eth per token1
             priceSoFar = BigNumber.from(pool.token1Price).mul(
-              token1.derivedETH
+              token1.derivedETH,
             );
           }
         }
@@ -135,7 +135,7 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
           assert(token0);
           // get the derived ETH in pool
           const ethLocked = BigNumber.from(pool.totalValueLockedToken0).mul(
-            token0.derivedETH
+            token0.derivedETH,
           );
           if (
             ethLocked.gt(largestLiquidityETH) &&
@@ -144,7 +144,7 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
             largestLiquidityETH = ethLocked;
             // token0 per our token * ETH per token0
             priceSoFar = BigNumber.from(pool.token0Price).mul(
-              token0.derivedETH
+              token0.derivedETH,
             );
           }
         }
@@ -164,7 +164,7 @@ export async function getTrackedAmountUSD(
   tokenAmount0: BigNumber,
   token0: Token,
   tokenAmount1: BigNumber,
-  token1: Token
+  token1: Token,
 ): Promise<BigNumber> {
   const bundle = await Bundle.get("1");
   assert(bundle);

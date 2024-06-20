@@ -44,8 +44,8 @@ export async function handleTokenMint(tx: MintTokenTransaction): Promise<void> {
   // This searches by the function fragment signature to get the right log
   const eventTokenLog = tx.logs?.find((log) =>
     log.topics.includes(
-      "0x4b3711cd7ece062b0828c1b6e08d814a72d4c003383a016c833cbb1b45956e34"
-    )
+      "0x4b3711cd7ece062b0828c1b6e08d814a72d4c003383a016c833cbb1b45956e34",
+    ),
   ) as EventTokenLog;
 
   if (eventTokenLog) {
