@@ -49,8 +49,9 @@
     "BOB",
     "Bitlayer",
     "XDC Network",
-    "LayerEdge"
+    "LayerEdge",
     "Viction",
+    "Zetachain/*"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
