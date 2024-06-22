@@ -5,6 +5,7 @@
     "Altlayer/*",
     "Arbitrum/*",
     "Artela/*",
+    "Asset\\ Chain/*",
     "Astar/*",
     "Aurora/*",
     "Avalanche/*",
@@ -67,10 +68,9 @@
     "Viction/*",
     "XDC/*",
     "XLayer/*",
-    "Zksync/*",
     "Zetachain/*",
-    "Asset\\ Chain/*",
-    "Zora/*",
+    "Zksync/*",
+    "Zora/*"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
