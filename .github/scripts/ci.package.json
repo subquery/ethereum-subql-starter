@@ -68,7 +68,8 @@
     "XDC/*",
     "XLayer/*",
     "Zksync/*",
-    "Zora/*"
+    "Asset\\ Chain/*",
+    "Zora/*",
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
