@@ -176,9 +176,7 @@ const project: EthereumProject = {
             kind: EthereumHandlerKind.Event,
             handler: "handleBurn",
             filter: {
-              topics: [
-                "Burn(address,int24,int24,uint128,uint256,uint256)",
-              ],
+              topics: ["Burn(address,int24,int24,uint128,uint256,uint256)"],
             },
           },
           {
