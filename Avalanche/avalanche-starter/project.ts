@@ -64,7 +64,7 @@ const project: EthereumProject = {
                * function: '0x095ea7b3'
                * function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
                */
-              function: "deposit(uint256 amount)",
+              function: "approve(address spender, uint256 amount)",
             },
           },
           {

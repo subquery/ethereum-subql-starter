@@ -50,7 +50,7 @@ const project: EthereumProject = {
         // Crabada Legacy Contract https://snowtrace.io/address/0xCB7569a6Fe3843c32512d4F3AB35eAE65bd1D50c
         address: "0xCB7569a6Fe3843c32512d4F3AB35eAE65bd1D50c",
       },
-      assets: new Map([["erc20", { file: "./abis/crabada.json" }]]),
+      assets: new Map([["crabada", { file: "./abis/crabada.json" }]]),
       mapping: {
         file: "./dist/index.js",
         handlers: [

@@ -179,9 +179,7 @@ const project: EthereumProject = {
             kind: EthereumHandlerKind.Event,
             handler: "handleBurn",
             filter: {
-              topics: [
-                "Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)",
-              ],
+              topics: ["Burn(address,int24,int24,uint128,uint256,uint256)"],
             },
           },
           {
@@ -189,7 +187,7 @@ const project: EthereumProject = {
             handler: "handleFlash",
             filter: {
               topics: [
-                "Flash(indexed address,indexed address,uint256,uint256,uint256,uint256)",
+                "Flash(address,address,uint256,uint256,uint256,uint256)",
               ],
             },
           },

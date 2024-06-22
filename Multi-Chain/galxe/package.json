@@ -37,9 +37,9 @@
   },
   "devDependencies": {
     "@subql/cli": "latest",
-    "@subql/node-ethereum": "^3.1.0",
+    "@subql/node-ethereum": "latest",
     "@subql/testing": "latest",
-    "@subql/types": "^3.2.0",
+    "@subql/types": "latest",
     "ethers": "^5.7.2",
     "typescript": "latest",
     "mustache": "^4.2.0"

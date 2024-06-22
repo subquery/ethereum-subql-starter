@@ -1,8 +1,8 @@
-# SubQuery - Example Project for Base Goerli
+# SubQuery - Example Project for Asset Chain Testnet
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all the drips from the [USDC faucet contract](https://goerli.etherscan.io/address/0x298e0B0a38fF8B99bf1a3b697B0efB2195cfE47D) and calculates the total amount of USDC faucet dripped per day on Base's Goerli Network**
+**This SubQuery project indexes all transfers and approval events for the WRWA (`0x0FA7527F1050bb9F9736828B689c652AB2c483ef`) on Asset Chain Testnet**
 
 ## Start
 
@@ -16,7 +16,7 @@ Don't forget to install dependencies with `npm install` or `yarn install`!
 
 Although this is a working example SubQuery project, you can edit the SubQuery project by changing the following files:
 
-- The project manifest in `project.ts` defines the key project configuration and mapping handler filters
+- The project manifest in `project.yaml` defines the key project configuration and mapping handler filters
 - The GraphQL Schema (`schema.graphql`) defines the shape of the resulting data that you are using SubQuery to index
 - The Mapping functions in `src/mappings/` directory are typescript functions that handle transformation logic
 
@@ -39,18 +39,28 @@ You can observe the three services start, and once all are running (it may take 
 For this project, you can try to query with the following GraphQL code to get a taste of how it works.
 
 ```graphql
-query {
-  drips(first: 10, orderBy: DATE_DESC) {
-    nodes {
-      id
-      value
-      date
+{
+  query {
+    transfers(first: 5, orderBy: VALUE_DESC) {
+      totalCount
+      nodes {
+        id
+        blockHeight
+        from
+        to
+        value
+        contractAddress
+      }
     }
   }
-  dailyUSDCDrips(orderBy: ID_DESC) {
+  approvals(first: 5, orderBy: BLOCK_HEIGHT_DESC) {
     nodes {
       id
-      totalValue
+      blockHeight
+      owner
+      spender
+      value
+      contractAddress
     }
   }
 }

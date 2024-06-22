@@ -8,9 +8,9 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "base-goerli-starter",
+  name: "asset-chain-testnet-starter",
   description:
-    "This project can be use as a starting point for developing your new Base Goerli SubQuery project",
+    "This project can be use as a starting point for developing your new Asset Chain Testnet SubQuery project",
   runner: {
     node: {
       name: "@subql/node-ethereum",
@@ -26,10 +26,10 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     *  chainId is the EVM Chain ID, for Base Goerli this is 84531
-     *  https://chainlist.org/chain/84531
+     * chainId is the EVM Chain ID, for Asset Chain Testnet this is 42421
+     * https://chainlist.org/chain/42421
      */
-    chainId: "84531",
+    chainId: "42421",
     /**
      * These endpoint(s) should be public non-pruned archive node
      * We recommend providing more than one endpoint for improved reliability, performance, and uptime
@@ -38,25 +38,23 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://goerli.base.org"],
+    endpoint: ["https://enugu-rpc.assetchain.org"],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 3060969,
-
+      startBlock: 2330,
       options: {
-        // Must be a key of assets
         abi: "erc20",
-        // This is the block that the contract was deployed on https://goerli.basescan.org/tx/0x3901609b27f80e44b4530c4beaf8484635c088a8e24524e02d7b2571d4f40840
-        address: "0x2e9f75df8839ff192da27e977cd154fd1eae03cf",
+        // This is the contract address for Tether USD (USDT)
+        address: "0x0FA7527F1050bb9F9736828B689c652AB2c483ef",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
       mapping: {
         file: "./dist/index.js",
         handlers: [
           {
-            kind: EthereumHandlerKind.Call,
+            kind: EthereumHandlerKind.Call, // We use ethereum handlers since Asset Chain Testnet is EVM-compatible
             handler: "handleTransaction",
             filter: {
               /**
@@ -64,7 +62,7 @@ const project: EthereumProject = {
                * function: '0x095ea7b3'
                * function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
                */
-              function: "approve(address spender, uint256 rawAmount)",
+              function: "approve(address spender, uint256 amount)",
             },
           },
           {

@@ -49,5 +49,5 @@ templates:
           handler: handleMaticSignMsg
           filter:
             topics:
-              - SignMsg(indexed bytes32)
+              - SignMsg(bytes32)
 repository: https://github.com/subquery/ethereum-subql-starter

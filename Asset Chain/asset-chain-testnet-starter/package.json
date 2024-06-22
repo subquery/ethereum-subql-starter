@@ -1,7 +1,7 @@
 {
-  "name": "base-goerli-starter",
+  "name": "asset-chain-testnet-starter",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Base Goerli SubQuery project",
+  "description": "This project can be use as a starting point for developing your new Asset Chain Testnet SubQuery project",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
@@ -32,5 +32,6 @@
     "@subql/node-ethereum": "latest",
     "ethers": "^5.7.2",
     "typescript": "latest"
-  }
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }

@@ -159,7 +159,7 @@ const project: EthereumProject = {
             handler: "handleSwap",
             filter: {
               topics: [
-                "Swap (address sender, address recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+                "Swap(address,address,int256,int256,uint160,uint128,int24,uint128,uint128)",
               ],
             },
           },
@@ -176,9 +176,7 @@ const project: EthereumProject = {
             kind: EthereumHandlerKind.Event,
             handler: "handleBurn",
             filter: {
-              topics: [
-                "Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)",
-              ],
+              topics: ["Burn(address,int24,int24,uint128,uint256,uint256)"],
             },
           },
           {
@@ -186,7 +184,7 @@ const project: EthereumProject = {
             handler: "handleFlash",
             filter: {
               topics: [
-                "Flash(indexed address,indexed address,uint256,uint256,uint256,uint256)",
+                "Flash(address,address,uint256,uint256,uint256,uint256)",
               ],
             },
           },
