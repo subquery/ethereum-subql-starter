@@ -70,7 +70,8 @@
     "XLayer/*",
     "Zetachain/*",
     "Zksync/*",
-    "Zora/*"
+    "Zora/*",
+    "Optopia"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
