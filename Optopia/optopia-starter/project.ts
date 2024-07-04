@@ -38,16 +38,16 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://rpc-mainnet.optopia.ai,  https://rpc-mainnet-2.optopia.ai"],
+    endpoint: ["https://rpc-mainnet.optopia.ai, https://rpc-mainnet-2.optopia.ai"],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 2113893, 
+      startBlock: 515707, 
       options: {
         abi: "erc20",
-        // This is the contract address for $OPAI(Ethereum)  0xF8e57AC2730D3088D98B79209739b0D5Ba085a03  $OPAI(Optopia)  0xF4C3a4d9568672FB4A8174EfD29dDAB6255E8729(coming soon)  $WETH  0x4200000000000000000000000000000000000006  $USDT  0x05D032ac25d322df992303dCa074EE7392C117b9  $USDC  0xb62F35B9546A908d11c5803ecBBA735AbC3E3eaE
-        address: "L1StandardBridgeProxy  0x1adE86B9cc8a50Db747b7aaC32E8527d42c71fC1  L1ERC721BridgeProxy  0xAFc9946b25e3e93208b7E2D477680C5B6e2952be  L1CrossDomainMessengerProxy  0x03D5bc58E7b7E13ba785F67AFA2d2fC49cB2BdF3  OptimismPortalProxy  0x39A90926306E11497EC5FE1C459910258B620edD  OptimismMintableERC20FactoryProxy  0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c  L2OutputOracleProxy  0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5  SystemConfigProxy  0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9  ProxyAdmin  0x161aF05fA6BdA1c6E7Ee12839d470931bA796948  AddressManager  0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C  ProxyAdminOwner  0x2C73A1610EE822a8C2C21eddd455e725A3334c8C  SystemConfigOwner  0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE  Guardian  0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE  Challenger  0xd01De08Cc118Cc1a1b39c54c8b4ff02A8ADE63eE",
+        // This is the contract address for WETH  
+        address: "0x4200000000000000000000000000000000000006",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
       mapping: {
