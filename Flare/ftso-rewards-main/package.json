@@ -1,7 +1,7 @@
 {
-  "name": "flare-starter",
+  "name": "flare-ftso-rewards",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new Flare SubQuery project",
+  "description": "This project can be use as a starting point for developing your new Flare SubQuery project. It indexes all rewards from the Flare FTSO Reward Manager",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
@@ -21,14 +21,15 @@
   "author": "SubQuery Team",
   "license": "MIT",
   "dependencies": {
-    "@subql/common": "latest",
     "@subql/types-ethereum": "latest",
-    "@subql/validator": "latest",
+    "abab": "^2.0.6",
     "assert": "^2.0.0"
   },
   "devDependencies": {
-    "@subql/cli": "latest",
+    "@subql/cli": "^5.1.0",
+    "@subql/node-ethereum": "latest",
     "@subql/testing": "latest",
-    "typescript": "^5.2.2"
+    "ethers": "^5.7.2",
+    "typescript": "latest"
   }
 }
