@@ -8,9 +8,10 @@ export async function handleLog(
 ): Promise<void> {
   assert(event.args, "Event args are missing")
 
-  // ensure that our account entities exist
+  // Ensure that our account entities exist
   const whoClaimed = await Address.get(event.args.whoClaimed.toLowerCase());
   if (!whoClaimed) {
+    // Does not exist, create new
     await Address.create({
       id: event.args.whoClaimed.toLowerCase(),
     }).save();
@@ -18,6 +19,7 @@ export async function handleLog(
 
   const whoRecieved = await Address.get(event.args.sentTo.toLowerCase());
   if (!whoRecieved) {
+    // Does not exist, create new
     await Address.create({
       id: event.args.sentTo.toLowerCase(),
     }).save();
