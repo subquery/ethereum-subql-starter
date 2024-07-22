@@ -71,7 +71,8 @@
     "Zetachain/*",
     "Zksync/*",
     "Zora/*",
-    "Optopia"
+    "Optopia",
+    "Kroma"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
