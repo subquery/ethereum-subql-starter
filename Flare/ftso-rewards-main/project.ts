@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "flare-starter",
+  name: "flare-ftso-rewards-starter",
   description:
     "This project can be use as a starting point for developing your new Flare SubQuery project",
   runner: {
@@ -26,10 +26,10 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for Flare this is 14
-     * https://chainlist.org/chain/14
+     * chainId is the EVM Chain ID, for Flare Songbird this is 19
+     * https://chainlist.org/chain/19
      */
-    chainId: "14",
+    chainId: "19",
     /**
      * This endpoint must be a public non-pruned archive node
      * Public nodes may be rate limited, which can affect indexing speed
@@ -37,36 +37,23 @@ const project: EthereumProject = {
      * You can get them from OnFinality for free https://app.onfinality.io
      * https://documentation.onfinality.io/support/the-enhanced-api-service
      */
-    endpoint: ["https://flare-api.flare.network/ext/C/rpc"],
-    dictionary: "https://dict-tyk.subquery.network/query/flare-mainnet",
+    endpoint: ["https://songbird-api.flare.network/ext/C/rpc"],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 2300000, //This is the block that the contract was deployed on https://explorer.celo.org/mainnet/token/0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207
+      startBlock: 36036, //This is the block that the contract was deployed on https://explorer.celo.org/mainnet/token/0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207
       options: {
         // Must be a key of assets
-        abi: "priceSubmitter",
-        address: "0x1000000000000000000000000000000000000003",
+        abi: "ftsoRewardManager",
+        address: "0xc5738334b972745067ffa666040fdeadc66cb925", // https://songbird-explorer.flare.network/address/0xc5738334b972745067fFa666040fdeADc66Cb925
       },
       assets: new Map([
-        ["priceSubmitter", { file: "./priceSubmitter.abi.json" }],
+        ["ftsoRewardManager", { file: "./ftsoRewardManager.abi.json" }],
       ]),
       mapping: {
         file: "./dist/index.js",
         handlers: [
-          {
-            kind: EthereumHandlerKind.Call, // We use ethereum handlers since Celo is EVM-compatible
-            handler: "handleTransaction",
-            filter: {
-              /**
-               * The function can either be the function fragment or signature
-               * function: '0x095ea7b3'
-               * function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
-               */
-              function: "submitHash(uint256 _epochId, bytes32 _hash)",
-            },
-          },
           {
             kind: EthereumHandlerKind.Event,
             handler: "handleLog",
@@ -76,7 +63,7 @@ const project: EthereumProject = {
                * address: "0x60781C2586D68229fde47564546784ab3fACA982"
                */
               topics: [
-                "HashSubmitted(address indexed submitter, uint256 indexed epochId, bytes32 hash, uint256 timestamp)",
+                "RewardClaimed(address indexed dataProvider, address indexed whoClaimed, address indexed sentTo, uint256 rewardEpoch, uint256 amount)",
               ],
             },
           },

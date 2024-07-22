@@ -26,8 +26,8 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for Boba Eth testnet this is 288
-     * https://chainlist.org/chain/288
+     * chainId is the EVM Chain ID, for Flare Songbird this is 19
+     * https://chainlist.org/chain/19
      */
     chainId: "19",
     /**
