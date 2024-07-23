@@ -39,7 +39,6 @@
     "@subql/cli": "latest",
     "@subql/node-ethereum": "latest",
     "@subql/testing": "latest",
-    "@subql/types": "latest",
     "ethers": "^5.7.2",
     "typescript": "latest",
     "mustache": "^4.2.0"

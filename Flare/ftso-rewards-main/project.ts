@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "flare-ftso-rewards-starter",
+  name: "flare-ftso-rewards",
   description:
     "This project can be use as a starting point for developing your new Flare SubQuery project",
   runner: {
@@ -42,7 +42,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 36036, //This is the block that the contract was deployed on https://explorer.celo.org/mainnet/token/0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207
+      startBlock: 36036, //This is the block that the contract was deployed on https://songbird-explorer.flare.network/tx/0xe84e8a5e13017755185adaf9699b8b42782315243b826a2fa92f27516a4397cf
       options: {
         // Must be a key of assets
         abi: "ftsoRewardManager",

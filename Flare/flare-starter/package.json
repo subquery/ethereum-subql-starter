@@ -21,14 +21,15 @@
   "author": "SubQuery Team",
   "license": "MIT",
   "dependencies": {
-    "@subql/common": "latest",
     "@subql/types-ethereum": "latest",
-    "@subql/validator": "latest",
+    "abab": "^2.0.6",
     "assert": "^2.0.0"
   },
   "devDependencies": {
     "@subql/cli": "latest",
+    "@subql/node-ethereum": "latest",
     "@subql/testing": "latest",
-    "typescript": "^5.2.2"
+    "ethers": "^5.7.2",
+    "typescript": "latest"
   }
 }
