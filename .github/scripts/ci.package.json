@@ -72,6 +72,7 @@
     "Zksync/*",
     "Zora/*",
     "Optopia",
+    "Kroma",
     "Mint"
   ],
   "scripts": {
