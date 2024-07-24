@@ -1,20 +1,12 @@
-import { FlareLog } from "@subql/types-flare";
-import { BigNumber } from "@ethersproject/bignumber";
+import assert from "assert";
 import { Address, Reward } from "../types";
+import { RewardClaimedLog } from "../types/abi-interfaces/FtsoRewardManagerAbi";
 
-type RewardClaimedLogArgs = [string, string, string, BigNumber, BigNumber] & {
-  dataProvider: string;
-  whoClaimed: string;
-  sentTo: string;
-  rewardEpoch: BigNumber;
-  amount: BigNumber;
-};
 
 export async function handleLog(
-  event: FlareLog<RewardClaimedLogArgs>
+  event: RewardClaimedLog
 ): Promise<void> {
-  // See example log in this transaction https://songbird-explorer.flare.network/tx/0xd832d0283f56acbda902066dd47147f510a68fd923296a2162cffcf10c15d8f8/logs
-  // logger.info("flare Event");
+  assert(event.args, "Event args are missing")
 
   // Ensure that our account entities exist
   const whoClaimed = await Address.get(event.args.whoClaimed.toLowerCase());

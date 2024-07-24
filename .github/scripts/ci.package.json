@@ -72,7 +72,8 @@
     "Zksync/*",
     "Zora/*",
     "Optopia",
-    "Kroma"
+    "Kroma",
+    "Mint"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
