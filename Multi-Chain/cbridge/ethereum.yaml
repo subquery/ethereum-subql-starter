@@ -1,0 +1,48 @@
+specVersion: "1.0.0"
+
+name: "multi-chain-ethereum-cbridge"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "Ethereum CBridge"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  # chainId is the EVM Chain ID, for Ethereum this is 1
+  # https://chainlist.org/chain/1
+  chainId: "1"
+  # This endpoint must be a public non-pruned archive node
+  # Public nodes may be rate limited, which can affect indexing speed
+  # When developing your project we suggest getting a private API key
+  endpoint: "https://ethereum.rpc.subquery.network/public"
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 13719989
+    options:
+      # Must be a key of assets
+      abi: bridge
+      address: "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+    assets:
+      bridge:
+        file: "./abis/bridge.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleSend
+          kind: ethereum/LogHandler
+          filter:
+            topics:
+              - Send (bytes32 transferId, address sender, address receiver, address token, uint256 amount, uint64 dstChainId, uint64 nonce, uint32 maxSlippage)
+        - handler: handleRelay
+          kind: ethereum/LogHandler
+          filter:
+            topics:
+              - Relay (bytes32 transferId, address sender, address receiver, address token, uint256 amount, uint64 srcChainId, bytes32 srcTransferId)
