@@ -1,0 +1,274 @@
+# // Auto-generated , DO NOT EDIT
+specVersion: 1.0.0
+version: 0.0.1
+name: snapshot-ethereum
+description: >-
+  This project can be use as a starting point for developing your new Ethereum
+  SubQuery project
+runner:
+  node:
+    name: '@subql/node-ethereum'
+    version: '>=3.0.0'
+  query:
+    name: '@subql/query'
+    version: '*'
+schema:
+  file: ./schema.graphql
+network:
+  chainId: '1'
+  endpoint:
+    - https://eth.api.onfinality.io/public
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 19131917
+    options:
+      abi: ProxyFactory
+      address: '0x4b4f7f64be813ccc66aefc3bfce2baa01188631c'
+    assets:
+      ProxyFactory:
+        file: ./abis/ProxyFactory.json
+      AvatarExecutionStrategy:
+        file: ./abis/AvatarExecutionStrategy.json
+      AxiomExecutionStrategy:
+        file: ./abis/AxiomExecutionStrategy.json
+      TimelockExecutionStrategy:
+        file: ./abis/TimelockExecutionStrategy.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleProxyDeployed
+          filter:
+            topics:
+              - ProxyDeployed(address,address)
+templates:
+  - kind: ethereum/Runtime
+    name: Space
+    options:
+      abi: Space
+    assets:
+      Space:
+        file: ./abis/Space.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleSpaceCreated
+          filter:
+            topics:
+              - SpaceCreated(address,(address,uint32,uint32,uint32,(address,bytes),string,string,string,(address,bytes)[],string[],address[]))
+  #       - kind: ethereum/LogHandler
+  #         handler: handleProposalCreated
+  #         filter:
+  #           topics:
+  #             - ProposalCreated(uint256,address,(address,uint32,address,uint32,uint32,uint8,bytes32,uint256),string,bytes)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleProposalUpdated
+  #         filter:
+  #           topics:
+  #             - ProposalUpdated(uint256,(address,bytes),string)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleProposalExecuted
+  #         filter:
+  #           topics:
+  #             - ProposalExecuted(uint256)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleProposalCancelled
+  #         filter:
+  #           topics:
+  #             - ProposalCancelled(uint256)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleVoteCreated
+  #         filter:
+  #           topics:
+  #             - VoteCast(uint256,address,uint8,uint256)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleVoteCreatedWithMetadata
+  #         filter:
+  #           topics:
+  #             - VoteCastWithMetadata(uint256,address,uint8,uint256,string)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleMetadataUriUpdated
+  #         filter:
+  #           topics:
+  #             - MetadataURIUpdated(string)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleVotingDelayUpdated
+  #         filter:
+  #           topics:
+  #             - VotingDelayUpdated(uint32)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleMinVotingDurationUpdated
+  #         filter:
+  #           topics:
+  #             - MinVotingDurationUpdated(uint32)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleMaxVotingDurationUpdated
+  #         filter:
+  #           topics:
+  #             - MinVotingDurationUpdated(uint32)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleOwnershipTransferred
+  #         filter:
+  #           topics:
+  #             - OwnershipTransferred(address,address)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleAuthenticatorsAdded
+  #         filter:
+  #           topics:
+  #             - AuthenticatorsAdded(address[])
+  #       - kind: ethereum/LogHandler
+  #         handler: handleAuthenticatorsRemoved
+  #         filter:
+  #           topics:
+  #             - AuthenticatorsRemoved(address[])
+  #       - kind: ethereum/LogHandler
+  #         handler: handleVotingStrategiesAdded
+  #         filter:
+  #           topics:
+  #             - VotingStrategiesAdded((address,bytes)[],string[])
+  #       - kind: ethereum/LogHandler
+  #         handler: handleVotingStrategiesRemoved
+  #         filter:
+  #           topics:
+  #             - VotingStrategiesRemoved(uint8[])
+  #       - kind: ethereum/LogHandler
+  #         handler: handleProposalValidationStrategyUpdated
+  #         filter:
+  #           topics:
+  #             - ProposalValidationStrategyUpdated((address,bytes),string)
+  # - kind: ethereum/Runtime
+  #   name: AxiomExecutionStrategy
+  #   options:
+  #     abi: AxiomExecutionStrategy
+  #   assets:
+  #     AxiomExecutionStrategy:
+  #       file: ./abis/AxiomExecutionStrategy.json
+  #   mapping:
+  #     file: ./dist/index.js
+  #     handlers:
+  #       - kind: ethereum/LogHandler
+  #         handler: handleAxiomWriteOffchainVotes
+  #         filter:
+  #           topics:
+  #             - WriteOffchainVotes(uint256,uint256,uint256,uint256,uint256)
+  # - kind: ethereum/Runtime
+  #   name: TimelockExecutionStrategy
+  #   options:
+  #     abi: TimelockExecutionStrategy
+  #   assets:
+  #     TimelockExecutionStrategy:
+  #       file: ./abis/TimelockExecutionStrategy.json
+  #   mapping:
+  #     file: ./dist/index.js
+  #     handlers:
+  #       - kind: ethereum/LogHandler
+  #         handler: handleTimelockProposalExecuted
+  #         filter:
+  #           topics:
+  #             - ProposalExecuted(bytes32)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleTimelockProposalVetoed
+  #         filter:
+  #           topics:
+  #             - ProposalVetoed(bytes32)
+  # - kind: ethereum/Runtime
+  #   name: TimelockExecutionStrategy
+  #   options:
+  #     abi: TimelockExecutionStrategy
+  #   assets:
+  #     TimelockExecutionStrategy:
+  #       file: ./abis/TimelockExecutionStrategy.json
+  #   mapping:
+  #     file: ./dist/index.js
+  #     handlers:
+  #       - kind: ethereum/LogHandler
+  #         handler: handleTimelockProposalExecuted
+  #         filter:
+  #           topics:
+  #             - ProposalExecuted(bytes32)
+  #       - kind: ethereum/LogHandler
+  #         handler: handleTimelockProposalVetoed
+  #         filter:
+  #           topics:
+  #             - ProposalVetoed(bytes32)
+  # - name: SpaceMetadata
+  #   kind: file/ipfs
+  #   mapping:
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     file: ./src/ipfs.ts
+  #     handler: handleSpaceMetadata
+  #     entities:
+  #       - SpaceMetadata
+  #     abis:
+  #       - name: Space
+  #         file: ./abis/Space.json
+  #   network: sepolia
+  # - name: ProposalMetadata
+  #   kind: file/ipfs
+  #   mapping:
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     file: ./src/ipfs.ts
+  #     handler: handleProposalMetadata
+  #     entities:
+  #       - ProposalMetadata
+  #     abis:
+  #       - name: Space
+  #         file: ./abis/Space.json
+  #   network: sepolia
+  # - name: VoteMetadata
+  #   kind: file/ipfs
+  #   mapping:
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     file: ./src/ipfs.ts
+  #     handler: handleVoteMetadata
+  #     entities:
+  #       - VoteMetadata
+  #     abis:
+  #       - name: Space
+  #         file: ./abis/Space.json
+  #   network: sepolia
+  # - name: StrategiesParsedMetadataData
+  #   kind: file/ipfs
+  #   mapping:
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     file: ./src/ipfs.ts
+  #     handler: handleStrategiesParsedMetadataData
+  #     entities:
+  #       - StrategiesParsedMetadataData
+  #     abis:
+  #       - name: Space
+  #         file: ./abis/Space.json
+  #   network: sepolia
+  # - name: VotingPowerValidationStrategyMetadata
+  #   kind: file/ipfs
+  #   mapping:
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     file: ./src/ipfs.ts
+  #     handler: handleVotingPowerValidationStrategyMetadata
+  #     entities:
+  #       - VotingPowerValidationStrategiesParsedMetadata
+  #     abis:
+  #       - name: Space
+  #         file: ./abis/Space.json
+  #   network: sepolia
+  - kind: ethereum/Runtime
+    name: L1AvatarExecutionStrategy
+    options:
+      abi: L1AvatarExecutionStrategy
+    assets:
+      L1AvatarExecutionStrategy:
+        file: ./abis/L1AvatarExecutionStrategy.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - kind: ethereum/LogHandler
+          handler: handleStarknetProposalExecuted
+          filter:
+            topics:
+              - ProposalExecuted(uint256,uint256)
