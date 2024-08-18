@@ -1,6 +1,6 @@
 specVersion: "1.0.0"
 
-name: "multi-chain-ethereum-cbridge"
+name: "multi-chain-linea-cbridge"
 version: "0.0.1"
 runner:
   node:
@@ -9,25 +9,21 @@ runner:
   query:
     name: "@subql/query"
     version: "*"
-description: "Ethereum CBridge"
+description: "Linea CBridge"
 repository: "https://github.com/subquery/ethereum-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  chainId: "1"
-  # This endpoint must be a public non-pruned archive node
-  # Public nodes may be rate limited, which can affect indexing speed
-  # When developing your project we suggest getting a private API key
-  endpoint: "https://ethereum.rpc.subquery.network/public"
+  chainId: "59144"
+  endpoint: "https://linea.blockpi.network/v1/rpc/public"
 dataSources:
   - kind: ethereum/Runtime
-    startBlock: 13719989
+    startBlock: 445
     options:
-      # Must be a key of assets
       abi: bridge
-      address: "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      address: "0x9B36f165baB9ebe611d491180418d8De4b8f3a1f"
     assets:
       bridge:
         file: "./abis/bridge.json"

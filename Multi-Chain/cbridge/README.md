@@ -1,8 +1,8 @@
-# SubQuery - Example Multi-Chain Project
+# CBridge SubQuery - Example Multi-Chain Project
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This sample project indexes all CBridge transactions accross multiple networks**
+This sample project indexes all CBridge transactions accross multiple networks. The smart contract addresses were sourced from https://cbridge-docs.celer.network/reference/contract-addresses.
 
 ## Start
 

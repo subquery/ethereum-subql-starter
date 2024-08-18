@@ -12,7 +12,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -36,9 +36,9 @@ services:
       - --multi-chain
       - --db-schema=cbridge
       - --disable-historical
-      - --batch-size=1
+      - --batch-size=30
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://subquery-node:3000/ready"]
+      test: [ "CMD", "curl", "-f", "http://subquery-node:3000/ready" ]
       interval: 3s
       timeout: 5s
       retries: 10
@@ -62,7 +62,7 @@ services:
       - --db-schema=cbridge
       - --disable-historical
       - -f=app/ethereum.yaml
-      - --batch-size=1
+      - --batch-size=30
     healthcheck:
       test:
         - CMD
@@ -72,7 +72,146 @@ services:
       interval: 3s
       timeout: 5s
       retries: 10
-
+  subquery-node-linea:
+    image: subquerynetwork/subql-node-ethereum:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+    environment:
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_DATABASE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+    volumes:
+      - ./:/app
+    command:
+      - --multi-chain
+      - --db-schema=cbridge
+      - --disable-historical
+      - -f=app/linea.yaml
+      - --batch-size=30
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://subquery-node-ethereum:3000/ready
+      interval: 3s
+      timeout: 5s
+  subquery-node-avalanche:
+    image: subquerynetwork/subql-node-ethereum:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+    environment:
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_DATABASE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+    volumes:
+      - ./:/app
+    command:
+      - --multi-chain
+      - --db-schema=cbridge
+      - --disable-historical
+      - -f=app/avalanche.yaml
+      - --batch-size=30
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://subquery-node-ethereum:3000/ready
+      interval: 3s
+      timeout: 5s
+  subquery-node-fantom:
+    image: subquerynetwork/subql-node-ethereum:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+    environment:
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_DATABASE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+    volumes:
+      - ./:/app
+    command:
+      - --multi-chain
+      - --db-schema=cbridge
+      - --disable-historical
+      - -f=app/fantom.yaml
+      - --batch-size=30
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://subquery-node-ethereum:3000/ready
+      interval: 3s
+      timeout: 5s
+  subquery-node-base:
+    image: subquerynetwork/subql-node-ethereum:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+    environment:
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_DATABASE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+    volumes:
+      - ./:/app
+    command:
+      - --multi-chain
+      - --db-schema=cbridge
+      - --disable-historical
+      - -f=app/base.yaml
+      - --batch-size=30
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://subquery-node-ethereum:3000/ready
+      interval: 3s
+      timeout: 5s
+  subquery-node-gnosis:
+    image: subquerynetwork/subql-node-ethereum:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+    environment:
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_DATABASE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+    volumes:
+      - ./:/app
+    command:
+      - --multi-chain
+      - --db-schema=cbridge
+      - --disable-historical
+      - -f=app/gnosis.yaml
+      - --batch-size=30
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://subquery-node-ethereum:3000/ready
+      interval: 3s
+      timeout: 5s
   graphql-engine:
     image: subquerynetwork/subql-query:latest
     ports:

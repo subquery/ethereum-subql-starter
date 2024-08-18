@@ -1,6 +1,6 @@
 specVersion: "1.0.0"
 
-name: "multi-chain-ethereum-cbridge"
+name: "multi-chain-avalanche-cbridge"
 version: "0.0.1"
 runner:
   node:
@@ -9,25 +9,21 @@ runner:
   query:
     name: "@subql/query"
     version: "*"
-description: "Ethereum CBridge"
+description: "Avalanche CBridge"
 repository: "https://github.com/subquery/ethereum-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  chainId: "1"
-  # This endpoint must be a public non-pruned archive node
-  # Public nodes may be rate limited, which can affect indexing speed
-  # When developing your project we suggest getting a private API key
-  endpoint: "https://ethereum.rpc.subquery.network/public"
+  chainId: "43114"
+  endpoint: "https://avax.meowrpc.com"
 dataSources:
   - kind: ethereum/Runtime
-    startBlock: 13719989
+    startBlock: 7660096
     options:
-      # Must be a key of assets
       abi: bridge
-      address: "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      address: "0xef3c714c9425a8F3697A9C969Dc1af30ba82e5d4"
     assets:
       bridge:
         file: "./abis/bridge.json"

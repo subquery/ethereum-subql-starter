@@ -1,7 +1,7 @@
 {
   "name": "multi-chain-cbridge",
   "version": "0.0.1",
-  "description": "This sample project indexes all CBridge bridge transactions",
+  "description": "This sample project indexes CBridge transactions across multiple networks",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
@@ -25,11 +25,10 @@
     "assert": "^2.0.0"
   },
   "devDependencies": {
-    "@subql/cli": "5.1.1",
+    "@subql/cli": "latest",
     "@subql/testing": "latest",
     "@subql/node-ethereum": "latest",
     "ethers": "^5.7.2",
     "typescript": "latest"
-  },
-  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+  }
 }

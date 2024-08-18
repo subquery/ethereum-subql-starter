@@ -5,3 +5,8 @@ query:
 projects:
   - bsc.yaml
   - ethereum.yaml
+  - linea.yaml
+  - avalanche.yaml
+  - fantom.yaml
+  - base.yaml
+  - gnosis.yaml

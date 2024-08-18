@@ -1,6 +1,6 @@
 specVersion: "1.0.0"
 
-name: "multi-chain-ethereum-cbridge"
+name: "multi-chain-base-cbridge"
 version: "0.0.1"
 runner:
   node:
@@ -9,25 +9,21 @@ runner:
   query:
     name: "@subql/query"
     version: "*"
-description: "Ethereum CBridge"
+description: "Base CBridge"
 repository: "https://github.com/subquery/ethereum-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  chainId: "1"
-  # This endpoint must be a public non-pruned archive node
-  # Public nodes may be rate limited, which can affect indexing speed
-  # When developing your project we suggest getting a private API key
-  endpoint: "https://ethereum.rpc.subquery.network/public"
+  chainId: "8543"
+  endpoint: "https://base.rpc.subquery.network/public"
 dataSources:
   - kind: ethereum/Runtime
-    startBlock: 13719989
+    startBlock: 1394439
     options:
-      # Must be a key of assets
       abi: bridge
-      address: "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      address: "0x7d43AABC515C356145049227CeE54B608342c0ad"
     assets:
       bridge:
         file: "./abis/bridge.json"

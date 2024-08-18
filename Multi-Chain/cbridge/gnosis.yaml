@@ -1,6 +1,6 @@
 specVersion: "1.0.0"
 
-name: "multi-chain-ethereum-cbridge"
+name: "multi-chain-gnosis-cbridge"
 version: "0.0.1"
 runner:
   node:
@@ -9,25 +9,21 @@ runner:
   query:
     name: "@subql/query"
     version: "*"
-description: "Ethereum CBridge"
+description: "Gnosis CBridge"
 repository: "https://github.com/subquery/ethereum-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  chainId: "1"
-  # This endpoint must be a public non-pruned archive node
-  # Public nodes may be rate limited, which can affect indexing speed
-  # When developing your project we suggest getting a private API key
-  endpoint: "https://ethereum.rpc.subquery.network/public"
+  chainId: "100"
+  endpoint: "https://rpc.gnosischain.com"
 dataSources:
   - kind: ethereum/Runtime
-    startBlock: 13719989
+    startBlock: 19926499
     options:
-      # Must be a key of assets
       abi: bridge
-      address: "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      address: "0x3795C36e7D12A8c252A20C5a7B455f7c57b60283"
     assets:
       bridge:
         file: "./abis/bridge.json"
