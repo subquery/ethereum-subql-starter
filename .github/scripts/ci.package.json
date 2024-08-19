@@ -73,7 +73,8 @@
     "Zora/*",
     "Optopia",
     "Kroma",
-    "Mint"
+    "Mint",
+    "OFN"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
