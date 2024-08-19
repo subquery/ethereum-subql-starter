@@ -1,0 +1,42 @@
+specVersion: "1.0.0"
+
+name: "multi-chain-linea-cbridge"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "Linea CBridge"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  chainId: "59144"
+  endpoint: "https://linea.blockpi.network/v1/rpc/public"
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 445
+    options:
+      abi: bridge
+      address: "0x9B36f165baB9ebe611d491180418d8De4b8f3a1f"
+    assets:
+      bridge:
+        file: "./abis/bridge.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleSend
+          kind: ethereum/LogHandler
+          filter:
+            topics:
+              - Send (bytes32 transferId, address sender, address receiver, address token, uint256 amount, uint64 dstChainId, uint64 nonce, uint32 maxSlippage)
+        - handler: handleRelay
+          kind: ethereum/LogHandler
+          filter:
+            topics:
+              - Relay (bytes32 transferId, address sender, address receiver, address token, uint256 amount, uint64 srcChainId, bytes32 srcTransferId)

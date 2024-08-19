@@ -1,0 +1,28 @@
+type BridgeTransaction @entity {
+  id: ID!
+  transactionOnSource: TransactionOnSource
+  transactionOnTarget: TransactionOnTarget
+}
+
+type TransactionOnSource @entity {
+  id: ID!
+  transferId: String!
+  sender: String!
+  receiver: String!
+  token: String!
+  amount: BigInt!
+  dstChain: BigInt!
+  nonce: BigInt!
+  maxSlippage: BigInt!
+}
+
+type TransactionOnTarget @entity {
+  id: ID!
+  transferId: String!
+  sender: String!
+  receiver: String!
+  token: String!
+  amount: BigInt!
+  srcChain: BigInt!
+  srcTransferId: String!
+}

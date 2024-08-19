@@ -1,0 +1,42 @@
+specVersion: "1.0.0"
+
+name: "multi-chain-gnosis-cbridge"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "Gnosis CBridge"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  chainId: "100"
+  endpoint: "https://rpc.gnosischain.com"
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 19926499
+    options:
+      abi: bridge
+      address: "0x3795C36e7D12A8c252A20C5a7B455f7c57b60283"
+    assets:
+      bridge:
+        file: "./abis/bridge.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleSend
+          kind: ethereum/LogHandler
+          filter:
+            topics:
+              - Send (bytes32 transferId, address sender, address receiver, address token, uint256 amount, uint64 dstChainId, uint64 nonce, uint32 maxSlippage)
+        - handler: handleRelay
+          kind: ethereum/LogHandler
+          filter:
+            topics:
+              - Relay (bytes32 transferId, address sender, address receiver, address token, uint256 amount, uint64 srcChainId, bytes32 srcTransferId)

@@ -1,0 +1,42 @@
+specVersion: "1.0.0"
+
+name: "multi-chain-base-cbridge"
+version: "0.0.1"
+runner:
+  node:
+    name: "@subql/node-ethereum"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: "Base CBridge"
+repository: "https://github.com/subquery/ethereum-subql-starter"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  chainId: "8543"
+  endpoint: "https://base.rpc.subquery.network/public"
+dataSources:
+  - kind: ethereum/Runtime
+    startBlock: 1394439
+    options:
+      abi: bridge
+      address: "0x7d43AABC515C356145049227CeE54B608342c0ad"
+    assets:
+      bridge:
+        file: "./abis/bridge.json"
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleSend
+          kind: ethereum/LogHandler
+          filter:
+            topics:
+              - Send (bytes32 transferId, address sender, address receiver, address token, uint256 amount, uint64 dstChainId, uint64 nonce, uint32 maxSlippage)
+        - handler: handleRelay
+          kind: ethereum/LogHandler
+          filter:
+            topics:
+              - Relay (bytes32 transferId, address sender, address receiver, address token, uint256 amount, uint64 srcChainId, bytes32 srcTransferId)
