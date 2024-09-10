@@ -38,12 +38,12 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["wss://evm-ws.sei-apis.com,https://evm-rpc.sei-apis.com"],
+    endpoint: ["wss://evm-ws.sei-apis.com", "https://evm-rpc.sei-apis.com"],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 101111318, 
+      startBlock: 101111318,
       options: {
         abi: "erc20",
         // This is the contract address for JLY (Jelly Token)
