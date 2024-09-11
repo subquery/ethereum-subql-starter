@@ -15,7 +15,6 @@ network:
   chainId: "5"
   endpoint:
     - wss://ethereum-goerli.publicnode.com
-  dictionary:
 dataSources:
   - kind: ethereum/Runtime
     startBlock: 7383494

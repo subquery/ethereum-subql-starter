@@ -38,7 +38,6 @@ const project: EthereumProject = {
      * https://documentation.onfinality.io/support/the-enhanced-api-service
      */
     endpoint: ["https://flare-api.flare.network/ext/C/rpc"],
-    dictionary: "https://dict-tyk.subquery.network/query/flare-mainnet",
   },
   dataSources: [
     {
