@@ -28,7 +28,7 @@ export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
     owner: tx.from,
     spender: await tx.args[0],
     value: BigInt(await tx.args[1].toString()),
-    contractAddress: tx.to,
+    contractAddress: tx.to || "",
   });
 
   await approval.save();

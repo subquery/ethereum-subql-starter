@@ -25,7 +25,7 @@ export async function handleNftClaim(log: TokensClaimedLog): Promise<void> {
 
 export async function handleDailyAggregation(
   date: Date,
-  quantity: bigint,
+  quantity: bigint
 ): Promise<void> {
   const id = date.toISOString().slice(0, 10);
   let aggregation = await DailyAggregation.get(id);
@@ -52,7 +52,7 @@ export async function handleDailyAggregation(
     owner: tx.from,
     spender: await tx.args[0],
     value: BigInt(await tx.args[1].toString()),
-    contractAddress: tx.to,
+    contractAddress: tx.to || "",
   });
 
   await approval.save();

@@ -31,7 +31,7 @@ export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
     owner: tx.from,
     spender: tx.args[0],
     value: BigInt(tx.args[1].toString()),
-    contractAddress: tx.to,
+    contractAddress: tx.to || "",
   });
 
   await approval.save();
