@@ -74,7 +74,8 @@
     "Optopia",
     "Kroma",
     "Mint",
-    "OFN"
+    "OFN",
+    "Cronos zkEVM"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
