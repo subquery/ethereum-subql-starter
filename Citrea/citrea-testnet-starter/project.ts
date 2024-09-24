@@ -43,11 +43,11 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 107453,
+      startBlock: 277716,
       options: {
         abi: "erc20",
-        // This is the contract address for USDC
-        address: "0xb669dC8cC6D044307Ba45366C0c836eC3c7e31AA",
+        // This is the contract address for SimpleToken (STKN)
+        address: "0xC50EC8C87f2bE35b5D0Cfad0fA0ef2693dCEbbE7",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
       mapping: {
