@@ -75,7 +75,8 @@
     "Kroma",
     "Mint",
     "OFN",
-    "Cronos zkEVM"
+    "Cronos zkEVM",
+    "CrossFi Testnet"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
