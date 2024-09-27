@@ -8,9 +8,9 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "klaytn-starter",
+  name: "kaia-starter",
   description:
-    "This project can be use as a starting point for developing your new Klaytn SubQuery project",
+    "This project can be use as a starting point for developing your new Kaia SubQuery project",
   runner: {
     node: {
       name: "@subql/node-ethereum",
@@ -26,7 +26,7 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for Klaytn this is 8217
+     * chainId is the EVM Chain ID, for Kaia this is 8217
      * https://chainlist.org/chain/8217
      */
     chainId: "8217",
