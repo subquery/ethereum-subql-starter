@@ -71,7 +71,12 @@ jobs:
           cd template
           mv template "$subFolderName"
           cd ..
-          mv template "$folderName"
+          if [ -d "$folderName" ]; then
+            mv "template/$subFolderName" "$folderName/"
+            rm -rf template
+          else
+            mv template "$folderName"
+          fi
           cd .github && yarn && cd ..
           .github/node_modules/mustache/bin/mustache input.json .github/template/template/project.ts > "$folderName"/$subFolderName/project.ts
           .github/node_modules/mustache/bin/mustache input.json .github/template/template/README.md > "$folderName"/$subFolderName/README.md
