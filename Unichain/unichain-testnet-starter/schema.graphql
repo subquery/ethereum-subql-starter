@@ -1,0 +1,19 @@
+type EvmTransaction @entity {
+  id: ID!
+  txHash: String!
+  from: String! @index
+  to: String! @index
+  func: String @index
+  blockHeight: BigInt! @index
+  success: Boolean!
+}
+
+type EvmLog @entity {
+  id: ID!
+  address: String! @index
+  blockHeight: BigInt! @index
+  topics0: String @index
+  topics1: String
+  topics2: String
+  topics3: String
+}
