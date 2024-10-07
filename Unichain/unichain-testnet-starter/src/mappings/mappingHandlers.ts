@@ -1,42 +1,37 @@
+import { Approval, Transfer } from "../types";
 import {
-  EthereumBlock,
-  EthereumLog,
-  EthereumTransaction,
-} from '@subql/types-ethereum';
-import { EvmLog, EvmTransaction } from "../types/models";
-import { inputToFunctionSighash, isZero } from './utils';
+  ApproveTransaction,
+  TransferLog,
+} from "../types/abi-interfaces/Erc20Abi";
+import assert from "assert";
 
-export async function handleBlock(block: EthereumBlock): Promise<void> {
- const logs = block.logs.map(log => handleLog(log));
- const transactions = await Promise.all(block.transactions.map(tx => handleTransaction(tx)));
- await Promise.all([
-   store.bulkCreate('EvmLog', logs),
-   store.bulkCreate('EvmTransaction', transactions)
- ]);
+export async function handleLog(log: TransferLog): Promise<void> {
+  logger.info(`New transfer transaction log at block ${log.blockNumber}`);
+  assert(log.args, "No log.args");
+
+  const transaction = Transfer.create({
+    id: log.transactionHash,
+    blockHeight: BigInt(log.blockNumber),
+    to: log.args.to,
+    from: log.args.from,
+    value: log.args.value.toBigInt(),
+    contractAddress: log.address,
+  });
+
+  await transaction.save();
 }
 
-export function handleLog(log: EthereumLog): EvmLog {
- return EvmLog.create({
-   id: `${log.blockNumber}-${log.logIndex}`,
-   address: log.address.toLowerCase(),
-   blockHeight: BigInt(log.blockNumber),
-   topics0: log.topics[0]?.toLowerCase(),
-   topics1: log.topics[1]?.toLowerCase(),
-   topics2: log.topics[2]?.toLowerCase(),
-   topics3: log.topics[3]?.toLowerCase(),
- });
-}
+export async function handleTransaction(tx: ApproveTransaction): Promise<void> {
+  logger.info(`New Approval transaction at block ${tx.blockNumber}`);
+  assert(tx.args, "No tx.args");
 
-export async function handleTransaction(transaction: EthereumTransaction,): Promise<EvmTransaction> {
- const func = isZero(transaction.input) ? undefined : inputToFunctionSighash(transaction.input).toLowerCase();
- return EvmTransaction.create({
-   id: `${transaction.blockNumber}-${transaction.transactionIndex}`,
-   blockHeight: BigInt(transaction.blockNumber),
-   from: transaction.from.toLowerCase(),
-   to: transaction.to?.toLowerCase() ?? '',
-   txHash: transaction.hash,
-   // If there are logs we can assume the tx was successful
-   success: (!!transaction.logs?.length),
-   func
- });
+  const approval = Approval.create({
+    id: tx.hash,
+    owner: tx.from,
+    spender: await tx.args[0],
+    value: BigInt(await tx.args[1].toString()),
+    contractAddress: tx.to || "",
+  });
+
+  await approval.save();
 }

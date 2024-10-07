@@ -2,7 +2,7 @@
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This project indexes all transaction and event data on Unichain's Testnet**
+**This SubQuery project indexes all transfers and approval events for the [USDC](https://unichain-sepolia.blockscout.com/address/0x31d0220469e10c4E71834a79b1f276d740d3768F?tab=logs) on Unichain's Testnet**
 
 ## Start
 
@@ -39,27 +39,28 @@ You can observe the three services start, and once all are running (it may take 
 For this project, you can try to query with the following GraphQL code to get a taste of how it works.
 
 ```graphql
-query {
-  evmLogs(first: 2) {
-    nodes {
-      id
-      address
-      blockHeight
-      topics0
-      topics1
-      topics2
-      topics3
+{
+  query {
+    transfers(first: 5, orderBy: VALUE_DESC) {
+      totalCount
+      nodes {
+        id
+        blockHeight
+        from
+        to
+        value
+        contractAddress
+      }
     }
   }
-  evmTransactions(first: 2) {
+  approvals(first: 5, orderBy: BLOCK_HEIGHT_DESC) {
     nodes {
       id
-      txHash
-      from
-      to
-      func
       blockHeight
-      success
+      owner
+      spender
+      value
+      contractAddress
     }
   }
 }

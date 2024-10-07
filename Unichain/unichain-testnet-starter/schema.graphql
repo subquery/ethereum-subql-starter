@@ -1,19 +1,21 @@
-type EvmTransaction @entity {
-  id: ID!
-  txHash: String!
-  from: String! @index
-  to: String! @index
-  func: String @index
-  blockHeight: BigInt! @index
-  success: Boolean!
+# To improve query performance, we strongly suggest adding indexes to any field that you plan to filter or sort by
+# Add the `@index` or `@index(unique: true)` annotation after any non-key field
+# https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
+
+type Transfer @entity {
+  id: ID! # Transaction hash
+  blockHeight: BigInt
+  to: String!
+  from: String!
+  value: BigInt!
+  contractAddress: String!
 }
 
-type EvmLog @entity {
-  id: ID!
-  address: String! @index
-  blockHeight: BigInt! @index
-  topics0: String @index
-  topics1: String
-  topics2: String
-  topics3: String
+type Approval @entity {
+  id: ID! # Transaction hash
+  blockHeight: BigInt
+  owner: String!
+  spender: String!
+  value: BigInt!
+  contractAddress: String!
 }

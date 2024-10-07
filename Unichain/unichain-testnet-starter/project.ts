@@ -39,20 +39,48 @@ const project: EthereumProject = {
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
     endpoint: [
-      "http://beta-u-Proxy-9QsHxlNJa4es-1179015898.us-east-2.elb.amazonaws.com:8545",
-      "ws://beta-u-Proxy-9QsHxlNJa4es-1179015898.us-east-2.elb.amazonaws.com:8546"
+      "https://sepolia.unichain.org"
     ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 	1, 
+      startBlock: 243124, // This is the block that the contract was deployed on https://unichain-sepolia.blockscout.com/address/0x31d0220469e10c4E71834a79b1f276d740d3768F?tab=logs
+
+      options: {
+        // Must be a key of assets
+        abi: "erc20",
+        // This is the contract address for USDC https://unichain-sepolia.blockscout.com/address/0x31d0220469e10c4E71834a79b1f276d740d3768F?tab=logs
+        address: "0x31d0220469e10c4E71834a79b1f276d740d3768F",
+      },
+      assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
       mapping: {
         file: "./dist/index.js",
         handlers: [
           {
-            kind: EthereumHandlerKind.Block,
-            handler: "handleBlock",
+            kind: EthereumHandlerKind.Call,
+            handler: "handleTransaction",
+            filter: {
+              /**
+               * The function can either be the function fragment or signature
+               * function: '0x095ea7b3'
+               * function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
+               */
+              function: "approve(address spender, uint256 rawAmount)",
+            },
+          },
+          {
+            kind: EthereumHandlerKind.Event,
+            handler: "handleLog",
+            filter: {
+              /**
+               * Follows standard log filters https://docs.ethers.io/v5/concepts/events/
+               * address: "0x60781C2586D68229fde47564546784ab3fACA982"
+               */
+              topics: [
+                "Transfer(address indexed from, address indexed to, uint256 amount)",
+              ],
+            },
           },
         ],
       },
