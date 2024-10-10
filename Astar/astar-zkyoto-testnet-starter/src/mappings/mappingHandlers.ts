@@ -5,6 +5,7 @@ import { EthereumTransaction } from "@subql/types-ethereum";
 export async function handleTransaction(
   tx: EthereumTransaction,
 ): Promise<void> {
+  assert(tx.to)
   const approval = Transaction.create({
     id: tx.hash,
     to: tx.to,
