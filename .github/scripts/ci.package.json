@@ -76,7 +76,8 @@
     "Mint",
     "OFN",
     "Cronos zkEVM",
-    "CrossFi Testnet"
+    "CrossFi Testnet",
+    "Ontology EVM"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
