@@ -77,7 +77,8 @@
     "OFN",
     "Cronos zkEVM",
     "CrossFi Testnet",
-    "Ontology"
+    "Ontology",
+    "Asset Chain"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
