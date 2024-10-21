@@ -78,7 +78,8 @@
     "Cronos zkEVM",
     "CrossFi Testnet",
     "Ontology",
-    "Asset Chain"
+    "Asset Chain",
+    "Berachain bArtio"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
