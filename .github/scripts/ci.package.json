@@ -79,7 +79,8 @@
     "CrossFi Testnet",
     "Ontology",
     "Asset Chain",
-    "Berachain bArtio"
+    "Berachain bArtio",
+    "Now Chain"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
