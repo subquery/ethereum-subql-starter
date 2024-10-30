@@ -80,7 +80,12 @@
     "Ontology",
     "Asset Chain",
     "Berachain bArtio",
-    "Rootstock"
+    "Rootstock",
+    "Ronin",
+    "Flow",
+    "Torus",
+    "Now Chain",
+    "Kakarot Starknet"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
