@@ -1,0 +1,123 @@
+type AccountState @entity {
+  # TODO uncomment fields
+  id: ID! # block_hash: Hash of the block this account state was indexed from.
+  blockNumber: BigInt! # block_number: Number of the block this account state was indexed from.
+  blockTimestamp: BigInt! # block_timestamp: Unix timestamp when the block was added to the blockchain.
+  address: String! # address: Address identifying the account.
+  nonce: BigInt! # nonce: Nonce (transaction count) associated with this account at this block.
+  balance: BigInt! # balance: Native Ether balance of the account in Wei. A decimal number represented as a BIGNUMERIC to preserve up to 128-bit numeric precision.
+  # balanceLossless: String # balance_lossless: Native Ether balance of the account in Wei. A decimal number represented in STRING format to preserve full 256-bit numeric precision.
+  codeHash: String! # code_hash: Hash of the code of the account. For all externally-owned accounts this will be "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470". This is the hash when there is no code present.
+  code: String # code: Compiled bytecode of this account in hexadecimal format, given the account is a smart contract.
+  # accountProof: [String!]! # account_proof: Merkle proof for verifying the account balance at the given block. An array of RLP-serialized Merkle tree nodes, starting with the state root node.
+  # storageHash: String! # storage_hash: Hash of the storage root representing a Merkle proof. For all non-smart contract accounts this will be "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421". This is the hash of an empty Merkle tree.
+}
+
+type Block @entity { 
+  id: ID! # block_hash: Hash of the block.
+  blockNumber: BigInt! # block_number: Number of the block.
+  blockTimestamp: BigInt! # block_timestamp: Unix timestamp when the block was added to the blockchain.
+  parentHash: String! # parent_hash: Hash of the parent block.
+  size: BigInt! # size: Size of this block in bytes.
+  extraData: String! # extra_data: Extra data of this block.
+  gasLimit: BigInt! # gas_limit: Maximum gas allowed in this block.
+  gasUsed: BigInt! # gas_used: Total gas used by all transactions in this block.
+  baseFeePerGas: BigInt # base_fee_per_gas: Reserve price that transactions must pay for inclusion in this block.
+  mixHash: String! # mix_hash: 32-byte hash which proves, when combined with the nonce, that a sufficient amount of computation has been carried out on this block.
+  nonce: String! # nonce: 8-byte integer in hexadecimal format. Used together with the mix hash to show the proof of work.
+  difficulty: BigInt # difficulty: Difficulty for this block.
+  totalDifficulty: BigInt # total_difficulty: Accumulated difficulty of the chain until this block.
+  miner: String! # miner: Address of the beneficiary to whom the mining rewards were given.
+  sha3Uncles: String! # sha3_uncles: SHA3 of the uncles data in the block.
+  transactionCount: BigInt! # transaction_count: Number of transactions in the block.
+  transactionsRoot: String! # transactions_root: Root of the transaction trie of the block.
+  receiptsRoot: String! # receipts_root: Root of the receipts trie of the block.
+  stateRoot: String! # state_root: Root of the final state trie of the block.
+  logsBloom: String! # logs_bloom: Bloom filter for the logs of the block.
+  # withdrawalsRoot: String # withdrawals_root: Validator withdrawal root.
+  # withdrawals: [Withdrawal!]! # withdrawals: Validator withdrawals.
+}
+
+type DecodedEvent {
+  # TODO add fields
+}
+
+type Log @entity {
+  id: ID! # block_hash: Hash of the block this log was created from.
+  blockNumber: BigInt! # block_number: Number of the block this log was created from.
+  blockTimestamp: BigInt! # block_timestamp: Unix timestamp when the block was added to the blockchain.
+  transactionHash: String! # transaction_hash: Hash of the transaction this log was created from.
+  transactionIndex: BigInt! # transaction_index: The transaction's index position in the block.
+  logIndex: BigInt! # log_index: The log's index position in the block.
+  address: String # address: Address from which this log originated.
+  data: String # data: Contains one or more 32-byte non-indexed arguments of the log.
+  topics: [String!]! # topics: Array of 0 to 4 32-byte hex of indexed log arguments.
+  removed: Boolean # removed: Whether or not the log was orphaned off the main chain.
+}
+
+type Receipt @entity {
+  id: ID! # block_hash: Hash of the block in which this transaction was located.
+  blockNumber: BigInt! # block_number: Number of the block in which this transaction was located.
+  blockTimestamp: BigInt! # block_timestamp: Unix timestamp when the block was added to the blockchain.
+  transactionHash: String! # transaction_hash: Hash of the transaction.
+  transactionIndex: BigInt! # transaction_index: The transaction's index position in the block.
+  fromAddress: String! # from_address: Address of the sender.
+  toAddress: String # to_address: Address of the receiver.
+  contractAddress: String # contract_address: Hexadecimal-encoded address of new contract or absent if no contract was created.
+  cumulativeGasUsed: BigInt! # cumulative_gas_used: Gas used by this and all preceding transactions in the block.
+  gasUsed: BigInt! # gas_used: Gas used by this transaction alone.
+  effectiveGasPrice: BigInt! # effective_gas_price: Actual value per gas deducted from the sender's account.
+  logsBloom: String! # logs_bloom: Bloom filter of the logs from this transaction.
+  root: String # root: Post-transaction state root.
+  status: BigInt # status: Either 1 (success) or 0 (failure).
+}
+
+type TokenTransfer @entity {
+  id: ID! # block_hash: Hash of the block this event was emitted from.
+  blockNumber: BigInt! # block_number: Number of the block this event was emitted from.
+  blockTimestamp: BigInt! # block_timestamp: Unix timestamp when the block was added to the blockchain.
+  transactionHash: String! # transaction_hash: Hash of the transaction this event was emitted from.
+  transactionIndex: BigInt! # transaction_index: The transaction's index position in the block.
+  eventIndex: BigInt! # event_index: The event's index position in the block.
+  batchIndex: BigInt # batch_index: The transfer's position in the batch transfer event.
+  address: String # address: Address from which this event originated.
+  eventType: String! # event_type: Token standard that matches the event.
+  eventHash: String! # event_hash: Keccak hash of the event signature.
+  eventSignature: String! # event_signature: Function signature of the event.
+  operatorAddress: String # operator_address: Address of the transfer operator.
+  fromAddress: String! # from_address: Address of the previous owner of the token(s).
+  toAddress: String! # to_address: Address of the new owner of the token(s).
+  tokenId: String # token_id: Identifier of the token(s) being transferred.
+  quantity: BigInt! # quantity: Quantity of tokens being transferred.
+  removed: Boolean # removed: Whether or not the event was orphaned off the main chain.
+}
+
+type Trace @entity {
+  # TODO add fields
+}
+
+type Transaction @entity {
+  # TODO uncomment fields
+  id: ID! # block_hash: Hash of the block in which this transaction was located.
+  blockNumber: BigInt! # block_number: Number of the block in which this transaction was located.
+  blockTimestamp: BigInt! # block_timestamp: Unix timestamp when the block was added to the blockchain.
+  transactionHash: String! # transaction_hash: Hash of the transaction.
+  transactionIndex: BigInt! # transaction_index: The transaction's index position in the block.
+  nonce: BigInt! # nonce: Number of transactions made by the sender prior to this one.
+  fromAddress: String! # from_address: Address of the sender.
+  toAddress: String # to_address: Address of the receiver.
+  value: BigInt! # value: Value transferred in Wei. A decimal number represented as a BIGNUMERIC to preserve up to 128-bit numeric precision.
+  # valueLossless: String # value_lossless: Value transferred in Wei. A decimal number represented in STRING format to preserve full 256-bit numeric precision.
+  gas: BigInt! # gas: Quantity of gas units provided by the sender.
+  gasPrice: BigInt # gas_price: Price per gas unit provided by the sender in Wei.
+  input: String! # input: Data sent along with the transaction, with a maximum size of 32 bytes.
+  maxFeePerGas: BigInt # max_fee_per_gas: Maximum fee per unit of gas for this transaction.
+  maxPriorityFeePerGas: BigInt # max_priority_fee_per_gas: Maximum priority fee per unit of gas for this transaction.
+  transactionType: BigInt! # transaction_type: Type of the transaction.
+  chainId: BigInt # chain_id: Chain ID used in transaction signing.
+  # accessList: [String!]! # access_list: List of addresses and storage keys that the transaction plans to access and has pre-paid gas for.
+  r: String # r: ECDSA signature r.
+  s: String # s: ECDSA signature s.
+  v: String # v: ECDSA signature v.
+  yParity: String # y_parity: ECDSA signature y_parity.
+}
