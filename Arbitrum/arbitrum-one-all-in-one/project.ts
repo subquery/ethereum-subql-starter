@@ -7,9 +7,9 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "arbitrum-nova-all-in-one",
+  name: "arbitrum-one-all-in-one",
   description:
-    "This project can be use as a starting point for developing your new Arbitrum Nova SubQuery project",
+    "This project can be use as a starting point for developing your new Arbitrum One SubQuery project",
   runner: {
     node: {
       name: "@subql/node-ethereum",
@@ -25,10 +25,10 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for Arbitrum Nova this is 42170
+     * chainId is the EVM Chain ID, for Arbitrum One this is 42161
      * https://chainlist.org/chain/42170
      */
-    chainId: "42170",
+    chainId: "42161",
     /**
      * These endpoint(s) should be public non-pruned archive node
      * We recommend providing more than one endpoint for improved reliability, performance, and uptime
@@ -37,7 +37,7 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://nova.arbitrum.io/rpc"],
+    endpoint: ["wss://arbitrum.callstaticrpc.com"],
   },
   dataSources: [
     {
