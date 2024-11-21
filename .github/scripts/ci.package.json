@@ -87,7 +87,8 @@
     "Flow",
     "Torus",
     "Now Chain",
-    "Kakarot Starknet"
+    "Kakarot Starknet",
+    "0G Newton Testnet"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
