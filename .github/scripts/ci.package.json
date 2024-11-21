@@ -89,7 +89,10 @@
     "Now Chain",
     "Kakarot Starknet",
     "0G Newton Testnet",
-    "Taiko"
+    "Taiko",
+    "Zora Sepolia",
+    "zkLink Nova",
+    "zkSync Sepolia"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
