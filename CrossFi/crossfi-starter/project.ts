@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "crossfi-testnet-starter",
+  name: "crossfi-starter",
   description:
     "This project can be use as a starting point for developing your new CrossFi SubQuery project",
   runner: {
@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 1447576, 
+      startBlock: 1447576,
       options: {
         abi: "erc20",
         // This is the contract address for SHIBA
