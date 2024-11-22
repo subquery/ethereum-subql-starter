@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "crossfi-testnet-testnet-starter",
+  name: "crossfi-testnet-starter",
   description:
     "This project can be use as a starting point for developing your new CrossFi Testnet SubQuery project",
   runner: {
@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 3676637, 
+      startBlock: 3676637,
       options: {
         abi: "erc20",
         // This is the contract address for CrossFi Foundation Token
