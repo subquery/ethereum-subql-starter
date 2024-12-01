@@ -126,7 +126,8 @@
     "Zora Sepolia",
     "zkLink Nova",
     "zkSync Sepolia",
-    "Tannsi Demo"
+    "Tannsi Demo",
+    "Creator"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
