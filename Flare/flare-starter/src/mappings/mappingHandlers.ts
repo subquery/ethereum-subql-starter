@@ -46,7 +46,7 @@ export async function handleTransaction(
   transaction: EthereumTransaction<SubmitHashCallArgs>,
 ): Promise<void> {
   assert(transaction.args, "No transaction.args");
-
+  assert(transaction.to, "No transaction.to")
   const approval = SubmitHash.create({
     id: transaction.hash,
     epochId: JSON.parse(transaction.args[0].toString()),
