@@ -127,7 +127,8 @@
     "zkLink Nova",
     "zkSync Sepolia",
     "Tannsi Demo",
-    "Creator"
+    "Creator",
+    "Botanix Testnet"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
