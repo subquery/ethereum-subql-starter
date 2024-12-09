@@ -128,7 +128,8 @@
     "zkSync Sepolia",
     "Tannsi Demo",
     "Creator",
-    "Mezo"
+    "Mezo",
+    "Botanix Testnet"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
