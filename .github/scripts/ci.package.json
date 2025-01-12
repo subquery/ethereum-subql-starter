@@ -129,7 +129,8 @@
     "Tannsi Demo",
     "Creator",
     "Mezo",
-    "Botanix Testnet"
+    "Botanix Testnet",
+    "Sonic"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
