@@ -130,7 +130,8 @@
     "Creator",
     "Mezo",
     "Botanix Testnet",
-    "Sonic"
+    "Sonic",
+    "Soneium"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
