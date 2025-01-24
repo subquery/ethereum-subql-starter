@@ -131,7 +131,8 @@
     "Mezo",
     "Botanix Testnet",
     "Sonic",
-    "Soneium"
+    "Soneium",
+    "Monad"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
