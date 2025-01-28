@@ -132,7 +132,8 @@
     "Botanix Testnet",
     "Sonic",
     "Soneium",
-    "Monad"
+    "Monad",
+    "Abstract Sepolia"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
