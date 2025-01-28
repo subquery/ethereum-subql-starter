@@ -133,7 +133,7 @@
     "Sonic",
     "Soneium",
     "Monad",
-    "Abstract Sepolia"
+    "Abstract"
   ],
   "scripts": {
     "codegen": "yarn workspaces run codegen",
