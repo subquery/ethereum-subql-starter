@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "abstract-sepolia-testnet-starter",
+  name: "abstract-testnet-starter",
   description:
     "This project can be use as a starting point for developing your new Abstract Sepolia SubQuery project",
   runner: {
@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 5250983, 
+      startBlock: 5250983,
       options: {
         abi: "erc20",
         // This is the contract address for Lolbits
