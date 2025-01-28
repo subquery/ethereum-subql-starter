@@ -1,8 +1,8 @@
-# SubQuery - Example Project for Abstract Maine
+# SubQuery - Example Project for Abstract Mainet
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for the Luna (`0xB38F3b7Ac44a778b9389FC4a0E8cd578950e868F`) on Abstract Maine**
+**This SubQuery project indexes all transfers and approval events for the Luna (`0xB38F3b7Ac44a778b9389FC4a0E8cd578950e868F`) on Abstract Mainet**
 
 ## Start
 
