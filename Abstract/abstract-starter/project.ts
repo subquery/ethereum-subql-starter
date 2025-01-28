@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "abstract-maine-starter",
+  name: "abstract-starter",
   description:
     "This project can be use as a starting point for developing your new Abstract SubQuery project",
   runner: {
@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 278730, 
+      startBlock: 278730,
       options: {
         abi: "erc20",
         // This is the contract address for Luna
