@@ -2,11 +2,8 @@ import assert from "assert";
 import { Address, Reward } from "../types";
 import { RewardClaimedLog } from "../types/abi-interfaces/FtsoRewardManagerAbi";
 
-
-export async function handleLog(
-  event: RewardClaimedLog
-): Promise<void> {
-  assert(event.args, "Event args are missing")
+export async function handleLog(event: RewardClaimedLog): Promise<void> {
+  assert(event.args, "Event args are missing");
 
   // Ensure that our account entities exist
   const whoClaimed = await Address.get(event.args.whoClaimed.toLowerCase());

@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 0, 
+      startBlock: 0,
       options: {
         abi: "erc20",
         // This is the contract address for OFN

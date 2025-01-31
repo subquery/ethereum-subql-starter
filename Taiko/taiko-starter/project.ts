@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://taiko-json-rpc.stakely.io,https://taiko-rpc.publicnode.com"],
+    endpoint: [
+      "https://taiko-json-rpc.stakely.io,https://taiko-rpc.publicnode.com",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 85, 
+      startBlock: 85,
       options: {
         abi: "erc20",
         // This is the contract address for Wrapped Ether

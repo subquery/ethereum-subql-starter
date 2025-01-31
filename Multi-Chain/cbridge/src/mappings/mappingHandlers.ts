@@ -24,7 +24,7 @@ export async function handleSend(event: SendLog): Promise<void> {
   await transactionOnSource.save();
 
   let bridgeTransactionRecord = await BridgeTransaction.get(
-    event.args.transferId.toString()
+    event.args.transferId.toString(),
   );
   if (!bridgeTransactionRecord) {
     bridgeTransactionRecord = BridgeTransaction.create({
@@ -51,7 +51,7 @@ export async function handleRelay(event: RelayLog): Promise<void> {
   await transactionOnTarget.save();
 
   let bridgeTransactionRecord = await BridgeTransaction.get(
-    event.args.srcTransferId.toString()
+    event.args.srcTransferId.toString(),
   );
   if (!bridgeTransactionRecord) {
     bridgeTransactionRecord = BridgeTransaction.create({

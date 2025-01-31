@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 4555957, 
+      startBlock: 4555957,
       options: {
         abi: "erc20",
         // This is the contract address for App Shib Club

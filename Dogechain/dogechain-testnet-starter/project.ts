@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 7670482, 
+      startBlock: 7670482,
       options: {
         abi: "erc20",
         // This is the contract address for uREKT Token

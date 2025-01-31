@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 472169, 
+      startBlock: 472169,
       options: {
         abi: "erc20",
         // This is the contract address for Stone

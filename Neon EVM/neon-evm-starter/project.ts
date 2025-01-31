@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://neon-proxy-mainnet.solana.p2p.org,wss://neon-evm.drpc.org"],
+    endpoint: [
+      "https://neon-proxy-mainnet.solana.p2p.org,wss://neon-evm.drpc.org",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 207988165, 
+      startBlock: 207988165,
       options: {
         abi: "erc20",
         // This is the contract address for Mora

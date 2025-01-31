@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 45932, 
+      startBlock: 45932,
       options: {
         abi: "erc20",
         // This is the contract address for XPArthera

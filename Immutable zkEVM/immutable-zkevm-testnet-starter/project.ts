@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://rpc.testnet.immutable.com,wss://immutable-zkevm-testnet.drpc.org"],
+    endpoint: [
+      "https://rpc.testnet.immutable.com,wss://immutable-zkevm-testnet.drpc.org",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 6934244, 
+      startBlock: 6934244,
       options: {
         abi: "erc20",
         // This is the contract address for Best Game Token

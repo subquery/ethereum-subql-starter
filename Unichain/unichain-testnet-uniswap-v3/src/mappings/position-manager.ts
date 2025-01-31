@@ -130,7 +130,7 @@ export async function handleIncreaseLiquidity(
   if (BigNumber.from(event.blockNumber).eq(14317993)) {
     return;
   }
-  
+
   assert(event.args);
   const position = await getPosition(event, event.args.tokenId);
 

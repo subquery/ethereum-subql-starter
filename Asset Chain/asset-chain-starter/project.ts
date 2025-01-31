@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 17584, 
+      startBlock: 17584,
       options: {
         abi: "erc20",
         // This is the contract address for RWA

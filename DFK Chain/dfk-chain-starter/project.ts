@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 44, 
+      startBlock: 44,
       options: {
         abi: "erc20",
         // This is the contract address for WJEWEL Token

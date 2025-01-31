@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 831899, 
+      startBlock: 831899,
       options: {
         abi: "erc20",
         // This is the contract address for Toro Inoue (Toro)

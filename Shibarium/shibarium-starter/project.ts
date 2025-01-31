@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 5917814, 
+      startBlock: 5917814,
       options: {
         abi: "erc20",
         // This is the contract address for BAD IDEA AI

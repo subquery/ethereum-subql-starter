@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 66718, 
+      startBlock: 66718,
       options: {
         abi: "erc20",
         // This is the contract address for Tether USDT

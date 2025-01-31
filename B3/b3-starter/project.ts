@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 3909978, 
+      startBlock: 3909978,
       options: {
         abi: "erc20",
         // This is the contract address for Portal Fantasy XP

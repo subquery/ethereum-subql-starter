@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://rpc.cardona.zkevm-rpc.com,https://polygon-zkevm-cardona.blockpi.network/v1/rpc/public"],
+    endpoint: [
+      "https://rpc.cardona.zkevm-rpc.com,https://polygon-zkevm-cardona.blockpi.network/v1/rpc/public",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 1337982, 
+      startBlock: 1337982,
       options: {
         abi: "erc20",
         // This is the contract address for LINK

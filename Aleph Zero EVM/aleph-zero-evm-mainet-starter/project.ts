@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["wss://alephzero.drpc.org,https://alephzero.drpc.org,wss://ws.alephzero.raas.gelato.cloud,https://rpc.alephzero.raas.gelato.cloud"],
+    endpoint: [
+      "wss://alephzero.drpc.org,https://alephzero.drpc.org,wss://ws.alephzero.raas.gelato.cloud,https://rpc.alephzero.raas.gelato.cloud",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 4344176, 
+      startBlock: 4344176,
       options: {
         abi: "erc20",
         // This is the contract address for Merkly Hyperlane FT

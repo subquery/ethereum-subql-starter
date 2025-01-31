@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 1884186, 
+      startBlock: 1884186,
       options: {
         abi: "erc20",
         // This is the contract address for ICP

@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["wss://ws.arb-blueberry.gelato.digital,https://rpc.arb-blueberry.gelato.digital"],
+    endpoint: [
+      "wss://ws.arb-blueberry.gelato.digital,https://rpc.arb-blueberry.gelato.digital",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 51217, 
+      startBlock: 51217,
       options: {
         abi: "erc20",
         // This is the contract address for Playnance

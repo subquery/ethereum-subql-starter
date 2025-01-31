@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 3168018, 
+      startBlock: 3168018,
       options: {
         abi: "erc20",
         // This is the contract address for BitGem

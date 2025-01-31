@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 2529003, 
+      startBlock: 2529003,
       options: {
         abi: "erc20",
         // This is the contract address for PEWPEW

@@ -93,7 +93,9 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
   let priceSoFar = ZERO_BD;
   const bundle = await Bundle.get("1");
 
-  const tokenWhitelist = await WhiteListPools.getByTokenId(token.id, {limit: 100});
+  const tokenWhitelist = await WhiteListPools.getByTokenId(token.id, {
+    limit: 100,
+  });
   // hardcoded fix for incorrect rates
   // if whitelist includes token - get the safe price
   assert(bundle);

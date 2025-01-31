@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["wss://opbnb-testnet-rpc.publicnode.com,https://opbnb-testnet-rpc.bnbchain.org"],
+    endpoint: [
+      "wss://opbnb-testnet-rpc.publicnode.com,https://opbnb-testnet-rpc.bnbchain.org",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 171251, 
+      startBlock: 171251,
       options: {
         abi: "erc20",
         // This is the contract address for Runix

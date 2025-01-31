@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 195000, 
+      startBlock: 195000,
       options: {
         abi: "erc20",
         // This is the contract address for USDC

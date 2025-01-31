@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["wss://ethereum-holesky-rpc.publicnode.com,wss://holesky.drpc.org"],
+    endpoint: [
+      "wss://ethereum-holesky-rpc.publicnode.com,wss://holesky.drpc.org",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 1817049, 
+      startBlock: 1817049,
       options: {
         abi: "erc20",
         // This is the contract address for GaspV2

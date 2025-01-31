@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://endpoints.omniatech.io/v1/manta-pacific/sepolia/public,https://endpoints.omniatech.io/v1/manta-pacific/sepolia/public"],
+    endpoint: [
+      "https://endpoints.omniatech.io/v1/manta-pacific/sepolia/public,https://endpoints.omniatech.io/v1/manta-pacific/sepolia/public",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 220462, 
+      startBlock: 220462,
       options: {
         abi: "erc20",
         // This is the contract address for testUSDC

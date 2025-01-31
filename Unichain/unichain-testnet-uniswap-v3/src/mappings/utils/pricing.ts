@@ -7,7 +7,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { exponentToBigDecimal, safeDiv, safeDivNumToNum } from "./index";
 import { formatUnits, parseUnits } from "@ethersproject/units";
 import assert from "assert";
-import {GetOptions } from "@subql/types-core";
+import { GetOptions } from "@subql/types-core";
 
 const WETH_ADDRESS = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c";
 const USDC_WETH_03_POOL = "0x36696169c63e42cd08ce11f5deebbcebae652050";
@@ -74,8 +74,8 @@ export async function findEthPerToken(token: Token): Promise<BigNumber> {
   const options: GetOptions<WhiteListPools> = {
     limit: 100, // Specify the limit you want
     offset: 0, // Optional: Specify the offset if needed
-    orderDirection: 'ASC', // Optional: Specify 'ASC' or 'DESC'
-};
+    orderDirection: "ASC", // Optional: Specify 'ASC' or 'DESC'
+  };
 
   const tokenWhitelist = await WhiteListPools.getByTokenId(token.id, options);
   // hardcoded fix for incorrect rates

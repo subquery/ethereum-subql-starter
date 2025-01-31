@@ -38,15 +38,17 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://rpc-mainnet.optopia.ai, https://rpc-mainnet-2.optopia.ai"],
+    endpoint: [
+      "https://rpc-mainnet.optopia.ai, https://rpc-mainnet-2.optopia.ai",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 515707, 
+      startBlock: 515707,
       options: {
         abi: "erc20",
-        // This is the contract address for WETH  
+        // This is the contract address for WETH
         address: "0x4200000000000000000000000000000000000006",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),

@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://0g-json-rpc-public.originstake.com,https://0g-json-rpc-public.originstake.com"],
+    endpoint: [
+      "https://0g-json-rpc-public.originstake.com,https://0g-json-rpc-public.originstake.com",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 444650, 
+      startBlock: 444650,
       options: {
         abi: "erc20",
         // This is the contract address for FunToken

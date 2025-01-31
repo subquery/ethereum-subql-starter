@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://cyber.alt.technology,https://rpc.cyber.co,wss://cyber-ws.alt.technology"],
+    endpoint: [
+      "https://cyber.alt.technology,https://rpc.cyber.co,wss://cyber-ws.alt.technology",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 1236112, 
+      startBlock: 1236112,
       options: {
         abi: "erc20",
         // This is the contract address for CyberConnect

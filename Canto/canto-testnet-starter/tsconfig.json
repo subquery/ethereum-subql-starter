@@ -10,7 +10,7 @@
     "outDir": "dist",
     "rootDir": "src",
     "target": "es2018",
-    "strict": true,
+    "strict": true
   },
-  "include": ["src/**/*", "node_modules/@subql/types-core/dist/global.d.ts"],
+  "include": ["src/**/*", "node_modules/@subql/types-core/dist/global.d.ts"]
 }

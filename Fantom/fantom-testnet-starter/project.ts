@@ -38,12 +38,14 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://rpc.testnet.fantom.network,https://fantom-testnet.public.blastapi.io,wss://fantom-testnet-rpc.publicnode.com"],
+    endpoint: [
+      "https://rpc.testnet.fantom.network,https://fantom-testnet.public.blastapi.io,wss://fantom-testnet-rpc.publicnode.com",
+    ],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 26060817, 
+      startBlock: 26060817,
       options: {
         abi: "erc20",
         // This is the contract address for WFTM

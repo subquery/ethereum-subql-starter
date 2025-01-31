@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 40, 
+      startBlock: 40,
       options: {
         abi: "erc20",
         // This is the contract address for CRO

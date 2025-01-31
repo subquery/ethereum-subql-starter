@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 892218, 
+      startBlock: 892218,
       options: {
         abi: "erc20",
         // This is the contract address for RIF
