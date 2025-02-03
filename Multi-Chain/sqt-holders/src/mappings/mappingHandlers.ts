@@ -31,8 +31,8 @@ const calculateCurrentBalance = async (
   blockheight: bigint,
 ): Promise<Account> => {
   const fromTransactions =
-    (await Transfer.getByAccountFromId(account.id)) || [];
-  const toTransactions = (await Transfer.getByAccountToId(account.id)) || [];
+    (await Transfer.getByAccountFromId(account.id, {limit: 100})) || [];
+  const toTransactions = (await Transfer.getByAccountToId(account.id, {limit: 100})) || [];
 
   logger.info(
     `There are ${(
