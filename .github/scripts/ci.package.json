@@ -136,7 +136,7 @@
     "Abstract"
   ],
   "scripts": {
-    "codegen": "yarn workspaces run codegen",
-    "build": "yarn workspaces run build"
+    "codegen": "yarn workspaces foreach -Apt run codegen",
+    "build": "yarn workspaces foreach -Apt run build"
   }
 }
