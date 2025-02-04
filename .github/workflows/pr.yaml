@@ -1,11 +1,12 @@
-name: PR
+name: CI
+
 on:
   pull_request:
     paths-ignore:
       - ".github/workflows/**"
+
 jobs:
-  pr:
-    name: pr
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,13 +14,22 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 18
-      - name: setup workspace
+      - name: Setup workspace
         run: cp .github/scripts/ci.package.json package.json
       # Do this before yarn to avoid node_modules directory
-      - name: update tsconfigs for workspace
+      - name: Update tsconfigs for workspace
         run: ./.github/scripts/copy-ts-config.sh
-      - run: yarn
-      - name: codegen
+      - name: Set up Yarn node_modules linker
+        run: |
+          NODE_LINKER="nodeLinker: node-modules"
+          echo "$NODE_LINKER" > .yarnrc.yml
+      - name: Enable and activate Corepack (necessary for Yarn v2 and later).
+        run: corepack enable && corepack prepare yarn@stable --activate      
+      - name: Install dependencies 
+        run: yarn
+        env:
+            YARN_ENABLE_IMMUTABLE_INSTALLS: false # required according to https://github.com/yarnpkg/berry/issues/2948
+      - name: Codegen
         run: yarn codegen
-      - name: build
+      - name: Build
         run: yarn build
