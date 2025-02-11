@@ -133,7 +133,8 @@
     "Sonic",
     "Soneium",
     "Monad",
-    "Abstract"
+    "Abstract",
+    "Bittensor"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
