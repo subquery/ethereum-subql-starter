@@ -134,7 +134,8 @@
     "Soneium",
     "Monad",
     "Abstract",
-    "Bittensor"
+    "Bittensor",
+    "Unichain"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
