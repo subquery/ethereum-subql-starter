@@ -135,7 +135,8 @@
     "Monad",
     "Abstract",
     "Bittensor",
-    "Unichain"
+    "Unichain",
+    "Nibiru"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
