@@ -9,11 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: lts/*
       - name: Setup workspace
         run: cp .github/scripts/ci.package.json package.json
       # Do this before yarn to avoid node_modules directory
@@ -24,11 +24,11 @@ jobs:
           NODE_LINKER="nodeLinker: node-modules"
           echo "$NODE_LINKER" > .yarnrc.yml
       - name: Enable and activate Corepack (necessary for Yarn v2 and later).
-        run: corepack enable && corepack prepare yarn@stable --activate      
-      - name: Install dependencies 
+        run: corepack enable && corepack prepare yarn@stable --activate
+      - name: Install dependencies
         run: yarn
         env:
-            YARN_ENABLE_IMMUTABLE_INSTALLS: false # required according to https://github.com/yarnpkg/berry/issues/2948
+          YARN_ENABLE_IMMUTABLE_INSTALLS: false # required according to https://github.com/yarnpkg/berry/issues/2948
       - name: Codegen
         run: yarn codegen
       - name: Build

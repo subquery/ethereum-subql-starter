@@ -2,7 +2,7 @@
 # Add the `@index` or `@index(unique: true)` annotation after any non-key field
 # https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
 
-type Transfer @entity {
+type Transfer @entity @fullText(fields: ["from", "to"], language: "english") {
   id: ID!
   from: String!
   to: String!
