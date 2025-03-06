@@ -137,7 +137,8 @@
     "Bittensor",
     "Unichain",
     "Nibiru",
-    "Neo X"
+    "Neo X",
+    "Autonity"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
