@@ -138,7 +138,8 @@
     "Unichain",
     "Nibiru",
     "Neo X",
-    "Autonity"
+    "Autonity",
+    "Darwinia"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
