@@ -139,7 +139,8 @@
     "Nibiru",
     "Neo X",
     "Autonity",
-    "Darwinia"
+    "Darwinia",
+    "COTI Testnet"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
