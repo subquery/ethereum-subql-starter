@@ -140,7 +140,9 @@
     "Neo X",
     "Autonity",
     "Darwinia",
-    "DuckChain"
+    "DuckChain",
+    "COTI",
+    "COTI Testnet"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
