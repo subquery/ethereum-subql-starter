@@ -1,5 +1,5 @@
 {
-  "name": "sei-mainnet-starter",
+  "name": "sei-starter",
   "version": "0.0.1",
   "description": "This project can be use as a starting point for developing your new SEI Mainnet SubQuery project",
   "main": "dist/index.js",

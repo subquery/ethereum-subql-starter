@@ -143,7 +143,7 @@
     "DuckChain",
     "COTI",
     "COTI Testnet",
-    "SEI Mainnet"
+    "SEI"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",

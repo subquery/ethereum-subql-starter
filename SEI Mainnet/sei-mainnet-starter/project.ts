@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "sei-mainnet-starter",
+  name: "sei-starter",
   description:
     "This project can be use as a starting point for developing your new SEI Mainnet SubQuery project",
   runner: {
@@ -43,7 +43,7 @@ const project: EthereumProject = {
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 79147698, 
+      startBlock: 79123881, 
       options: {
         abi: "erc20",
         // This is the contract address for USDT
