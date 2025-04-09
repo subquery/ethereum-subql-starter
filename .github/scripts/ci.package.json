@@ -142,7 +142,8 @@
     "Darwinia",
     "DuckChain",
     "COTI",
-    "COTI Testnet"
+    "COTI Testnet",
+    "SEI"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
