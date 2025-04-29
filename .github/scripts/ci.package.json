@@ -144,7 +144,8 @@
     "COTI",
     "COTI Testnet",
     "SEI",
-    "Flare"
+    "Flare",
+    "Units"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
