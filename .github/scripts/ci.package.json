@@ -146,7 +146,8 @@
     "SEI",
     "Flare",
     "Units",
-    "Berachain"
+    "Berachain",
+    "SIX Protocol"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
