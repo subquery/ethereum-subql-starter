@@ -148,7 +148,8 @@
     "Units",
     "Berachain",
     "SIX Protocol",
-    "edeXa Mainnet"
+    "edeXa Mainnet",
+    "edeXa Testnet"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
