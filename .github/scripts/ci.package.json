@@ -147,7 +147,8 @@
     "Flare",
     "Units",
     "Berachain",
-    "SIX Protocol"
+    "SIX Protocol",
+    "edeXa Testnet"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
