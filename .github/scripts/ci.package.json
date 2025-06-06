@@ -150,7 +150,8 @@
     "SIX Protocol",
     "edeXa Mainnet",
     "edeXa Testnet",
-    "Edgen Chain"
+    "Edgen Chain",
+    "Botanix"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
