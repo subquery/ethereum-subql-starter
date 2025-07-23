@@ -151,7 +151,8 @@
     "edeXa Mainnet",
     "edeXa Testnet",
     "Edgen Chain",
-    "Botanix"
+    "Botanix",
+    "Zircuit"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
