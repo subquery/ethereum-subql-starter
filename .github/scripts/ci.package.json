@@ -153,7 +153,8 @@
     "Edgen Chain",
     "Botanix",
     "Zircuit",
-    "Zircuit Garfield Testnet"
+    "Zircuit Garfield Testnet",
+    "Lens Chain"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
