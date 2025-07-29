@@ -1,7 +1,7 @@
 {
-  "name": "{{lowercasePrettyName}}-starter",
+  "name": "zircuit-garfield-testnet-testnet-starter",
   "version": "0.0.1",
-  "description": "This project can be use as a starting point for developing your new {{prettyName}} SubQuery project",
+  "description": "This project can be use as a starting point for developing your new Zircuit Garfield Testnet Testnet SubQuery project",
   "main": "dist/index.js",
   "scripts": {
     "build": "subql build",
