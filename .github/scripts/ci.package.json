@@ -154,7 +154,8 @@
     "Botanix",
     "Zircuit",
     "Zircuit Garfield Testnet",
-    "Lens Chain"
+    "Lens Chain",
+    "Hedera EVM"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
