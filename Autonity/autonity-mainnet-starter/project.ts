@@ -39,6 +39,7 @@ const project: EthereumProject = {
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
     endpoint: ["https://autonity.rpc.web3cdn.network,https://rpc.autonity-apis.com,https://autonity.rpc.subquery.network/public"],
+    dictionary: "https://datasource.subquery.dev/autonity-dictionary"
   },
   dataSources: [
     {
