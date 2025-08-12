@@ -8,7 +8,7 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "autonity-testnet-starter",
+  name: "autonity-mainnet-starter",
   description:
     "This project can be use as a starting point for developing your new Autonity SubQuery project",
   runner: {
@@ -26,10 +26,10 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     * chainId is the EVM Chain ID, for Autonity this is 65010004
-     * https://chainlist.org/chain/65010004
+     * chainId is the EVM Chain ID, for Autonity this is 65000000
+     * https://chainlist.org/chain/65000000
      */
-    chainId: "65010004",
+    chainId: "65000000",
     /**
      * These endpoint(s) should be public non-pruned archive node
      * We recommend providing more than one endpoint for improved reliability, performance, and uptime
@@ -38,7 +38,8 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://bakerloo.autonity-apis.com,https://autonity.rpc.web3cdn.network/testnet"],
+    endpoint: ["https://autonity.rpc.web3cdn.network,https://rpc.autonity-apis.com,https://autonity.rpc.subquery.network/public"],
+    dictionary: "https://datasource.subquery.dev/autonity-dictionary"
   },
   dataSources: [
     {
