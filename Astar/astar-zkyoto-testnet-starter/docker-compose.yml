@@ -40,7 +40,7 @@ services:
       - --unfinalized-blocks=true
 
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://subquery-node:3000/ready"]
+      test: ["CMD", "wget", "--spider", "-q", "http://subquery-node:3000/ready"]
       interval: 3s
       timeout: 5s
       retries: 10
