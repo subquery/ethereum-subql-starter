@@ -29,7 +29,7 @@ const project: EthereumProject = {
      * chainId is the EVM Chain ID, for Sonic this is 57054
      * https://chainlist.org/chain/57054
      */
-    chainId: "57054",
+    chainId: "14601",
     /**
      * These endpoint(s) should be public non-pruned archive node
      * We recommend providing more than one endpoint for improved reliability, performance, and uptime
@@ -38,7 +38,7 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://rpc.blaze.soniclabs.com"],
+    endpoint: ["https://rpc.testnet.soniclabs.com"],
   },
   dataSources: [
     {
@@ -54,7 +54,7 @@ const project: EthereumProject = {
         file: "./dist/index.js",
         handlers: [
           {
-            kind: EthereumHandlerKind.Call, // We use ethereum handlers since Sonic Testnet (Blaze) is EVM-compatible
+            kind: EthereumHandlerKind.Call, // We use ethereum handlers since Sonic Testnet is EVM-compatible
             handler: "handleTransaction",
             filter: {
               /**

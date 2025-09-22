@@ -1,8 +1,8 @@
-# SubQuery - Example Project for Sonic Testnet (Blaze)
+# SubQuery - Example Project for Sonic Testnet
 
 [SubQuery](https://subquery.network) is a fast, flexible, and reliable open-source data indexer that provides you with custom APIs for your web3 project across all of our supported networks. To learn about how to get started with SubQuery, [visit our docs](https://academy.subquery.network).
 
-**This SubQuery project indexes all transfers and approval events for the WS (`0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38`) on Sonic Testnet (Blaze)**
+**This SubQuery project indexes all transfers and approval events for the WS (`0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38`) on Sonic Testnet **
 
 ## Start
 
