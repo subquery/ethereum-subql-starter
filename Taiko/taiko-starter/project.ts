@@ -39,7 +39,8 @@ const project: EthereumProject = {
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
     endpoint: [
-      "https://taiko-json-rpc.stakely.io,https://taiko-rpc.publicnode.com",
+      "https://rpc.mainnet.taiko.xyz/",
+      "https://taiko-rpc.publicnode.com",
     ],
   },
   dataSources: [

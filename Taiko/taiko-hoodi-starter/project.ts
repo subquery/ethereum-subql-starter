@@ -8,9 +8,9 @@ import {
 const project: EthereumProject = {
   specVersion: "1.0.0",
   version: "0.0.1",
-  name: "taiko-holesky-starter",
+  name: "taiko-hoodi-starter",
   description:
-    "This project can be use as a starting point for developing your new Taiko Holesky SubQuery project",
+    "This project can be use as a starting point for developing your new Taiko Hoodi SubQuery project",
   runner: {
     node: {
       name: "@subql/node-ethereum",
@@ -26,10 +26,10 @@ const project: EthereumProject = {
   },
   network: {
     /**
-     *  chainId is the EVM Chain ID, for Taiko Holesky this is 17000
-     *  https://chainlist.org/chain/17000
+     *  chainId is the EVM Chain ID, for Taiko Hoodi Mainnet this is 167008
+     *  https://chainlist.org/chain/167012
      */
-    chainId: "17000",
+    chainId: "167012",
     /**
      * These endpoint(s) should be public non-pruned archive node
      * We recommend providing more than one endpoint for improved reliability, performance, and uptime
@@ -38,17 +38,17 @@ const project: EthereumProject = {
      * If you use a rate limited endpoint, adjust the --batch-size and --workers parameters
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
-    endpoint: ["https://ethereum-holesky.blockpi.network/v1/rpc/public"],
+    endpoint: ["https://0xrpc.io/hoodi"],
   },
   dataSources: [
     {
       kind: EthereumDatasourceKind.Runtime,
-      startBlock: 709237,
+      startBlock: 1208,
       options: {
         // Must be a key of assets
         abi: "erc20",
-        // This is the contract address for Taiko Token Katla (TTKOk) https://holesky.etherscan.io/address/0x8C5ac30834D3f85a66B1D19333232bB0a9ca2Db0#events
-        address: "0x8C5ac30834D3f85a66B1D19333232bB0a9ca2Db0",
+        // At the time of creating this there are no ERC20 tokens on Taiko Hoodi
+        // address: "0x2a99837850543e223C134687f0c2B7E059873047",
       },
       assets: new Map([["erc20", { file: "./abis/erc20.abi.json" }]]),
       mapping: {
