@@ -157,7 +157,8 @@
     "Lens Chain",
     "Hedera EVM",
     "Celo Sepolia",
-    "Ethereum Hoodi"
+    "Ethereum Hoodi",
+    "Ink"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
