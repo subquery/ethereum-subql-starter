@@ -156,7 +156,8 @@
     "Zircuit Garfield Testnet",
     "Lens Chain",
     "Hedera EVM",
-    "Celo Sepolia"
+    "Celo Sepolia",
+    "Ethereum Hoodi"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
