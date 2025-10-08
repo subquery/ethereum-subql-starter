@@ -158,7 +158,9 @@
     "Hedera EVM",
     "Celo Sepolia",
     "Ethereum Hoodi",
-    "Lumia"
+    "Lumia",
+    "MemeCore",
+    "Hyperliquid"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
