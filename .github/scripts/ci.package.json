@@ -162,7 +162,8 @@
     "Ink",
     "Lumia",
     "MemeCore",
-    "Hyperliquid"
+    "Hyperliquid",
+    "Fuse"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
