@@ -39,7 +39,8 @@ const project: EthereumProject = {
      * These settings can be found in your docker-compose.yaml, they will slow indexing but prevent your project being rate limited
      */
     endpoint: [
-      "wss://polygon-amoy-bor-rpc.publicnode.com,https://polygon-amoy.drpc.org",
+      "https://rpc-amoy.polygon.technology",
+      "https://polygon-amoy.api.onfinality.io/public",
     ],
   },
   dataSources: [
