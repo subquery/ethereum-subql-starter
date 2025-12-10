@@ -163,7 +163,8 @@
     "Lumia",
     "MemeCore",
     "Hyperliquid",
-    "Fuse"
+    "Fuse",
+    "Tempo"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
