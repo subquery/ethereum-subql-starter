@@ -164,7 +164,8 @@
     "MemeCore",
     "Hyperliquid",
     "Fuse",
-    "Tempo"
+    "Tempo",
+    "BattleChain"
   ],
   "scripts": {
     "codegen": "yarn workspaces foreach -Apt run codegen",
